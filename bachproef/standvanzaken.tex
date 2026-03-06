@@ -7,45 +7,63 @@
 
 % Pas na deze inleidende paragraaf komt de eerste sectiehoofding.
 
-Dit hoofdstuk bevat je literatuurstudie. De inhoud gaat verder op de inleiding, maar zal het onderwerp van de bachelorproef *diepgaand* uitspitten. De bedoeling is dat de lezer na lezing van dit hoofdstuk helemaal op de hoogte is van de huidige stand van zaken (state-of-the-art) in het onderzoeksdomein. Iemand die niet vertrouwd is met het onderwerp, weet nu voldoende om de rest van het verhaal te kunnen volgen, zonder dat die er nog andere informatie moet over opzoeken \autocite{Pollefliet2011}.
+%Dit hoofdstuk bevat je literatuurstudie. De inhoud gaat verder op de inleiding, maar zal het onderwerp van de bachelorproef *diepgaand* uitspitten. De bedoeling is dat de lezer na lezing van dit hoofdstuk helemaal op de hoogte is van de huidige stand van zaken (state-of-the-art) in het onderzoeksdomein. Iemand die niet vertrouwd is met het onderwerp, weet nu voldoende om de rest van het verhaal te kunnen volgen, zonder dat die er nog andere informatie moet over opzoeken \autocite{Pollefliet2011}.
 
-Je verwijst bij elke bewering die je doet, vakterm die je introduceert, enz.\ naar je bronnen. In \LaTeX{} kan dat met het commando \texttt{$\backslash${textcite\{\}}} of \texttt{$\backslash${autocite\{\}}}. Als argument van het commando geef je de ``sleutel'' van een ``record'' in een bibliografische databank in het Bib\LaTeX{}-formaat (een tekstbestand). Als je expliciet naar de auteur verwijst in de zin (narratieve referentie), gebruik je \texttt{$\backslash${}textcite\{\}}. Soms is de auteursnaam niet expliciet een onderdeel van de zin, dan gebruik je \texttt{$\backslash${}autocite\{\}} (referentie tussen haakjes). Dit gebruik je bv.~bij een citaat, of om in het bijschrift van een overgenomen afbeelding, broncode, tabel, enz. te verwijzen naar de bron. In de volgende paragraaf een voorbeeld van elk.
+%Je verwijst bij elke bewering die je doet, vakterm die je introduceert, enz.\ naar je bronnen. In \LaTeX{} kan dat met het commando \texttt{$\backslash${textcite\{\}}} of \texttt{$\backslash${autocite\{\}}}. Als argument van het commando geef je de ``sleutel'' van een ``record'' in een bibliografische databank in het Bib\LaTeX{}-formaat (een tekstbestand). Als je expliciet naar de auteur verwijst in de zin (narratieve referentie), gebruik je \texttt{$\backslash${}textcite\{\}}. Soms is de auteursnaam niet expliciet een onderdeel van de zin, dan gebruik je \texttt{$\backslash${}autocite\{\}} (referentie tussen haakjes). Dit gebruik je bv.~bij een citaat, of om in het bijschrift van een overgenomen afbeelding, broncode, tabel, enz. te verwijzen naar de bron. In de volgende paragraaf een voorbeeld van elk.
 
-\textcite{Knuth1998} schreef een van de standaardwerken over sorteer- en zoekalgoritmen. Experten zijn het erover eens dat cloud computing een interessante opportuniteit vormen, zowel voor gebruikers als voor dienstverleners op vlak van informatietechnologie~\autocite{Creeger2009}.
+%\textcite{Knuth1998} schreef een van de standaardwerken over sorteer- en zoekalgoritmen. Experten zijn het erover eens dat cloud computing een interessante opportuniteit vormen, zowel voor gebruikers als voor dienstverleners op vlak van informatietechnologie~\autocite{Creeger2009}.
 
-Let er ook op: het \texttt{cite}-commando voor de punt, dus binnen de zin. Je verwijst meteen naar een bron in de eerste zin die erop gebaseerd is, dus niet pas op het einde van een paragraaf.
+%Let er ook op: het \texttt{cite}-commando voor de punt, dus binnen de zin. Je verwijst meteen naar een bron in de eerste zin die erop gebaseerd is, dus niet pas op het einde van een paragraaf.
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{grail.jpg}
-  \caption[Voorbeeld figuur.]{\label{fig:grail}Voorbeeld van invoegen van een figuur. Zorg altijd voor een uitgebreid bijschrift dat de figuur volledig beschrijft zonder in de tekst te moeten gaan zoeken. Vergeet ook je bronvermelding niet!}
-\end{figure}
+%  \centering
+%  \includegraphics[width=0.8\textwidth]{grail.jpg}
+%  \caption[Voorbeeld figuur.]{\label{fig:grail}Voorbeeld van invoegen van een figuur. Zorg altijd voor een uitgebreid bijschrift dat de figuur volledig beschrijft zonder in de tekst te moeten gaan zoeken. Vergeet ook je bronvermelding niet!}
+%\end{figure}
 
-\begin{listing}
-  \begin{minted}{python}
-    import pandas as pd
-    import seaborn as sns
+%\begin{listing}
+%  \begin{minted}{python}
+%    import pandas as pd
+%    import seaborn as sns
 
-    penguins = sns.load_dataset('penguins')
-    sns.relplot(data=penguins, x="flipper_length_mm", y="bill_length_mm", hue="species")
-  \end{minted}
-  \caption[Voorbeeld codefragment]{Voorbeeld van het invoegen van een codefragment.}
-\end{listing}
+    %penguins = sns.load_dataset('penguins')
+    %sns.relplot(data=penguins, x="flipper_length_mm", y="bill_length_mm", hue="species")
+  %\end{minted}
+  %\caption[Voorbeeld codefragment]{Voorbeeld van het invoegen van een codefragment.}
+%\end{listing}
 
-\lipsum[7-20]
+%\lipsum[7-20]
 
-\begin{table}
-  \centering
-  \begin{tabular}{lcr}
-    \toprule
-    \textbf{Kolom 1} & \textbf{Kolom 2} & \textbf{Kolom 3} \\
-    $\alpha$         & $\beta$          & $\gamma$         \\
-    \midrule
-    A                & 10.230           & a                \\
-    B                & 45.678           & b                \\
-    C                & 99.987           & c                \\
-    \bottomrule
-  \end{tabular}
-  \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
-\end{table}
+%\begin{table}
+%  \centering
+%  \begin{tabular}{lcr}
+%    \toprule
+%    \textbf{Kolom 1} & \textbf{Kolom 2} & \textbf{Kolom 3} \\
+%    $\alpha$         & $\beta$          & $\gamma$         \\
+%    \midrule
+%    A                & 10.230           & a                \\
+%    B                & 45.678           & b                \\
+%    C                & 99.987           & c                \\
+%    \bottomrule
+%  \end{tabular}
+%  \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
+%\end{table}
+
+Automatische gebruikers provisioning vormt vandaag een essentieel onderdeel van moderne toegangscontroles binnen organisaties. Denk bijvoorbeeld aan het toekennen van rechten op mappen maar ook aan de toegang tot gebouwen die openen met een badge. De nood aan geautomatiseerde onboarding processen is de afgelopen jaren sterk toegenomen door de groeiende complexiteit van IT-omgevingen en de afhankelijkheid van digitale middelen tijdens de eerste werkdag van een nieuwe medewerker. Volgens \textcite{Okta2025} leidt handmatige provisioning niet alleen tot inefficiëntie, maar vormt het ook een aanzienlijk beveiligingsrisico. Dit komt vooral omdat inconsistenties in het aanmaken van accounts en toewijzen van toegangsrechten het gevolg zijn van menselijke fouten. Automatische provisioning wordt in de vakliteratuur dan ook beschouwd als een noodzakelijke stap richting veilig identiteitsbeheer. \newline
+
+Uit onderzoek naar onboardingprocessen blijkt dat veel organisaties nog steeds vertrouwen op manuele workflows waarbij de personeelsdiensten, diensthoofden en IT elk afzonderlijke taken uitvoeren. \textcite{Radev2023} toont aan dat deze processen leiden tot vertragingen en een verhoogde administratieve last, waarbij fouten in gegevensoverdracht of ontbrekende stappen af en toe voorkomen. De studie benadrukt dat vooral het ontbreken van geïntegreerde systemen zorgt voor knelpunten, wat aansluit bij het probleem dat zich binnen de gemeente Berlare voordoet. \textcite{Vitla2023} bevestigt deze bevindingen en concludeert dat geautomatiseerde functionaliteit significant bijdraagt aan productiviteitswinst doordat medewerkers vanaf de eerste werkdag toegang hebben tot alle noodzakelijke digitale middelen. Dit bevordert zowel de eerste werkdag van de nieuwe collega, als ook de werktaken van de diensten die een handmatige taak hebben bij het onboardingsproces. \newline
+
+Zoals in de vorige alinea werd aangehaald, blijft ook identiteitsmanagement zich sterk profileren als AI-ondersteunde decision making. \textcite{Hariharan2025} beschrijft hoe AI-gedreven IAM-systemen (identiteit- en toegangsmanagement systemen) risico's kunnen inschatten en automatisch de juiste rechten kunnen toekennen aan de hand van job descriptions en het detecteren van afwijkingen. Dergelijke oplossingen vinden hun toepassing voorlopig vooral bij grote bedrijven maar zijn in lokale besturen niet altijd toegestaan wegens de extra regels omdat er met persoonsgerelateerde gegevens wordt gewerkt. De technologie die in deze bachelorproef aan bod komt richt zich echter op een eenvoudiger schaalniveau waarbij automatisatie vooral gaat via API's, workflow-systemen of tools zoals Microsoft Power Automate of andere pijplijn systemen.\newline
+
+Wat opvalt is dat de bestaande literatuur grotendeels betrekking heeft op enterprise-omgevingen en grote IAM-platformen. Studies die specifiek naar kleinere overheidsinstanties of gemeentelijke diensten kijken zijn zeldzaam. Veel onderzoeken beschrijven algemene onboarding processen, maar gaan niet in op de problemen die ontstaan bij het synchroniseren van systemen van een personeelsdienst met Active Directory in publieke organisaties. Er is duidelijk nog een gebrek aan kennis die aanleiding is tot dit onderzoek. Terwijl veel literatuur zich richt op modellen en implementaties van grote bedrijfsomgevingen, wil deze bachelorproef een stappenplan ontwikkelen dat als proof of concept kan dienen voor een gemeentelijke IT-afdeling. Hierbij wordt rekening gehouden met lokale werkwijzen, de bestaande infrastructuur en wettelijke vereisten zoals de GDPR. \newline
+
+Samengevat laat de huidige situatie duidelijk zien dat automatische gebruikers provisioning wordt gezien als een must voor een efficiënt en veilig identiteitsbeheer. Literatuur beschrijft wat de voordelen zijn, welke inefficiënties er in bestaande processen zitten en geeft aan hoe je technisch kunt integreren. Echter wordt er minder aandacht besteed aan de implementatie in kleinere gemeenten. Deze bachelorproef wil juist dat gat opvullen door te onderzoeken hoe een geautomatiseerd provisioning proces op basis van personeelsgegevens in een gemeentelijke ICT-omgeving kan worden ​‍​‌‍​‍‌gerealiseerd.\newline
+
+In verschillende support artikelen van Microsoft zelf, staat er beschreven dat Microsoft Power Automate gebruikt kan worden voor automatische flows te creëren tussen Microsoft Forms en Excel \autocite{Microsoft2024}. Ook kan Power Automate flows maken om powershell scripts uit te voeren. Het lastige hiermee is echter dat Power Automate een licentie nodig heeft en om dit in een testomgeving te gebruiken, heb je uiteraard geen licenties voor deze testomgeving ter beschikking. 
+
+Ook geeft \textcite{Microsoft2021} aan dat er een handige implementatie is voor Power Automate in Powershell. Op deze manier kan je dus in powershell zelf commando's gaan gebruiken die echt gekoppeld zijn aan Power Automate.\newline
+
+In de huidige omgeving van de gemeente Berlare, wordt er gebruik gemaakt van de een hybride omgeving. Dit wilt zeggen dat er bepaalde systemen volledig in de cloud draaien, maar ook dat er nog bepaalde systemen lokaal on premises draaien. Aangezien de gemeente net zoals andere organisaties bepaalde GDPR regels moet volgen, moet er een deel lokaal on prem draaien, als ook de handigheid van gebruik maken van de cloud. Op die manier zorgen bedrijven voor manieren om privacy gevoelige bestanden lokaal op een server te zetten en dus zo de privacywetgeving niet te schenden \autocite{Ahuja2024}.
+
+
+Ook doordat het een hybride omgeving is, moet er een weg zijn dat de cloud van Microsoft Forms naar de on premises active directory (AD) kan gaan en daar dan een script kan uitvoeren voor de gebruikers aan te maken \autocite{Microsoft2025}. De gepaste toepassing daarvoor is de On-Premises-Data-Gateway van Microsoft. Dit legt als het ware een verbinding tussen de omgeving in de cloud, waar websites zoals Microsoft Forms en Power Automate draaien, en de lokale omgeving met de Active Directory servers op. Op die manier zou je dus eenvoudig de flow kunnen doorsturen naar de lokale servers. 
 
