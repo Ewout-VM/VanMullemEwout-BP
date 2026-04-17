@@ -1,0 +1,31 @@
+%%
+%%Power Automate
+%%
+
+\chapter{Power Automate}
+\label{ch:Power Automate}
+
+Om een automatische werking op te stellen, werd door een collega gekozen voor Power Automate. Power Automate is een programma van Microsoft zelf dat gebruikt kan worden om automatische flows te maken. Power automate is voornamelijk een tool dat in de cloud draait, maar het kan ook voor automatisatie zorgen on prem. \newline
+
+Voor cloud toepassingen van Microsoft heeft Power Automate verschillende stappen. Zo kan je echt op vlak van gebruikers mensen gaan aanmaken in Entra ID en deze aan groepen toevoegen etc. Aangezien er in de gemeente gebruik wordt gemaakt van een hybride omgeving, met dus zowel toepassing van Active Directory in de cloud en on prem, is het dus belangrijk dat de gebruikers on prem worden aangemaakt. \newline
+
+Voor active directory heeft Power Automate geen speciale stappen die je kan gebruiken. Hiervoor wordt het script, dat in \ref{ch:Scripting} uitgelegd wordt, gebruikt. Dit script staat dus lokaal op een server opgeslagen. Aangezien Power Automate een cloud tool is, hebben we een gateway nodig hiervoor. Hiervoor heeft Microsoft een programma gemaakt. Dit programma heet toepasselijk ``On-premises data gateway''.\newline
+
+In de cloud is er een flow gemaakt. Deze flow start met het ophalen van gegevens wanneer er een nieuwe inzending is van het formulier. Hiervoor is een stap die voorzien is, namelijk de stap ``Wanneer er een nieuwe reactie wordt verzonden''. In deze stap kan je eenvoudig in een keuze menu kiezen voor het formulier dat je in Microsoft Forms hebt gemaakt. Als deze er niet bijstaat, kan je ook op zoek gaan naar het id van het formulier. Deze kan je vinden in de URL van jouw form, achter het duidelijke ``FormID'' in de URL. \newline
+
+Hierna moet er nog een stap komen met de gemaakte form. Hiervoor heb je de stap ``Reactiedetails ophalen''. Hierin moet je opnieuw het id van de form ingeven, als ook het id van het antwoord kiezen. Bij het antwoord moet je kiezen voor een dynamische expressie te kiezen. Op deze manier kan je de laatst verzonden input selecteren. Je kan de dynamische expressie kiezen door aan de rechterkant van de kolom op de bliksemschicht te klikken, of door een ``/'' te typen.\newline
+
+De gemeente heeft, zoals uitgelegd in \ref{ch:Scripting}, op verschillende niveaus gebruikers. Ze zitten allemaal in een ``OU'' ``Users'', maar ze zitten wel nog steeds, afhankelijk van de sites, 1 niveau verschil. Hiervoor in binnen Power Automate, een extra stap gemaakt om de juiste sites en diensten toe te kennen. Hiervoor is de stap ``Compose'' aangeroepen. 
+
+Deze ``Compose'' gaat bij de vraag van welke site, kijken naar de reactie. Op vlak daarvan gaat hij het antwoord van de vraag over welke dienst de gebruiker zit. Zo gaat de form bijvoorbeeld bij het selecteren van site ``Gemeentehuis'', naar de vraag voor welke diensten van site gemeentehuis. Hierin staan dan bijvoorbeeld diensten ``vergunningen, personeelsdienst of informatica''. In de IF-statement kijkt hij bij het selecteren dan naar die vraag. Dit zorgt er voor dat hij dus altijd voor de dienst, de correcte dienst die in de form wordt gekozen, wordt ingevuld. Om het heel simpel uit te leggen, de IF-statements simuleren de werking van het formulier dat over bepaalde stappen springt afhankelijk van de antwoorden die worden gekozen. \newline
+
+Omdat Power Automate een betalende licentie heeft, werd er eerst een tussenstap gemaakt. De gegevens werden naar een Excel gestuurd. In deze Excel werden de kolommen exact hetzelfde aangemaakt als in de test Excel voor het script. Deze zorgden voor een duidelijke verwerking van de gegevens. Op deze manier kon er ook eenvoudig gecontroleerd worden of de gebruikers de correcte gegevens meekregen. Dit was een tijdelijke, noodzakelijke tussenstap. \newline
+
+De volgende stap is het script op de server aanroepen. Dit kan je doen door een stap toe te voegen in de cloud. De stap heeft de naam ``Run a flow built with Power Automate for desktop''. Hierin kan je een flow kiezen, die je op de desktop gemaakt hebt. 
+
+Om dit te kunnen doen moet je uiteraard een desktop hebben om deze flow op te runnen. Hiervoor moet ``Power automate desktop'' geïnstalleerd worden. Dit kan gewoon via de website van Microsoft. Eens geïnstalleerd, moet je inloggen met het account waarmee je ook in de cloud bent ingelogd. Hierna kan je een flow maken. Je kan de flow uiteindelijk ook zien staan in de cloud, maar zal deze nooit kunnen bewerken in de cloud. Dit moet on-premesis gebeuren.
+
+Om een connectie te maken tussen de cloud versie van Power Automate en de desktop versie, moet je een andere applicatie gebruiken.  Hiervoor wordt de applicatie ``Power automate machine runtime'' gebruikt. Heel logisch is deze niet. Deze geeft meteen de correcte omgeving weer, waarin je aan het werken bent. Ook al geeft deze de correcte omgeving weer, wilt dit niet zeggen dat er al een connectie is. Hiervoor moet je op de knop ``Refresh'' drukken. Hierdoor maakt de machine dan connectie met het internet en met jouw cloud. 
+
+Eens dit is gedaan, kan je aan de flow beginnen. De flow in de desktop versie is redelijk simpel. Deze roept het script, dat lokaal opgeslagen staat op dezelfde computer of server, aan. Hiervoor wordt de stap ``Run PowerShell Script'' gebruikt. In deze stap wordt het script aangeroepen vanop de locatie waar het staat. Bij het script horen ook variabelen. Deze dienen ook aangemaakt te worden in de desktop applicatie. Deze variabelen hebben exact dezelfde naam als de gegevens die worden toegewezen in de cloud versie. Op deze manier kunnen ze aan elkaar gelinkt worden.
+
