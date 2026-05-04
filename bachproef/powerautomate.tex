@@ -9,13 +9,13 @@ Om een automatische werking op te stellen, werd door een collega gekozen voor Po
 
 Voor cloud toepassingen van Microsoft heeft Power Automate verschillende stappen. Zo kan je echt op vlak van gebruikers mensen gaan aanmaken in Entra ID en deze aan groepen toevoegen etc. Aangezien er in de gemeente gebruik wordt gemaakt van een hybride omgeving, met dus zowel toepassing van Active Directory in de cloud en on prem, is het dus belangrijk dat de gebruikers on prem worden aangemaakt. \newline
 
-Voor active directory heeft Power Automate geen speciale stappen die je kan gebruiken. Hiervoor wordt het script, dat in hoofdstuk\ref{ch:Scripting} uitgelegd wordt, gebruikt. Dit script staat dus lokaal op een server opgeslagen. Aangezien Power Automate een cloud tool is, hebben we een gateway nodig hiervoor. Hiervoor heeft Microsoft een programma gemaakt. Dit programma heet toepasselijk ``On-premises data gateway''.\newline
+Voor active directory heeft Power Automate geen speciale stappen die je kan gebruiken. Hiervoor wordt het script, dat in hoofdstuk ~\ref{ch:Scripting} uitgelegd wordt, gebruikt. Dit script staat dus lokaal op een server opgeslagen. Aangezien Power Automate een cloud tool is, is er de desktop versie van Power Automate nodig. Deze applicatie werkt als brug tussen de online versie en de lokale toepassing van de Active Directory. \newline
 
 In de cloud is er een flow gemaakt. Deze flow start met het ophalen van gegevens wanneer er een nieuwe inzending is van het formulier. Hiervoor is een stap die voorzien is, namelijk de stap ``Wanneer er een nieuwe reactie wordt verzonden''. In deze stap kan je eenvoudig in een keuze menu kiezen voor het formulier dat je in Microsoft Forms hebt gemaakt. Als deze er niet bijstaat, kan je ook op zoek gaan naar het id van het formulier. Deze kan je vinden in de URL van jouw form, achter het duidelijke ``FormID'' in de URL. \newline
 
 Hierna moet er nog een stap komen met de gemaakte form. Hiervoor heb je de stap ``Reactiedetails ophalen''. Hierin moet je opnieuw het id van de form ingeven, als ook het id van het antwoord kiezen. Bij het antwoord moet je kiezen voor een dynamische expressie te kiezen. Op deze manier kan je de laatst verzonden input selecteren. Je kan de dynamische expressie kiezen door aan de rechterkant van de kolom op de bliksemschicht te klikken, of door een ``/'' te typen.\newline
 
-De gemeente heeft, zoals uitgelegd in hoofdstuk \ref{ch:Scripting}, op verschillende niveaus gebruikers. Ze zitten allemaal in een ``OU'' ``Users'', maar ze zitten wel nog steeds, afhankelijk van de sites, 1 niveau verschil. Hiervoor in binnen Power Automate, een extra stap gemaakt om de juiste sites en diensten toe te kennen. Hiervoor is de stap ``Compose'' aangeroepen. 
+De gemeente heeft, zoals uitgelegd in hoofdstuk ~\ref{ch:Scripting}, op verschillende niveaus gebruikers. Ze zitten allemaal in een ``OU'' ``Users'', maar ze zitten wel nog steeds, afhankelijk van de sites, 1 niveau verschil. Hiervoor in binnen Power Automate, een extra stap gemaakt om de juiste sites en diensten toe te kennen. Hiervoor is de stap ``Compose'' aangeroepen. 
 
 Deze ``Compose'' gaat bij de vraag van welke site, kijken naar de reactie. Op vlak daarvan gaat hij het antwoord van de vraag over welke dienst de gebruiker zit. Zo gaat de form bijvoorbeeld bij het selecteren van site ``Gemeentehuis'', naar de vraag voor welke diensten van site gemeentehuis. Hierin staan dan bijvoorbeeld diensten ``vergunningen, personeelsdienst of informatica''. In de IF-statement kijkt hij bij het selecteren dan naar die vraag. Dit zorgt er voor dat hij dus altijd voor de dienst, de correcte dienst die in de form wordt gekozen, wordt ingevuld. Om het heel simpel uit te leggen, de IF-statements simuleren de werking van het formulier dat over bepaalde stappen springt afhankelijk van de antwoorden die worden gekozen. \newline
 
@@ -41,5 +41,15 @@ Stel dat de user nog niet zou bestaan, gaat de ``Get user profile'' stap een fou
 
 Verder moet er nog een ``Delay'' stap komen. Deze stap zorgt dat de flow niet iedere seconde een vraag stuurt of deze al bestaat. Mocht dit wel zo zijn, zou er een te grote hoeveelheid aan vragen zijn en zou de flow blokkeren. De vertraging staat ingesteld op iedere 30 seconden en zal 120 keer lopen. Dit om zeker te zijn dat de automatische synchronisatie cyclus zeker voldoende tijd heeft om te lopen. Deze loopt 1 keer per half uur. \newline
 
-De laatste stappen zijn dan om de gebruiker toe te voegen aan de correcte groepen in Entra. Dit zijn groepen die licenties meegeven. Dit gebeurt met de stap ``Office 365 Groups''. 
+De laatste stappen zijn dan om de gebruiker toe te voegen aan de correcte groepen in Entra. Dit zijn groepen die licenties meegeven. Dit gebeurt met de stap ``Office 365 Groups''. Deze worden toegevoegd op vlak van het group-id in Entra en de User Principal Name. \newline
 
+Eventueel kan er daarna nog een stap komen om terug te koppelen naar het algemene systeem voor de onboarding. Momenteel kan dit nog niet toegepast worden, aangezien hiervoor nog geen systeem bestaat en dit ook nog in productie zit. \newline
+
+Op het einde van alle stappen ziet de flow er dus als volgt uit.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{PowerAutomate.png}
+    \caption[Complete Power Automate Cloud flow]{Deze afbeelding is de complete flow die in de cloud is. Deze flow heeft alle tussenstappen die hierboven beschreven zijn en waar er duidelijk vermeld staat dat het een cloud stap is. }
+    \label{fig:PowerAutomateCloud}
+\end{figure}
