@@ -1,0 +1,139 @@
+%%
+%%Script
+%%
+
+\chapter{Analyse en ontwerp van de oplossing}
+\label{ch:analyseontwerp}
+
+\section{Doelstellingen van de oplossing}
+
+Op basis van de analyse van het huidige onboardingproces werd vastgesteld dat verschillende stappen binnen de ICT-dienst repetitief en manueel uitgevoerd worden. Hierdoor neemt het verwerken van nieuwe medewerkers relatief veel tijd in beslag en ontstaat een verhoogde kans op menselijke fouten. Daarnaast zijn verschillende diensten afhankelijk van elkaar voor het uitvoeren van bepaalde configuraties, waardoor vertragingen kunnen ontstaan wanneer terugkoppelingen ontbreken.
+
+Het doel van dit onderzoek is daarom het ontwerpen van een oplossing die een deel van het onboardingproces automatiseert binnen de bestaande ICT-omgeving van het gemeentebestuur van Berlare. De focus ligt hierbij voornamelijk op het automatisch verwerken van gebruikersgegevens en het automatisch aanmaken van gebruikersaccounts binnen de Active Directory-omgeving.
+
+Daarnaast moet de oplossing zorgen voor een betere opvolging van uitgevoerde taken en een efficiëntere samenwerking tussen verschillende diensten binnen het onboardingproces. Het uiteindelijke doel is om de administratieve belasting te verminderen, de foutmarge te verkleinen en de doorlooptijd van het onboardingproces te beperken.
+
+\section{Analyse van automatiseerbare processen}
+
+\subsection{Automatiseerbare taken}
+
+Binnen het huidige onboardingproces werden verschillende taken geïdentificeerd die zich lenen tot automatisering. Het gaat hierbij voornamelijk om digitale configuraties die volgens vaste patronen uitgevoerd worden binnen de ICT-omgeving.
+
+Een eerste belangrijke taak is het automatisch aanmaken van gebruikersaccounts binnen Active Directory. Momenteel gebeurt dit handmatig waarbij gebruikersgegevens individueel ingevoerd worden. Daarnaast worden gebruikers eveneens manueel toegevoegd aan beveiligingsgroepen en distributielijsten.
+
+Ook het toekennen van licenties binnen Entra ID gebeurt momenteel afzonderlijk per gebruiker. Omdat deze toewijzingen grotendeels gebaseerd zijn op functie en dienst, kan dit proces geautomatiseerd worden door gebruikers automatisch aan de correcte groepen toe te voegen.
+
+Verder werden ook terugkerende communicatieve taken geïdentificeerd. Zo kunnen meldingen of terugkoppelingen automatisch verstuurd worden wanneer bepaalde configuraties succesvol uitgevoerd werden. Hierdoor kunnen andere diensten sneller verder werken met hun eigen configuraties.
+
+\subsection{Niet-automatiseerbare taken}
+
+Niet alle onderdelen van het onboardingproces lenen zich tot automatisering. Bepaalde taken vereisen fysieke tussenkomst of individuele beoordeling door medewerkers van de ICT-dienst.
+
+Zo gebeurt het selecteren van geschikte hardware momenteel op basis van de functie en de specifieke noden van de medewerker. Daarnaast vereisen ook de installatie van toestellen, het aansluiten van randapparatuur en bepaalde softwareconfiguraties manuele handelingen.
+
+Ook het fysiek verwerken van documenten, zoals het afdrukken en overhandigen van tijdelijke wachtwoorden, valt buiten de scope van dit onderzoek. Hiervoor zouden bijkomende gespecialiseerde systemen noodzakelijk zijn.
+
+De focus van dit onderzoek ligt daarom voornamelijk op het automatiseren van digitale configuraties en identiteitsbeheer binnen de bestaande IT-omgeving.
+
+\section{Technische vereisten}
+
+Binnen de bestaande infrastructuur van het gemeentebestuur wordt gebruikgemaakt van een hybride omgeving waarbij zowel cloudtoepassingen als lokale on-premisesystemen aanwezig zijn. Hierdoor moet de oplossing kunnen communiceren met beide omgevingen.
+
+De gebruikersaccounts worden lokaal beheerd binnen Active Directory, terwijl bepaalde cloudtoepassingen gebruikmaken van Entra ID. Hierdoor moet de oplossing rekening houden met synchronisatie tussen beide platformen.
+
+Daarnaast vormt compatibiliteit met bestaande Microsoft-diensten een belangrijke vereiste binnen het project. Binnen de organisatie wordt reeds gebruikgemaakt van Microsoft Power Automate, Microsoft 365 en PowerShell-gebaseerde beheertools. Hierdoor moet de oplossing integreren met deze bestaande infrastructuur.
+
+Verder moet de oplossing voldoende flexibel zijn om rekening te houden met verschillende diensten, sites en organisatorische structuren binnen de Active Directory-omgeving.
+
+\section{Architectuur van de oplossing}
+
+De ontworpen oplossing bestaat uit verschillende componenten die samenwerken binnen zowel de cloudomgeving als de lokale infrastructuur van de gemeente.
+
+De invoer van gebruikersgegevens gebeurt via Microsoft Forms. Wanneer een nieuwe aanvraag wordt verzonden, worden de gegevens verwerkt binnen een cloudflow in Power Automate. Deze flow verwerkt de ontvangen gegevens en bereidt deze voor op verdere verwerking binnen de lokale omgeving.
+
+Omdat Active Directory lokaal beheerd wordt, moet de cloudomgeving kunnen communiceren met een on-premisesysteem. Hiervoor wordt gebruikgemaakt van Power Automate Desktop en Power Automate Machine Runtime. Deze componenten vormen de brug tussen de cloudflow en de lokale serveromgeving.
+
+Binnen de lokale omgeving wordt een PowerShell-script uitgevoerd dat verantwoordelijk is voor het aanmaken van gebruikersaccounts, het toewijzen van groepen en het configureren van verschillende Active Directory-attributen.
+
+Na het aanmaken van de gebruiker wordt gewacht tot de synchronisatie tussen Active Directory en Entra ID voltooid is. Vervolgens kunnen bijkomende cloudconfiguraties uitgevoerd worden, zoals het toekennen van licenties via groepen binnen Entra ID.
+
+Nadien worden de distributielijsten en gedeelde postvakken toegevoegd bij de nieuwe gebruiker. Ondanks dat dit handmatig in de cloud gebeurt, gebeurt dit via automatisering in PowerShell. De reden hiervoor is dat Power Automate tot op heden geen connectoren heeft om aanpassingen te doen in Microsoft Exchange Online. Hierdoor wordt er dus wederom een PowerShell-script uitgevoerd dat verantwoordelijk is voor het toevoegen van distributielijsten en gedeelde postvakken. 
+
+Als laatste stap binnen het configuratieproces wordt automatisch een welkomstmail verzonden naar de nieuwe medewerker. Deze mail bevat verschillende handleidingen en praktische informatie die noodzakelijk zijn om vlot van start te kunnen gaan tijdens de eerste werkdag. Hierbij kan gedacht worden aan informatie over het verbinden met het draadloze netwerk, het gebruik van printers en andere interne ICT-toepassingen.
+
+Na het voltooien van alle configuratiestappen wordt een terugkoppeling uitgevoerd binnen het opvolgsysteem. Omdat het algemene opvolgingssysteem van een parallel project momenteel nog in ontwikkeling is, werd tijdelijk gekozen voor een tussenoplossing op basis van Excel. Hierbij wordt de status van de verwerking automatisch aangepast binnen hetzelfde Excelbestand dat tijdens de testfase gebruikt werd. Op deze manier kan eenvoudig gecontroleerd worden of de volledige flow succesvol werd uitgevoerd en de gebruiker correct werd aangemaakt.
+
+Figuur~\ref{fig:Architectuur} toont een vereenvoudigd overzicht van de algemene architectuur van de oplossing.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{Architectuur.png}
+    \caption[Power Automate flow]{Vereenvoudigde voorstelling van de Power Automate Flow}
+    \label{fig:Architectuur}
+\end{figure}
+
+\section{OU-structuur binnen Active Directory}
+
+Binnen de Active Directory-omgeving van de gemeente wordt gebruikgemaakt van een hiërarchische structuur van Organizational Units (OU's). Gebruikers worden hierbij ondergebracht op basis van site en dienst.
+
+Afhankelijk van de organisatorische structuur kunnen diensten zich op verschillende niveaus binnen de directorystructuur bevinden. Sommige sites bevatten afzonderlijke OU's per dienst, terwijl andere diensten gezamenlijk ondergebracht worden binnen één gedeelde OU.
+
+Zo bevat de site ``Gemeentehuis'' afzonderlijke OU's voor diensten zoals personeelsdienst, vergunningen en informatica. Andere locaties, zoals de onthaalpoort aan het Donkmeer, groeperen meerdere diensten binnen dezelfde OU omdat deze organisatorisch nauwer samenwerken.
+
+Door deze variatie binnen de directorystructuur moet de automatiseringsoplossing rekening houden met verschillende mappings tussen diensten en hun overeenkomstige OU-locaties.
+
+Figuur~\ref{fig:OrganizationalUnit} toont een vereenvoudigd overzicht van de gebruikte OU-structuur binnen Active Directory.
+
+\clearpage
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.4\textwidth]{OrganizationalUnit.png}
+    \caption[OU structuur]{Vereenvoudigde voorstelling van de OU-structuur binnen de Active Directory-omgeving van de gemeente.}
+    \label{fig:OrganizationalUnit}
+\end{figure}
+
+\section{Ontwerp van de automatiseringsflow}
+
+De automatiseringsflow werd ontworpen op basis van de bestaande onboardingprocedure binnen de ICT-dienst. Hierbij werd een verwerking voorzien waarbij gebruikersgegevens automatisch vertaald worden naar configuraties binnen Active Directory en Entra ID.
+
+Binnen Microsoft Forms worden verschillende gegevens verzameld, waaronder voornaam, achternaam, functietitel, dienst, site, telefoonnummer en contractinformatie. Deze gegevens worden vervolgens verwerkt binnen Power Automate.
+
+Omdat bepaalde vragen binnen het formulier afhankelijk zijn van eerder gekozen antwoorden, moet de flow rekening houden met dynamische gegevensstructuren. Hiervoor worden conditionele controles gebruikt om de correcte diensten en bijhorende OU-structuren te bepalen.
+
+Daarnaast moet de oplossing rekening houden met verschillen tussen cloud- en on-premisesystemen. Hierdoor werd gekozen voor een architectuur waarbij de cloudflow verantwoordelijk is voor gegevensverwerking en orchestration, terwijl lokale PowerShell-scripts instaan voor de configuratie van Active Directory.
+
+\section{Synchronisatie tussen Active Directory en Entra ID}
+
+Binnen de hybride omgeving van de gemeente worden gebruikersaccounts eerst lokaal aangemaakt binnen Active Directory. Vervolgens worden deze accounts automatisch gesynchroniseerd naar Entra ID.
+
+Deze synchronisatie gebeurt echter niet onmiddellijk maar volgens vaste synchronisatiecycli. Hierdoor ontstaat een vertraging tussen het aanmaken van een gebruiker binnen Active Directory en de beschikbaarheid van deze gebruiker binnen Entra ID.
+
+Omdat bepaalde cloudconfiguraties, zoals licentietoewijzingen, pas uitgevoerd kunnen worden nadat de gebruiker beschikbaar is binnen Entra ID, moet de automatiseringsflow rekening houden met deze wachttijd.
+
+Hiervoor werd een controlemechanisme ontworpen waarbij periodiek gecontroleerd wordt of de gebruiker reeds beschikbaar is binnen Entra ID. Pas wanneer de synchronisatie succesvol voltooid werd, kunnen bijkomende cloudconfiguraties uitgevoerd worden.
+
+\section{Testomgeving en validatieaanpak}
+
+Tijdens de eerste ontwikkelingsfase was nog geen volledige productieomgeving beschikbaar voor het uitvoeren van geautomatiseerde cloudflows. Daarnaast vereisen bepaalde onderdelen van Power Automate bijkomende licenties.
+
+Om de ontwikkeling toch te kunnen opstarten, werd eerst gewerkt met een testomgeving waarbij gebruikersgegevens vanuit een Excelbestand verwerkt werden. De kolommen binnen dit bestand werden opgesteld volgens dezelfde structuur als de uiteindelijke variabelen binnen Power Automate.
+
+Deze aanpak maakte het mogelijk om de PowerShell-scripts afzonderlijk te ontwikkelen en te testen zonder afhankelijk te zijn van de volledige cloudomgeving. Daarnaast kon hierdoor gecontroleerd worden of gebruikers correct aangemaakt werden en de juiste groepslidmaatschappen ontvingen.
+
+De tijdelijke testomgeving vormde hierdoor een belangrijke tussenfase binnen het ontwikkelingsproces van de uiteindelijke oplossing.
+
+\section{Keuze van technologieën}
+
+Binnen het onderzoek werden verschillende automatiseringsplatformen onderzocht die gebruikt kunnen worden voor workflowautomatisering en systeemintegratie.
+
+Platformen zoals Zapier, Make en Activepieces bieden mogelijkheden voor cloudgebaseerde automatisering en integratie tussen verschillende toepassingen. Deze platformen richten zich voornamelijk op algemene workflowautomatisering tussen cloudservices.
+
+Binnen dit project vormde ondersteuning voor lokale PowerShell-uitvoering echter een belangrijke vereiste. Omdat gebruikersaccounts lokaal binnen Active Directory aangemaakt moeten worden, moet de oplossing kunnen communiceren met on-premisesystemen.
+
+Daarnaast werd binnen de organisatie reeds gebruikgemaakt van infrastructuur gebaseerd op Microsoft en bestaande automatiseringsprojecten binnen Power Automate. Hierdoor bood Power Automate belangrijke voordelen op vlak van compatibiliteit en integratie met bestaande Microsoft-diensten.
+
+Verder ondersteunt Power Automate de combinatie van cloudflows en lokale desktopflows via Power Automate Desktop en Machine Runtime, waardoor communicatie met lokale systemen mogelijk wordt binnen een hybride omgeving.
+
+Op basis van deze vereisten werd gekozen om de verdere implementatie uit te werken met Microsoft Power Automate in combinatie met PowerShell-gebaseerde automatisering.
+
