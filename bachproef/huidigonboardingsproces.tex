@@ -5,21 +5,72 @@
 \chapter{Huidig Onboardingsproces}
 \label{ch:Huidig-Onboardingsproces}
 
-Binnen het kader van dit onderzoek is het essentieel om eerst de huidige werkwijze in kaart te brengen. Hiervoor werd in overleg met collega’s het bestaande onboardingproces geanalyseerd. Op basis van deze analyse werden tevens de vereisten van het gemeentebestuur geïdentificeerd. Hieruit bleek dat er een duidelijke behoefte bestaat om een aanzienlijk deel van het onboardingproces binnen de ICT-dienst te automatiseren. \newline
+\section{Beschrijving van het huidige onboardingproces}
 
-Niet alle onderdelen van het proces lenen zich echter tot automatisatie. Zo is het selecteren van geschikte hardware, zoals laptops, en het kiezen en installeren van bijhorende software op basis van bestaande configuratiepakketten moeilijk te automatiseren. Een mogelijke oplossing zou zijn om alle toestellen in voorraad permanent operationeel te houden zodat deze automatisch geconfigureerd kunnen worden. Dit werd echter als onrealistisch beschouwd, onder meer vanwege het inefficiënte energieverbruik. \newline
+\subsection{Algemene werking van het onboardingproces}
 
-Momenteel verloopt het onboardingproces grotendeels manueel. Zo worden gebruikersaccounts in Active Directory handmatig aangemaakt en worden de bijhorende groepen individueel toegewezen. Ook het toekennen van licenties en het toevoegen van gebruikers aan distributielijsten gebeurt handmatig. Daarnaast worden welkomstmails met relevante handleidingen afzonderlijk verstuurd naar nieuwe medewerkers. Eveneens wordt de welkomstbrief met het tijdelijke wachtwoord manueel afgedrukt en fysiek verwerkt in een envelop. De automatisatie van dit laatste onderdeel valt buiten de scope van dit onderzoek, aangezien dit bijkomende gespecialiseerde systemen zou vereisen. \newline
+Binnen het kader van dit onderzoek werd het bestaande onboardingproces van nieuwe medewerkers binnen het gemeentebestuur geanalyseerd. Het doel van deze analyse is om inzicht te verkrijgen in de huidige werkwijze, de betrokken diensten en de verschillende stappen die uitgevoerd worden tijdens het onboarden van nieuwe medewerkers.
 
-Parallel aan dit project werkt een collega aan een gelijkaardig initiatief op grotere schaal, met een focus op het automatisch versturen van meldingen naar medewerkers bij het voltooien van bepaalde stappen in het proces. Hierbij wordt gebruikgemaakt van Microsoft Power Automate. Deze keuze impliceert een zekere beperking in de selectie van alternatieve automatisatietools, omwille van compatibiliteit en integratievereisten.
+Het onboardingproces bestaat uit een combinatie van administratieve, technische en communicatieve handelingen die uitgevoerd worden door verschillende diensten binnen het gemeentebestuur. Hierbij zijn onder andere de personeelsdienst, de ICT-dienst en andere interne diensten betrokken. Elke dienst voert specifieke taken uit afhankelijk van de fase van het onboardingproces.
 
-Dit project komt er ook omdat er momenteel frustratie ontstaat bij werknemers omdat ze soms moeten uitzoeken of een taak al dan niet is gedaan. Zo kan het bijvoorbeeld zijn dat een collega zijn taak al heeft uitgevoerd, maar nog niet heeft teruggekoppeld. Hierdoor kan een andere collega zijn of haar werk niet doen omdat ze niet weten dat de voorwaarden om aan die stappen kunnen beginnen al gedaan zijn. Zowel om de frustraties als het een vlotter proces te maken, is dit project in leven geroepen. 
+Wanneer een nieuwe medewerker in dienst treedt, verzamelt de personeelsdienst eerst de noodzakelijke persoonsgegevens en functiegerelateerde informatie. Deze gegevens worden vervolgens doorgestuurd naar de ICT-dienst zodat de benodigde digitale accounts en toegangen kunnen worden aangemaakt.
 
-Om de werking van dat project goed te laten werken met dit project, worden er terugkoppelingen verwacht. Dit door middel van meldingen wanneer de gebruiker aangemaakt is. Andere diensten hebben immers nood aan de creatie van het mailadres om accounts in dienstspecifieke software aan te maken. Dit valt buiten de scope van de ICT dienst maar is nog steeds cruciaal voor het onboardingsproces. 
+Figuur~\ref{fig:HuidigeOnboarding} geeft een vereenvoudigd overzicht van de huidige onboardingflow binnen het gemeentebestuur.
+
+\subsection{Huidige werkwijze binnen de ICT-dienst}
+
+Binnen de ICT-dienst verloopt een groot deel van het onboardingproces momenteel manueel. Gebruikersaccounts worden individueel aangemaakt binnen Active Directory, waarna gebruikers handmatig toegevoegd worden aan relevante beveiligingsgroepen en distributielijsten.
+
+Daarnaast worden mailboxen geconfigureerd en worden rechten ingesteld voor verschillende interne systemen en gedeelde mappen. Ook licenties worden afzonderlijk toegekend afhankelijk van de functie en de benodigde softwaretoegang van de medewerker.
+
+Naast de configuratie van gebruikersaccounts worden eveneens verschillende communicatieve taken uitgevoerd. Zo worden welkomstmails met handleidingen en interne documentatie afzonderlijk verzonden naar nieuwe medewerkers. Daarnaast wordt een tijdelijke wachtwoordbrief gegenereerd, afgedrukt en fysiek verwerkt alvorens deze aan de medewerker wordt bezorgd.
+
+\subsection{Fysieke configuratiehandelingen}
+
+Naast digitale configuraties omvat het onboardingproces eveneens verschillende fysieke handelingen binnen de ICT-dienst. Hierbij gaat het onder andere om het voorbereiden van hardware, het installeren van toestellen en het configureren van softwarepakketten.
+
+Deze handelingen worden momenteel individueel uitgevoerd afhankelijk van de functie en de noden van de nieuwe medewerker. Hierdoor bestaat het onboardingproces uit een combinatie van digitale configuraties en fysieke installatietaken.
+
+\section{Communicatie en samenwerking tussen diensten}
+
+\subsection{Afhankelijkheden tussen diensten}
+
+Binnen het huidige onboardingproces zijn meerdere diensten afhankelijk van elkaar om bepaalde stappen correct te kunnen uitvoeren. De personeelsdienst levert bijvoorbeeld de noodzakelijke gegevens aan voor het aanmaken van gebruikersaccounts, terwijl andere interne diensten afhankelijk zijn van het beschikbaar zijn van een e-mailadres of gebruikersaccount om toegang te voorzien tot dienstspecifieke toepassingen.
+
+Hierdoor ontstaat een proces waarbij verschillende stappen pas uitgevoerd kunnen worden nadat voorgaande configuraties succesvol voltooid zijn. Een correcte communicatie tussen diensten speelt daarom een belangrijke rol binnen het onboardingproces.
+
+\subsection{Terugkoppeling van uitgevoerde taken}
+
+Binnen het huidige proces gebeurt de terugkoppeling van uitgevoerde taken voornamelijk manueel. Medewerkers communiceren onderling wanneer bepaalde configuraties of administratieve stappen voltooid zijn.
+
+Andere diensten zijn afhankelijk van meldingen of terugkoppelingen wanneer gebruikersaccounts succesvol aangemaakt werden. Deze informatie is noodzakelijk om bijkomende configuraties uit te voeren binnen dienstspecifieke softwaretoepassingen.
+
+Doordat deze communicatie momenteel grotendeels handmatig verloopt, ontstaat er regelmatig onduidelijkheid over de voortgang van bepaalde stappen binnen het onboardingproces.
+
+\section{Knelpunten binnen het huidige onboardingproces}
+
+\subsection{Manuele configuraties}
+
+Doordat een groot deel van het onboardingproces manueel uitgevoerd wordt, vereist het proces aanzienlijke administratieve en technische inspanningen van de ICT-dienst. Het individueel aanmaken van gebruikersaccounts, het toekennen van rechten en het configureren van mailboxen zorgen voor repetitieve handelingen binnen het proces.
+
+Daarnaast verhoogt manuele configuratie de kans op inconsistenties en menselijke fouten. Foutieve groepslidmaatschappen, ontbrekende rechten of vergeten configuraties kunnen leiden tot bijkomende correcties en vertragingen.
+
+\subsection{Gebrek aan centrale opvolging}
+
+Een bijkomend knelpunt binnen het huidige onboardingproces is het ontbreken van een centrale opvolging van uitgevoerde taken. Omdat verschillende stappen verspreid uitgevoerd worden door meerdere medewerkers en diensten, ontstaat er soms onduidelijkheid over de voortgang van het proces.
+
+Wanneer een bepaalde taak reeds uitgevoerd werd maar nog niet gecommuniceerd is naar andere betrokken medewerkers, kunnen vervolgstappen vertraging oplopen. Hierdoor ontstaan afhankelijkheden waarbij medewerkers moeten navragen of bepaalde configuraties reeds voltooid zijn.
+
+\subsection{Complexiteit van het onboardingproces}
+
+Het onboardingproces bestaat uit verschillende onderling verbonden stappen waarbij meerdere systemen betrokken zijn. Naast gebruikersbeheer in Active Directory moeten ook mailboxen, licenties, distributielijsten en interne toepassingen correct geconfigureerd worden.
+
+Door deze combinatie van administratieve, technische en communicatieve handelingen ontstaat een proces met meerdere afhankelijkheden en manuele tussenstappen. Dit verhoogt de complexiteit van het onboardingproces en bemoeilijkt een efficiënte opvolging van uitgevoerde configuraties.
+
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.8\textwidth]{HuidigeOnboarding.png}
-    \caption[Huidig onboardingsproces]{Deze afbeelding is het huidige onboardingsproces dat momenteel gebruikt wordt binnen de gemeente }
+    \caption[Huidig onboardingsproces]{Overzicht van het huidige onboardingproces en de interactie tussen de betrokken diensten}
     \label{fig:HuidigeOnboarding}
 \end{figure}

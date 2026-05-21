@@ -47,38 +47,142 @@
 %  \end{tabular}
 %  \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
 %\end{table}
+\section{Digitale onboarding en gebruikersprovisioning}
 
-Automatische gebruikers provisioning vormt vandaag een essentieel onderdeel van moderne toegangscontroles binnen organisaties. Denk bijvoorbeeld aan het toekennen van rechten op mappen maar ook aan de toegang tot gebouwen die openen met een badge. De nood aan geautomatiseerde onboarding processen is de afgelopen jaren sterk toegenomen door de groeiende complexiteit van IT-omgevingen en de afhankelijkheid van digitale middelen tijdens de eerste werkdag van een nieuwe medewerker. Volgens \textcite{Okta2025} leidt handmatige provisioning niet alleen tot inefficiëntie, maar vormt het ook een aanzienlijk beveiligingsrisico. Dit komt vooral omdat inconsistenties in het aanmaken van accounts en toewijzen van toegangsrechten het gevolg zijn van menselijke fouten. Automatische provisioning wordt in de vakliteratuur dan ook beschouwd als een noodzakelijke stap richting veilig identiteitsbeheer. \newline
+Digitale onboarding vormt vandaag een essentieel onderdeel van moderne organisaties. Tijdens het onboardingproces krijgen nieuwe medewerkers toegang tot de systemen, applicaties en middelen die noodzakelijk zijn om hun functie uit te oefenen. Dit omvat onder andere gebruikersaccounts, toegangsrechten, e-mailvoorzieningen en toegang tot gedeelde bestanden. Binnen grotere IT-omgevingen wordt dit proces vaak gekoppeld aan identity- en accessmanagementsystemen om toegangsbeheer centraal en gecontroleerd te organiseren.
 
-Uit onderzoek naar onboardingprocessen blijkt dat veel organisaties nog steeds vertrouwen op manuele workflows waarbij de personeelsdiensten, diensthoofden en IT elk afzonderlijke taken uitvoeren. \textcite{Radev2023} toont aan dat deze processen leiden tot vertragingen en een verhoogde administratieve last, waarbij fouten in gegevensoverdracht of ontbrekende stappen af en toe voorkomen. De studie benadrukt dat vooral het ontbreken van geïntegreerde systemen zorgt voor knelpunten, wat aansluit bij het probleem dat zich binnen de gemeente Berlare voordoet. \textcite{Vitla2023} bevestigt deze bevindingen en concludeert dat geautomatiseerde functionaliteit significant bijdraagt aan productiviteitswinst doordat medewerkers vanaf de eerste werkdag toegang hebben tot alle noodzakelijke digitale middelen. Dit bevordert zowel de eerste werkdag van de nieuwe collega, als ook de werktaken van de diensten die een handmatige taak hebben bij het onboardingsproces. \newline
+\subsection{Gebruikersprovisioning en toegangsbeheer}
 
-Zoals in de vorige alinea werd aangehaald, blijft ook identiteitsmanagement zich sterk profileren als AI-ondersteunde decision making. \textcite{Hariharan2025} beschrijft hoe AI-gedreven IAM-systemen (identiteit- en toegangsmanagement systemen) risico's kunnen inschatten en automatisch de juiste rechten kunnen toekennen aan de hand van job descriptions en het detecteren van afwijkingen. Dergelijke oplossingen vinden hun toepassing voorlopig vooral bij grote bedrijven maar zijn in lokale besturen niet altijd toegestaan wegens de extra regels omdat er met persoonsgerelateerde gegevens wordt gewerkt. De technologie die in deze bachelorproef aan bod komt richt zich echter op een eenvoudiger schaalniveau waarbij automatisatie vooral gaat via API's, workflow-systemen of tools zoals Microsoft Power Automate of andere pijplijn systemen.\newline
+Automatische gebruikersprovisioning vormt vandaag een belangrijk onderdeel van moderne toegangscontroles binnen organisaties. Provisioning verwijst naar het proces waarbij gebruikersaccounts, rechten en toegangen automatisch worden aangemaakt en beheerd. Denk hierbij aan het toekennen van rechten op gedeelde mappen, toegang tot applicaties of fysieke toegangscontrole via badgesystemen.
 
-Wat opvalt is dat de bestaande literatuur grotendeels betrekking heeft op enterprise-omgevingen en grote IAM-platformen. Studies die specifiek naar kleinere overheidsinstanties of gemeentelijke diensten kijken zijn zeldzaam. Veel onderzoeken beschrijven algemene onboarding processen, maar gaan niet in op de problemen die ontstaan bij het synchroniseren van systemen van een personeelsdienst met Active Directory in publieke organisaties. Er is duidelijk nog een gebrek aan kennis die aanleiding is tot dit onderzoek. Terwijl veel literatuur zich richt op modellen en implementaties van grote bedrijfsomgevingen, wil deze bachelorproef een stappenplan ontwikkelen dat als proof of concept kan dienen voor een gemeentelijke IT-afdeling. Hierbij wordt rekening gehouden met lokale werkwijzen, de bestaande infrastructuur en wettelijke vereisten zoals de GDPR. \newline
+De nood aan geautomatiseerde onboardingprocessen is de afgelopen jaren sterk toegenomen door de groeiende complexiteit van IT-omgevingen en de toenemende afhankelijkheid van digitale middelen vanaf de eerste werkdag van een medewerker. Volgens \textcite{Okta2025} leidt handmatige provisioning niet alleen tot inefficiëntie, maar vormt deze werkwijze eveneens een aanzienlijk beveiligingsrisico. Inconsistenties in het aanmaken van accounts en het toekennen van rechten kunnen namelijk leiden tot menselijke fouten en ongecontroleerde toegangsrechten. Automatische provisioning wordt daarom beschouwd als een noodzakelijke stap richting veilig en efficiënt identiteitsbeheer.
 
-Samengevat laat de huidige situatie duidelijk zien dat automatische gebruikers provisioning wordt gezien als een must voor een efficiënt en veilig identiteitsbeheer. Literatuur beschrijft wat de voordelen zijn, welke inefficiënties er in bestaande processen zitten en geeft aan hoe je technisch kunt integreren. Echter wordt er minder aandacht besteed aan de implementatie in kleinere gemeenten. Deze bachelorproef wil juist dat gat opvullen door te onderzoeken hoe een geautomatiseerd provisioning proces op basis van personeelsgegevens in een gemeentelijke ICT-omgeving kan worden ​‍​‌‍​‍‌gerealiseerd.\newline
+\subsection{Manuele versus geautomatiseerde onboardingprocessen}
 
-Een voorbeeld van een organisatie die oplossingen aanbiedt binnen dit domein is One Identity. Dit bedrijf ontwikkelt cybersecurity-oplossingen gericht op het beheren en beveiligen van digitale identiteiten, applicaties en data. Binnen hun aanbod bevindt zich de functionaliteit Identity Lifecycle Management (ILM), die instaat voor het beheer van digitale identiteiten gedurende de volledige tewerkstellingscyclus van een medewerker \autocite{OneIdentity2023}.\newline
+Uit onderzoek naar onboardingprocessen blijkt dat veel organisaties nog steeds vertrouwen op manuele workflows waarbij personeelsdiensten, leidinggevenden en IT-afdelingen afzonderlijke taken uitvoeren. \textcite{Radev2023} toont aan dat dergelijke processen vaak leiden tot vertragingen, verhoogde administratieve lasten en fouten bij gegevensoverdracht of toegangsbeheer. Vooral het ontbreken van geïntegreerde systemen vormt hierbij een belangrijk knelpunt.
 
-ILM omvat onder andere het automatisch toekennen van accounts en toegangsrechten bij de indiensttreding van nieuwe medewerkers (onboarding), het aanpassen van rechten bij functiewijzigingen, en het intrekken van toegangen bij uitdiensttreding (offboarding). Op deze manier ondersteunt het systeem organisaties bij het efficiënt en consistent beheren van gebruikers en hun toegangsrechten \autocite{OneIdentity2023}.
+Daarnaast bevestigt \textcite{Vitla2023} dat geautomatiseerde onboardingprocessen bijdragen aan een hogere productiviteit doordat medewerkers vanaf hun eerste werkdag onmiddellijk toegang hebben tot de noodzakelijke digitale middelen. Hierdoor kunnen zowel administratieve diensten als IT-afdelingen efficiënter werken en wordt de kans op configuratiefouten beperkt.
 
-Er zijn uiteraard verschillende programma's die te gebruiken zijn om pijplijnen te maken. Power automate is de bekendste. Alternatieven hiervan hebben elk hun eigen voor en nadelen. Volgens \textcite{Nwibe2026} zijn Activepieces, Zapier en Make de beste alternatieven. Deze zijn net zoals Power Automate betalend. Volgens de officiële website van Activepieces, is er geen integratie met powershell, hierdoor valt deze dus al meteen af. Zapier heeft ook geen echte powershell integratie. Het heeft de mogelijkheid om Javascript en Python te gebruiken en hierdoor api calls te doen en op die manier powershell scripts te triggeren, maar dit is niet de handigste manier. Ook Make kan geen powershell gebruiken. 
+Geautomatiseerde onboarding biedt bovendien voordelen op vlak van schaalbaarheid en standaardisatie. Waar manuele processen afhankelijk zijn van individuele handelingen, kunnen geautomatiseerde workflows consistente configuraties toepassen op basis van vooraf gedefinieerde regels en sjablonen.
 
-Om nog verder te kijken naar een alternatief, kwam n8n naar boven. Deze heeft wel een PowerShell integratie, maar die heeft best wel veel technische kennis nodig om te kunnen gebruiken. Een voordeel is wel, als je de versie kiest waarbij je deze zelf opzet, dat deze dan volledig gratis is. De cloudversie is echter wel betalend. Ook is de applicatie zelf best wel moeilijk om te begrijpen. Om deze te gebruiken moet er technische kennis zijn van API's en JSON. \newline
+\section{Identity and Access Management}
 
-In de volgende alinea's wordt er al uitvoerig gesproken over het gebruik van Power Automate. De reden hiervoor is omdat de keuze van het bedrijf hierop gevallen is. De keuze komt van een andere collega die al gelijkaardige flows maakt om het huidige onboardingsproces te verduidelijken. Hiervoor komt er al een pijplijn kijken waar de pijplijn van dit project uiteindelijk in zal passen. Power Automate is ook een best eenvoudig programma om te begrijpen. Alhoewel features soms goed verstopt zijn in het nieuwe design, is het eenvoudig om te troubleshooten en een goede flow op te bouwen. 
+\subsection{Identity Lifecycle Management}
 
-In verschillende support artikelen van Microsoft zelf, staat er beschreven dat Microsoft Power Automate gebruikt kan worden voor automatische flows te creëren tussen Microsoft Forms en Excel \autocite{Microsoft2024}. Ook kan Power Automate flows maken om powershell scripts uit te voeren. Het lastige hiermee is echter dat Power Automate een licentie nodig heeft en om dit in een testomgeving te gebruiken, heb je uiteraard geen licenties voor deze testomgeving ter beschikking. Power automate kan je wel gratis gebruiken voor bepaalde flows mits een bedrijf andere licenties van Microsoft heeft.  
+Identity and Access Management (IAM) omvat processen en technologieën die instaan voor het beheren van digitale identiteiten en toegangsrechten binnen organisaties. IAM-systemen ondersteunen organisaties bij het controleren van welke gebruikers toegang krijgen tot bepaalde systemen, applicaties en gegevens.
 
-Ook geeft \textcite{Microsoft2021} aan dat er een handige implementatie is voor Power Automate in Powershell. Op deze manier kan je dus in powershell zelf commando's gaan gebruiken die echt gekoppeld zijn aan Power Automate.\newline
+Een belangrijk onderdeel hiervan is Identity Lifecycle Management (ILM). Volgens \autocite{OneIdentity2023} omvat ILM het volledige beheer van digitale identiteiten gedurende de volledige levenscyclus van een medewerker. Dit gaat van onboarding en functiewijzigingen tot offboarding en het intrekken van toegangsrechten.
 
-In de huidige omgeving van de gemeente Berlare, wordt er gebruik gemaakt van de een hybride omgeving. Dit wilt zeggen dat er bepaalde systemen volledig in de cloud draaien, maar ook dat er nog bepaalde systemen lokaal on premises draaien. Aangezien de gemeente net zoals andere organisaties bepaalde GDPR regels moet volgen, moet er een deel lokaal on prem draaien, als ook de handigheid van gebruik maken van de cloud. Op die manier zorgen bedrijven voor manieren om privacy gevoelige bestanden lokaal op een server te zetten en dus zo de privacywetgeving niet te schenden \autocite{Ahuja2024}.
+ILM-systemen ondersteunen organisaties bij het automatisch toekennen van accounts en rechten bij indiensttreding, het aanpassen van toegangen bij functiewijzigingen en het verwijderen van rechten bij uitdiensttreding. Hierdoor kunnen organisaties gebruikersbeheer consistenter uitvoeren en beveiligingsrisico's beperken \autocite{OneIdentity2023}.
 
+\subsection{AI binnen IAM-systemen}
 
-Ook doordat het een hybride omgeving is, moet er een weg zijn dat de cloud van Microsoft Forms naar de on premises active directory (AD) kan gaan en daar dan een script kan uitvoeren voor de gebruikers aan te maken \autocite{Microsoft2025}. De gepaste toepassing daarvoor is de On-Premises-Data-Gateway van Microsoft. Dit legt als het ware een verbinding tussen de omgeving in de cloud, waar websites zoals Microsoft Forms en Power Automate draaien, en de lokale omgeving met de Active Directory servers op. Op die manier zou je dus eenvoudig de flow kunnen doorsturen naar de lokale servers. \newline
+Moderne IAM-oplossingen maken steeds vaker gebruik van AI-ondersteunde functionaliteiten. \textcite{Hariharan2025} beschrijft hoe AI-gedreven IAM-systemen risico's kunnen analyseren en automatisch toegangsrechten kunnen voorstellen op basis van functies, gedragspatronen en historische gegevens.
 
-Om te testen zal er eerste een tijd zonder Power Automate gewerkt worden aangezien deze tool enkel met licentie werkt. Op deze manier kan er dus in een testfase geen gebruik gemaakt worden van deze applicatie. Hiervoor zou dus eerst handmatig een Excel moeten gemaakt worden om deze dan met kolomnamen toe te wijzen aan variabelen in een Powershell script. Op deze manier kan je simuleren hoe er, met een tussenstap, gebruikers kunnen aangemaakt worden, als ook veiligheidsgroepen en distributielijsten doorgegeven worden.\newline
+Dergelijke systemen worden voornamelijk toegepast binnen grotere enterprise-omgevingen waar complexe rechtenstructuren aanwezig zijn. Binnen kleinere organisaties en publieke instellingen ligt de focus echter vaker op eenvoudiger automatiseringsprocessen via workflowsystemen, scripts en API-koppelingen.
 
-De PowerShell-cmdlet New-ADUser maakt deel uit van de Active Directory-module en wordt gebruikt om nieuwe gebruikersobjecten aan te maken binnen een domeinomgeving. Deze module zit niet standaard inbegrepen in PowerShell en moet dus ook nog geïmporteerd worden. Deze cmdlet biedt uitgebreide configuratiemogelijkheden, waaronder het instellen van gebruikersattributen zoals naam, accountnaam, wachtwoord en organisatorische eenheid. Daarnaast ondersteunt het het vooraf configureren van eigenschappen zoals accountstatus, groepslidmaatschap en profielinstellingen, wat essentieel is voor geautomatiseerd gebruikersbeheer in grotere IT-omgevingen. Door deze flexibiliteit kunnen systeembeheerders consistente en gestandaardiseerde gebruikersaccounts implementeren binnen een directorystructuur \autocite{Microsoft2024a}.
+\section{Workflowautomatisering}
 
-Verder benadrukt \textcite{Microsoft2024a} dat New-ADUser vaak wordt toegepast in scripts en automatiseringsprocessen, bijvoorbeeld bij het onboarden van nieuwe medewerkers. De cmdlet integreert met andere Active Directory functionaliteiten en maakt het mogelijk om gebruikersobjecten te combineren met aanvullende configuraties via andere PowerShell-commando’s. Hierdoor wordt niet alleen tijd bespaard, maar wordt ook de kans op menselijke fouten verminderd. De mogelijkheid om parameters te combineren en defaults te definiëren maakt deze cmdlet tot een krachtig hulpmiddel binnen systeembeheer en identity management \autocite{Microsoft2024a}.
+\subsection{Automatisering van bedrijfsprocessen}
+
+Workflowautomatisering verwijst naar het automatiseren van repetitieve processen en taken binnen organisaties. Door workflows te automatiseren kunnen organisaties manuele handelingen beperken, foutenmarges verkleinen en processen efficiënter uitvoeren.
+
+Binnen IT-omgevingen wordt workflowautomatisering onder andere gebruikt voor gebruikersbeheer, toegangscontrole, gegevensverwerking en systeemintegraties. De opkomst van low-code en no-code platformen heeft ervoor gezorgd dat dergelijke automatiseringen toegankelijker zijn geworden voor organisaties zonder uitgebreide softwareontwikkelingsafdelingen.
+
+\subsection{Low-code en no-code platformen}
+
+Low-code en no-code platformen maken het mogelijk om workflows te ontwikkelen via grafische interfaces en vooraf gebouwde componenten. Hierdoor kunnen processen sneller ontwikkeld en aangepast worden zonder uitgebreide programmeerkennis.
+
+Volgens \textcite{Nwibe2026} behoren Activepieces, Zapier en Make tot de meest gebruikte alternatieven voor Microsoft Power Automate binnen workflowautomatisering. Elk platform beschikt over specifieke eigenschappen, integratiemogelijkheden en beperkingen.
+
+\section{Workflowautomatiseringstools}
+
+\subsection{Microsoft Power Automate}
+
+Microsoft Power Automate is een workflowplatform binnen het Microsoft-ecosysteem dat gebruikt wordt voor het automatiseren van processen tussen cloud- en on-premisesomgevingen. Het platform ondersteunt integraties met Microsoft 365, SharePoint, Teams, Forms en diverse externe applicaties.
+
+Volgens \autocite{Microsoft2024} kan Power Automate gebruikt worden voor het automatisch verwerken van gegevens afkomstig uit Microsoft Forms en Excel. Daarnaast ondersteunt het platform het uitvoeren van scripts en het aanroepen van externe systemen via connectors en API-koppelingen.
+
+Verder beschrijft \textcite{Microsoft2021} dat er integraties bestaan tussen Power Automate en PowerShell, waardoor automatiseringsprocessen gecombineerd kunnen worden met systeembeheer en Active Directory-functionaliteiten.
+
+\subsection{Zapier}
+
+Zapier is een cloudgebaseerd automatiseringsplatform dat integraties aanbiedt tussen een groot aantal online diensten en applicaties. Het platform richt zich voornamelijk op eenvoudige workflowautomatisering via vooraf gedefinieerde connectors.
+
+Hoewel Zapier ondersteuning biedt voor scripting via onder andere JavaScript en Python, beschikt het platform niet over een ingebouwde PowerShell-integratie. Integraties met PowerShell verlopen daarom doorgaans via API-aanroepen of externe systemen.
+
+\subsection{Make}
+
+Make is een visueel workflowplatform dat organisaties toelaat om complexe automatiseringsprocessen op te bouwen via een grafische interface. Het platform ondersteunt uitgebreide API-integraties en conditionele workflows.
+
+Net zoals Zapier beschikt Make niet over een directe ingebouwde PowerShell-module. Integratie met PowerShell vereist daarom bijkomende configuraties of externe tussenlagen.
+
+\subsection{Activepieces}
+
+Activepieces is een open-source automatiseringsplatform dat zich richt op flexibele workflowautomatisering en integraties tussen cloudtoepassingen. Het platform ondersteunt verschillende connectors en uitbreidingen via API-koppelingen.
+
+Volgens de officiële documentatie beschikt Activepieces momenteel niet over een directe integratie met PowerShell, waardoor bijkomende configuratie noodzakelijk kan zijn voor systeembeheer binnen Windows-omgevingen.
+
+\subsection{n8n}
+
+n8n is een open-source workflowplatform dat organisaties toelaat om workflows lokaal of in de cloud te hosten. Het platform onderscheidt zich door zijn uitbreidbaarheid en uitgebreide ondersteuning voor API-integraties.
+
+Daarnaast biedt n8n ondersteuning voor scripting en technische configuraties via JSON-verwerking en aangepaste modules. Hierdoor biedt het platform meer flexibiliteit, maar vereist het doorgaans ook meer technische expertise voor implementatie en onderhoud.
+
+\subsection{Vergelijking van workflowplatformen}
+
+Workflowplatformen verschillen onderling op vlak van integratiemogelijkheden, gebruiksgemak, schaalbaarheid, prijsmodellen en ondersteuning voor scripting. Sommige platformen richten zich voornamelijk op cloudintegraties en gebruiksvriendelijke interfaces, terwijl andere oplossingen meer flexibiliteit bieden via open-source-functionaliteiten en technische configuratiemogelijkheden.
+
+Bij de selectie van een workflowplatform spelen factoren zoals beveiliging, compatibiliteit met bestaande infrastructuur, ondersteuning voor PowerShell en integratie met hybride IT-omgevingen een belangrijke rol.
+
+\section{PowerShell en Active Directory}
+
+\subsection{PowerShell binnen systeembeheer}
+
+PowerShell wordt binnen Windows-omgevingen veel gebruikt voor systeembeheer en automatisering. Via scripts kunnen beheerders repetitieve taken automatiseren en configuraties centraal beheren.
+
+Binnen identity- en accessmanagement wordt PowerShell vaak toegepast voor het beheren van gebruikersaccounts, groepsrechten en directorystructuren.
+
+\subsection{De cmdlet New-ADUser}
+
+De PowerShell-cmdlet New-ADUser maakt deel uit van de Active Directory-module en wordt gebruikt om nieuwe gebruikersobjecten aan te maken binnen een domeinomgeving \autocite{Microsoft2024a}.
+
+Deze cmdlet ondersteunt uitgebreide configuratiemogelijkheden, waaronder het instellen van gebruikersattributen zoals accountnamen, wachtwoorden, organisatorische eenheden en groepslidmaatschappen. Hierdoor kunnen organisaties consistente gebruikersaccounts implementeren binnen een Active Directory-omgeving.
+
+Verder benadrukt \textcite{Microsoft2024a} dat New-ADUser frequent wordt toegepast binnen scripts en automatiseringsprocessen voor onboarding en gebruikersbeheer. Door parameters en standaardconfiguraties te combineren kunnen beheerders efficiënter werken en menselijke fouten beperken.
+
+\section{Hybride IT-omgevingen}
+
+\subsection{Cloud- en on-premisesomgevingen}
+
+Veel organisaties maken vandaag gebruik van hybride IT-omgevingen waarbij bepaalde systemen in de cloud draaien terwijl andere toepassingen lokaal on-premises blijven functioneren. Deze aanpak combineert de schaalbaarheid en flexibiliteit van cloudplatformen met de controle en gegevensbescherming van lokale infrastructuren.
+
+Volgens \textcite{Ahuja2024} kiezen organisaties vaak voor hybride infrastructuren om privacygevoelige gegevens lokaal te bewaren terwijl andere diensten via cloudplatformen worden aangeboden.
+
+\subsection{Microsoft On-Premises Data Gateway}
+
+Binnen hybride Microsoft-omgevingen wordt de On-Premises Data Gateway gebruikt om veilige verbindingen mogelijk te maken tussen cloudtoepassingen en lokale systemen \autocite{Microsoft2025}.
+
+Deze gateway maakt het mogelijk om gegevens en workflows vanuit cloudplatformen zoals Microsoft Power Automate of Microsoft Forms te koppelen aan lokale systemen zoals Active Directory of lokale databanken.
+
+\section{Wetgeving en gegevensbescherming}
+
+\subsection{GDPR binnen gebruikersbeheer}
+
+Bij onboardingprocessen worden persoonsgegevens verwerkt zoals namen, contactgegevens, functietitels en gebruikersrechten. Organisaties dienen daarom rekening te houden met de Europese General Data Protection Regulation (GDPR).
+
+De GDPR legt organisaties verplichtingen op rond gegevensbescherming, toegangscontrole en veilige verwerking van persoonsgegevens. Binnen gebruikersbeheer betekent dit onder andere dat toegangsrechten beperkt moeten blijven tot noodzakelijke systemen en dat persoonsgegevens beveiligd verwerkt moeten worden.
+
+\subsection{Toegangscontrole en compliance}
+
+Naast gegevensbescherming speelt ook compliance een belangrijke rol binnen identity- en accessmanagement. Organisaties moeten kunnen aantonen welke gebruikers toegang hebben tot bepaalde systemen en op welke manier toegangsrechten worden beheerd.
+
+Automatisering kan hierbij bijdragen aan consistente toegangscontrole, logging en standaardisatie van processen. Hierdoor kunnen organisaties beter voldoen aan beveiligingsrichtlijnen en auditvereisten.
+
+\section{Onderzoekskloof}
+
+Wat opvalt binnen de bestaande literatuur is dat veel onderzoeken zich voornamelijk richten op enterprise-omgevingen en grootschalige IAM-platformen. Studies die specifiek focussen op kleinere overheidsinstanties of gemeentelijke IT-omgevingen zijn eerder beperkt.
+
+Daarnaast behandelen veel onderzoeken algemene onboardingprocessen zonder specifiek in te gaan op de integratie tussen personeelsgegevens, workflowautomatisering en Active Directory binnen publieke organisaties.
+
+Er bestaat bijgevolg nog een beperkte hoeveelheid praktijkgerichte literatuur rond geautomatiseerde gebruikersprovisioning binnen gemeentelijke IT-omgevingen. Deze bachelorproef wil bijdragen aan dit domein door te onderzoeken hoe een geautomatiseerd onboardingproces gerealiseerd kan worden binnen een hybride infrastructuur met aandacht voor workflowautomatisering, Active Directory-integratie en gegevensbescherming.
