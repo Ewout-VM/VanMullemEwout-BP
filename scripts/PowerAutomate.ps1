@@ -122,7 +122,7 @@ try {
     }
 
     # ===== Password =====
-    $Password = ConvertTo-SecureString "TempP@ss123!" -AsPlainText -Force
+    $Password = ConvertTo-SecureString "Welkominberlare9290+" -AsPlainText -Force
 
     # ===== Create user =====
     try {

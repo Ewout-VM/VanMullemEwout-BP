@@ -1,5 +1,5 @@
 %%
-%%Script
+%%Analyse en ontwerp van de oplossing
 %%
 
 \chapter{Analyse en ontwerp van de oplossing}
@@ -45,7 +45,22 @@ Daarnaast vormt compatibiliteit met bestaande Microsoft-diensten een belangrijke
 
 Verder moet de oplossing voldoende flexibel zijn om rekening te houden met verschillende diensten, sites en organisatorische structuren binnen de Active Directory-omgeving.
 
-\section{Architectuur van de oplossing}
+\section{Keuze van technologieën}
+
+Binnen het onderzoek werden verschillende automatiseringsplatformen onderzocht die gebruikt kunnen worden voor workflowautomatisering en systeemintegratie.
+
+Platformen zoals Zapier, Make en Activepieces bieden mogelijkheden voor cloudgebaseerde automatisering en integratie tussen verschillende toepassingen. Deze platformen richten zich voornamelijk op algemene workflowautomatisering tussen cloudservices.
+
+Binnen dit project vormde ondersteuning voor lokale PowerShell-uitvoering echter een belangrijke vereiste. Omdat gebruikersaccounts lokaal binnen Active Directory aangemaakt moeten worden, moet de oplossing kunnen communiceren met on-premisesystemen.
+
+Daarnaast werd binnen de organisatie reeds gebruikgemaakt van infrastructuur gebaseerd op Microsoft en bestaande automatiseringsprojecten binnen Power Automate. Hierdoor bood Power Automate belangrijke voordelen op vlak van compatibiliteit en integratie met bestaande Microsoft-diensten.
+
+Verder ondersteunt Power Automate de combinatie van cloudflows en lokale desktopflows via Power Automate Desktop en Machine Runtime, waardoor communicatie met lokale systemen mogelijk wordt binnen een hybride omgeving.
+
+Op basis van deze vereisten werd gekozen om de verdere implementatie uit te werken met Microsoft Power Automate in combinatie met PowerShell-gebaseerde automatisering.
+
+\section{Ontwerp van de oplossing}
+\subsection{Algemene oplossing}
 
 De ontworpen oplossing bestaat uit verschillende componenten die samenwerken binnen zowel de cloudomgeving als de lokale infrastructuur van de gemeente.
 
@@ -72,7 +87,17 @@ Figuur~\ref{fig:Architectuur} toont een vereenvoudigd overzicht van de algemene 
     \label{fig:Architectuur}
 \end{figure}
 
-\section{OU-structuur binnen Active Directory}
+\subsection{Ontwerp van de automatiseringsflow}
+
+De automatiseringsflow werd ontworpen op basis van de bestaande onboardingprocedure binnen de ICT-dienst. Hierbij werd een verwerking voorzien waarbij gebruikersgegevens automatisch vertaald worden naar configuraties binnen Active Directory en Entra ID.
+
+Binnen Microsoft Forms worden verschillende gegevens verzameld, waaronder voornaam, achternaam, functietitel, dienst, site, telefoonnummer en contractinformatie. Deze gegevens worden vervolgens verwerkt binnen Power Automate.
+
+Omdat bepaalde vragen binnen het formulier afhankelijk zijn van eerder gekozen antwoorden, moet de flow rekening houden met dynamische gegevensstructuren. Hiervoor worden conditionele controles gebruikt om de correcte diensten en bijhorende OU-structuren te bepalen.
+
+Daarnaast moet de oplossing rekening houden met verschillen tussen cloud- en on-premisesystemen. Hierdoor werd gekozen voor een architectuur waarbij de cloudflow verantwoordelijk is voor gegevensverwerking en orchestration, terwijl lokale PowerShell-scripts instaan voor de configuratie van Active Directory.
+
+\subsection{OU-structuur binnen Active Directory}
 
 Binnen de Active Directory-omgeving van de gemeente wordt gebruikgemaakt van een hiërarchische structuur van Organizational Units (OU's). Gebruikers worden hierbij ondergebracht op basis van site en dienst.
 
@@ -93,17 +118,7 @@ Figuur~\ref{fig:OrganizationalUnit} toont een vereenvoudigd overzicht van de geb
     \label{fig:OrganizationalUnit}
 \end{figure}
 
-\section{Ontwerp van de automatiseringsflow}
-
-De automatiseringsflow werd ontworpen op basis van de bestaande onboardingprocedure binnen de ICT-dienst. Hierbij werd een verwerking voorzien waarbij gebruikersgegevens automatisch vertaald worden naar configuraties binnen Active Directory en Entra ID.
-
-Binnen Microsoft Forms worden verschillende gegevens verzameld, waaronder voornaam, achternaam, functietitel, dienst, site, telefoonnummer en contractinformatie. Deze gegevens worden vervolgens verwerkt binnen Power Automate.
-
-Omdat bepaalde vragen binnen het formulier afhankelijk zijn van eerder gekozen antwoorden, moet de flow rekening houden met dynamische gegevensstructuren. Hiervoor worden conditionele controles gebruikt om de correcte diensten en bijhorende OU-structuren te bepalen.
-
-Daarnaast moet de oplossing rekening houden met verschillen tussen cloud- en on-premisesystemen. Hierdoor werd gekozen voor een architectuur waarbij de cloudflow verantwoordelijk is voor gegevensverwerking en orchestration, terwijl lokale PowerShell-scripts instaan voor de configuratie van Active Directory.
-
-\section{Synchronisatie tussen Active Directory en Entra ID}
+\subsection{Synchronisatie tussen Active Directory en Entra ID}
 
 Binnen de hybride omgeving van de gemeente worden gebruikersaccounts eerst lokaal aangemaakt binnen Active Directory. Vervolgens worden deze accounts automatisch gesynchroniseerd naar Entra ID.
 
@@ -123,17 +138,5 @@ Deze aanpak maakte het mogelijk om de PowerShell-scripts afzonderlijk te ontwikk
 
 De tijdelijke testomgeving vormde hierdoor een belangrijke tussenfase binnen het ontwikkelingsproces van de uiteindelijke oplossing.
 
-\section{Keuze van technologieën}
 
-Binnen het onderzoek werden verschillende automatiseringsplatformen onderzocht die gebruikt kunnen worden voor workflowautomatisering en systeemintegratie.
-
-Platformen zoals Zapier, Make en Activepieces bieden mogelijkheden voor cloudgebaseerde automatisering en integratie tussen verschillende toepassingen. Deze platformen richten zich voornamelijk op algemene workflowautomatisering tussen cloudservices.
-
-Binnen dit project vormde ondersteuning voor lokale PowerShell-uitvoering echter een belangrijke vereiste. Omdat gebruikersaccounts lokaal binnen Active Directory aangemaakt moeten worden, moet de oplossing kunnen communiceren met on-premisesystemen.
-
-Daarnaast werd binnen de organisatie reeds gebruikgemaakt van infrastructuur gebaseerd op Microsoft en bestaande automatiseringsprojecten binnen Power Automate. Hierdoor bood Power Automate belangrijke voordelen op vlak van compatibiliteit en integratie met bestaande Microsoft-diensten.
-
-Verder ondersteunt Power Automate de combinatie van cloudflows en lokale desktopflows via Power Automate Desktop en Machine Runtime, waardoor communicatie met lokale systemen mogelijk wordt binnen een hybride omgeving.
-
-Op basis van deze vereisten werd gekozen om de verdere implementatie uit te werken met Microsoft Power Automate in combinatie met PowerShell-gebaseerde automatisering.
 

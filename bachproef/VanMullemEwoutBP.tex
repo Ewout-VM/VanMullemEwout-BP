@@ -24,6 +24,7 @@
 \usepackage[chapter,outputdir=../output]{minted}
 \usemintedstyle{solarized-light}
 
+
 %% Formatting for minted environments.
 \setminted{%
     autogobble,
@@ -33,6 +34,8 @@
     tabsize=4
 }
 
+\usepackage{listings}
+\usepackage{xcolor}
 %% Ensure the list of listings is in the table of contents
 \renewcommand\listoflistingscaption{%
     \IfLanguageName{dutch}{Lijst van codefragmenten}{List of listings}
@@ -46,6 +49,8 @@
 }
 
 % Other packages not already included can be imported here
+
+
 
 %%---------- Document metadata -------------------------------------------------
 % TODO: Replace this with your own information
@@ -149,6 +154,27 @@
 %---------- Bijlagen -----------------------------------------------------------
 
 \appendix
+\chapter{PowerShell-script voor automatische onboarding}
+
+\section{Hoofdscript voor Active Directory-onboarding}
+
+\inputminted[
+linenos,
+breaklines,
+fontsize=\small
+]{powershell}{../scripts/PowerAutomate.ps1}
+
+\chapter{PowerShell-script voor instellen einddatum}
+
+\section{Script voor instellen einddatum}
+
+\inputminted[
+linenos,
+breaklines,
+fontsize=\small
+]{powershell}{../scripts/Enddate.ps1}
+
+
 
 \chapter{Onderzoeksvoorstel}
 
