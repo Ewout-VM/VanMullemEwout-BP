@@ -36,6 +36,17 @@
 
 \usepackage{listings}
 \usepackage{xcolor}
+
+\lstdefinelanguage{PowerShell}{
+    morekeywords={
+        function,param,if,else,foreach,return,try,catch,
+        Import-Module,Write-Host,Write-Output
+    },
+    sensitive=false,
+    morecomment=[l]{\#},
+    morestring=[b]"
+}
+
 %% Ensure the list of listings is in the table of contents
 \renewcommand\listoflistingscaption{%
     \IfLanguageName{dutch}{Lijst van codefragmenten}{List of listings}
@@ -158,21 +169,19 @@
 
 \section{Hoofdscript voor Active Directory-onboarding}
 
-\inputminted[
-linenos,
-breaklines,
-fontsize=\small
-]{powershell}{../scripts/PowerAutomate.ps1}
+\lstinputlisting[
+language=PowerShell,
+caption={Hoofdscript voor Active Directory-onboarding}
+]{../scripts/PowerAutomate.ps1}
 
 \chapter{PowerShell-script voor instellen einddatum}
 
 \section{Script voor instellen einddatum}
 
-\inputminted[
-linenos,
-breaklines,
-fontsize=\small
-]{powershell}{../scripts/Enddate.ps1}
+\lstinputlisting[
+language=PowerShell,
+caption={Script voor instellen van mogelijke einddatum}
+]{../scripts/Enddate.ps1}
 
 
 

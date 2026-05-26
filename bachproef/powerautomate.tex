@@ -15,294 +15,322 @@ Om de kans op foutieve invoer te beperken, werd een extra controleveld toegevoeg
 
 De toegang tot het formulier is beperkt via de beveiligingsinstellingen van Microsoft Forms. Enkel medewerkers van de personeelsdienst en de ICT-dienst kunnen het formulier invullen. In de praktijk wordt het formulier hoofdzakelijk gebruikt door de personeelsdienst, terwijl de ICT-dienst toegang behoudt voor testdoeleinden en voor het opnieuw uitvoeren van een onboardingproces wanneer een fout optreedt.
 
-\section{Cloudflow binnen Power Automate}
-
-Na het verzenden van het Microsoft Forms-formulier wordt automatisch een cloudflow binnen Microsoft Power Automate gestart. Deze flow vormt de centrale verwerkingslaag van de oplossing en staat in voor het ophalen, verwerken en voorbereiden van de ingevoerde gegevens.
-
-De flow start met de trigger ``Wanneer er een nieuwe reactie wordt verzonden''. Deze trigger detecteert automatisch wanneer een nieuwe onboardingaanvraag werd ingediend via Microsoft Forms. Hierbij wordt het juiste formulier geselecteerd op basis van het unieke formulier-id.
-
-Nadat de flow gestart werd, worden de details van de ingevulde aanvraag opgehaald via de stap ``Reactiedetails ophalen''. Deze stap maakt het mogelijk om alle ingevoerde waarden uit het formulier beschikbaar te maken binnen de flow. De verschillende antwoorden kunnen vervolgens gebruikt worden als dynamische variabelen binnen verdere stappen van het automatiseringsproces.
-
-Omdat bepaalde velden binnen het formulier afhankelijk zijn van eerder gekozen antwoorden, moet de flow rekening houden met conditionele logica. Zo worden bepaalde diensten enkel weergegeven wanneer een specifieke site geselecteerd werd. Hierdoor verschillen de beschikbare invoervelden afhankelijk van de gekozen locatie.
-
-Om deze gegevens uniform te kunnen verwerken binnen de verdere automatisering, worden ``Compose''-stappen gebruikt. Deze stappen zorgen ervoor dat de correcte dienst automatisch geselecteerd wordt op basis van de gekozen site binnen het formulier.
-
-Onderstaande vereenvoudigde expressie toont de gebruikte logica.
-
-\begin{lstlisting}[
-    caption={Samenstelling van de departementen},
-    label={lst:ComposeDepartement}
-    ]{text}
-    if(site == "Gemeentehuis",
-    dienst_gemeentehuis,
-    if(site == "Onthaalpoort",
-    dienst_onthaalpoort,
-    if(site == "Cultuurhuis Stroming",
-    dienst_cultuurhuis,
-    andere_dienst)))
-\end{lstlisting}
-
-Door gebruik te maken van deze conditionele verwerking kan de flow steeds de correcte dienst ophalen, ongeacht welke site geselecteerd werd binnen het formulier. Deze waarden worden later gebruikt voor het bepalen van de correcte OU-structuur en groepsconfiguraties binnen Active Directory.
-
-Naast het bepalen van de dienst wordt binnen de flow eveneens een rolcode samengesteld op basis van het departement van de gebruiker. Deze rolcodes worden later gebruikt binnen de PowerShell-scripts voor het toekennen van groepen, rechten en bijkomende configuraties.
-
-Hiervoor wordt opnieuw gebruikgemaakt van een ``Compose''-stap waarin conditionele logica toegepast wordt. Afhankelijk van het gekozen departement wordt een specifieke rolcode toegekend.
-
-Onderstaande vereenvoudigde expressie toont een voorbeeld van deze verwerking.
-
-\begin{minted}{text}
-    if(departement == "Informatica",
-    "IT-user",
-    if(departement == "Personeelsdienst",
-    "HR-user",
-    if(departement == "Financien",
-    "FI-user",
-    "user")))
-\end{minted}
-
-Door gebruik te maken van gestandaardiseerde rolcodes kan de verdere verwerking binnen PowerShell en Active Directory eenvoudiger en consistenter verlopen. Daarnaast maakt deze aanpak het mogelijk om rechten en groepslidmaatschappen centraal te beheren op basis van functie of dienst.
-
-Binnen de flow worden daarnaast verschillende variabelen samengesteld die later gebruikt worden binnen de PowerShell-scripts. Hierbij gaat het onder andere om de naam van de gebruiker, de dienst, de organisatorische eenheid binnen Active Directory en bijkomende configuraties zoals distributielijsten of gedeelde postvakken.
-
-Tijdens de eerste ontwikkelingsfase werd gebruikgemaakt van een tijdelijke tussenstap waarbij de gegevens eerst naar een Excelbestand geschreven werden. Deze aanpak maakte het mogelijk om de verwerking van gegevens eenvoudig te controleren voordat de effectieve automatisering binnen Active Directory werd uitgevoerd. Daarnaast bood deze tussenfase een extra controlemogelijkheid tijdens het testen van de oplossing.
-
-\clearpage
-
-\begin{figure}[htbp]
-    \centering
-    \includegraphics[width=0.9\textwidth]{Cloudflow_deel1.png}
-    \caption[Cloudflow binnen Power Automate]{Overzicht van de cloudflow binnen Microsoft Power Automate.}
-    \label{fig:Cloudflow_deel1}
-\end{figure}
-
-
-\section{Desktopflow en PowerShell-integratie}
-
-Omdat Active Directory lokaal beheerd wordt binnen de infrastructuur van het gemeentebestuur, volstaat een gewone cloudflow binnen Microsoft Power Automate niet om gebruikersaccounts rechtstreeks aan te maken of aan te passen. De gebruikers dienen lokaal aangemaakt te worden aangezien er sprake is van een hybride omgeving. Hiervoor is communicatie nodig met de lokale serveromgeving waarop Active Directory beschikbaar is. 
-
-Om deze communicatie mogelijk te maken, wordt gebruikgemaakt van Power Automate Desktop in combinatie met Power Automate Machine Runtime. Deze componenten vormen de verbinding tussen de cloudomgeving van Microsoft Power Automate en de lokale infrastructuur van de gemeente. Power Automate Desktop zal de scripts uitvoeren in een lokale flow en Power Automate Runtime zorgt voor de connectie tussen Power Automate Cloud en Power Automate Desktop. 
-
-Wanneer de cloudflow alle gegevens verwerkt heeft, wordt automatisch een desktopflow gestart op de lokale server. Hierbij worden verschillende parameters doorgestuurd, waaronder de naam van de gebruiker, de dienst, de gekozen site, de rolcode en eventuele bijkomende configuraties zoals distributielijsten of gedeelde postvakken.
-
-\subsection{Automatisch aanmaken en instellen van Active Directory-gebruikers}
-
-Binnen de desktopflow wordt een PowerShell-script uitgevoerd dat verantwoordelijk is voor het automatisch aanmaken en configureren van nieuwe gebruikersaccounts binnen Active Directory. Het script ontvangt verschillende parameters vanuit Power Automate, waaronder de voornaam, achternaam, dienst, site, functietitel en rolcode van de gebruiker.
-
-Op basis van deze gegevens worden automatisch de correcte accountgegevens samengesteld, de juiste Organizational Unit bepaald en de noodzakelijke groepslidmaatschappen toegekend.
-
-Onderstaand fragment toont de parameters die vanuit de desktopflow doorgestuurd worden naar het PowerShell-script.
-
-\begin{minted}{powershell}
-    param(
-    [string]$FirstName,
-    [string]$LastName,
-    [string]$Department,
-    [string]$Site,
-    [string]$Role,
-    [string]$Telephone,
-    [string]$Title
-    )
-\end{minted}
-
-Door gebruik te maken van parameters kan hetzelfde script hergebruikt worden voor verschillende gebruikers en diensten zonder manuele aanpassingen aan de code.
-
-\subsubsection{Verwerking van invoergegevens}
-
-Voor het aanmaken van de account worden de ontvangen gegevens eerst gevalideerd en genormaliseerd. Speciale tekens en niet-alfabetische karakters worden verwijderd om problemen met accountnamen en e-mailadressen te vermijden. Door de tekst eerst te normaliseren, worden speciale tekens opgesplitst zodat deze eenvoudiger verwijderd kunnen worden.
-
-Dezelfde verwerking wordt toegepast op zowel de voornaam als de achternaam van de gebruiker.
-
-\begin{minted}{powershell}
-    $FirstClean = $First.Normalize(
-    [Text.NormalizationForm]::FormD
-    ) -replace '\p{Mn}', ''
+    \section{Cloudflow binnen Power Automate}
     
-    $FirstClean = $FirstClean -replace '[^a-zA-Z]', ''
-\end{minted}
-
-Deze verwerking zorgt ervoor dat gebruikersnamen consistent opgebouwd worden en compatibel blijven met de naamgevingsconventies binnen Active Directory.
-
-Na het opschonen van de invoergegevens worden automatisch verschillende accountgegevens samengesteld. Hierbij gaat het onder andere om de \textit{SamAccountName}, het e-mailadres, de weergavenaam en bijkomende beschrijvende attributen.
-
-\begin{minted}{powershell}
-    $Sam = ($LastClean + $FirstClean.Substring(0,1)).ToLower()
-    $Email = ($FirstClean + "." + $LastClean + "@berlare.be").ToLower()
+    Na het verzenden van het Microsoft Forms-formulier wordt automatisch een cloudflow binnen Microsoft Power Automate gestart. Deze flow vormt de centrale verwerkingslaag van de oplossing en staat in voor het ophalen, verwerken en voorbereiden van de ingevoerde gegevens.
     
-    $DisplayName = "$First $Last"
-    $Description = $Title
-    $Company     = "Berlare"
-\end{minted}
-
-Door deze waarden automatisch op te bouwen, wordt een uniforme naamgeving binnen de Active Directory-omgeving gegarandeerd.
-
-Voordat een nieuwe gebruiker wordt aangemaakt, controleert het script eerst of reeds een account bestaat met dezelfde gebruikersnaam.
-
-\begin{minted}{powershell}
-    $Existing = Get-ADUser -Filter "SamAccountName -eq '$Sam'"
+    De flow start met de trigger ``Wanneer er een nieuwe reactie wordt verzonden''. Deze trigger detecteert automatisch wanneer een nieuwe onboardingaanvraag werd ingediend via Microsoft Forms. Hierbij wordt het juiste formulier geselecteerd op basis van het unieke formulier-id.
     
-    if ($Existing) {
-        Write-Warning "User already exists"
-        return
-    }
-\end{minted}
-
-Hierdoor wordt vermeden dat dubbele accounts aangemaakt worden binnen Active Directory.
-
-\subsubsection{Bepalen van de Organizational Unit}
-
-Om gebruikers automatisch op de correcte locatie binnen Active Directory te plaatsen, worden eerst mogelijke OU-paden opgebouwd op basis van de gekozen site en dienst.
-
-\begin{minted}{powershell}
-    $BaseOU = "OU=Berlare Gemeente,DC=intranet,DC=berlare,DC=be"
-    $UsersOUName = "OU=Users"
+    Nadat de flow gestart werd, worden de details van de ingevulde aanvraag opgehaald via de stap ``Reactiedetails ophalen''. Deze stap maakt het mogelijk om alle ingevoerde waarden uit het formulier beschikbaar te maken binnen de flow. De verschillende antwoorden kunnen vervolgens gebruikt worden als dynamische variabelen binnen verdere stappen van het automatiseringsproces.
     
-    $DeptOU = "$UsersOUName,OU=$Department,OU=Site $Site,$BaseOU"
-    $SiteOU = "$UsersOUName,OU=Site $Site,$BaseOU"
-\end{minted}
-
-Vervolgens controleert het script automatisch of een specifieke dienst-OU beschikbaar is. Indien deze niet gevonden wordt, valt het script terug op de algemene site-OU.
-
-\begin{minted}{powershell}
-    if ($DeptCheck) {
-        $TargetOU = $DeptOU
-    }
-    else {
-        $TargetOU = $SiteOU
-    }
-\end{minted}
-
-Deze aanpak zorgt ervoor dat het script flexibel kan omgaan met verschillen binnen de directorystructuur van de gemeente.
-
-\subsubsection{Aanmaken van het gebruikersaccount}
-
-Na het bepalen van de correcte OU wordt het gebruikersaccount effectief aangemaakt via het cmdlet \texttt{New-ADUser}. Hierbij worden verschillende attributen automatisch ingevuld, waaronder de naam, gebruikersnaam, functietitel, afdeling en het e-mailadres.
-
-\begin{minted}{powershell}
-    try {
-        New-ADUser `
-        -Name $DisplayName `
-        -GivenName $First `
-        -Surname $Last `
-        -SamAccountName $Sam `
-        -UserPrincipalName $Email `
-        -Department $Department `
-        -Title $Title `
-        -Enabled $true `
-        -Path $TargetOU
-    }
-    catch {
-        Write-Error "Failed to create user $Sam"
-        return
-    }
-\end{minted}
-
-Tijdens het aanmaken van de gebruiker wordt eveneens een tijdelijk wachtwoord ingesteld en wordt afgedwongen dat de gebruiker dit wachtwoord moet wijzigen bij de eerste aanmelding.
-
-Door gebruik te maken van \texttt{try-catch}-constructies kunnen fouten gecontroleerd opgevangen en gelogd worden zonder dat het volledige script onverwacht stopt.
-
-\subsubsection{Toekennen van groepslidmaatschappen}
-
-Naast het aanmaken van het account worden automatisch verschillende groepslidmaatschappen toegekend. Hiervoor wordt gebruikgemaakt van vooraf gedefinieerde mappings tussen rolcodes en Active Directory-groepen.
-
-\begin{minted}{powershell}
-    $RoleGroups = @{
-        "IT-USER" = @("GG_GE_Informatica")
-        "HR-USER" = @("GG_GE_Per")
-        "FI-USER" = @("GG_GE_FINANCIEN")
-    }
-\end{minted}
-
-Daarnaast worden ook standaardgroepen toegevoegd die iedere gebruiker binnen de organisatie moet ontvangen.
-
-\begin{minted}{powershell}
-    $DefaultGroups = @(
-    "SEC_DR_Data2",
-    "GG_GE_UNIFLOW",
-    "SEC_DR_Fotoarchief"
-    )
+    Omdat bepaalde velden binnen het formulier afhankelijk zijn van eerder gekozen antwoorden, moet de flow rekening houden met conditionele logica. Zo worden bepaalde diensten enkel weergegeven wanneer een specifieke site geselecteerd werd. Hierdoor verschillen de beschikbare invoervelden afhankelijk van de gekozen locatie.
     
-    $AllGroups = @()
-    $AllGroups += $DefaultGroups
+    Om deze gegevens uniform te kunnen verwerken binnen de verdere automatisering, worden ``Compose''-stappen gebruikt. Deze stappen zorgen ervoor dat de correcte dienst automatisch geselecteerd wordt op basis van de gekozen site binnen het formulier.
     
-    foreach ($Group in $AllGroups) {
-        Add-ADGroupMember -Identity $Group -Members $Sam
-    }
-\end{minted}
-
-Door groepslidmaatschappen automatisch toe te kennen, kunnen rechten en configuraties centraal beheerd worden via Active Directory-groepen.
-
-\subsubsection{Terugkoppeling naar Power Automate}
-
-Tot slot schrijft het script een beperkte uitvoer weg die opnieuw opgehaald kan worden binnen Power Automate. Hierbij wordt onder andere de User Principal Name teruggekoppeld naar de cloudflow.
-
-\begin{minted}{powershell}
-    $Result = [PSCustomObject]@{
-        UPN = $Email
-    }
+    Onderstaande vereenvoudigde expressie toont de gebruikte logica.
     
-    $Result | ConvertTo-Json -Compress
-\end{minted}
-
-Deze terugkoppeling wordt later gebruikt binnen verdere automatiseringsstappen, zoals de synchronisatiecontrole met Entra ID en het toekennen van cloudlicenties.
-
-\subsubsection{Instellen van accountvervaldatums}
-
-Voor medewerkers met een tijdelijk contract moet het gebruikersaccount automatisch gedeactiveerd worden op het einde van de contractperiode. Om te vermijden dat deze vervaldatums manueel beheerd moeten worden, werd binnen de desktopflow een bijkomend PowerShell-script voorzien dat automatisch een accountvervaldatum instelt binnen Active Directory. Wanneer deze code binnen het algemene onboardingscript werd geplaatst, reageerde PowerShell hier niet op en stelde het de datum niet in. 
-
-De einddatum wordt vanuit het Microsoft Forms-formulier doorgestuurd naar de desktopflow als parameter. Indien een einddatum ingevuld werd, verwerkt het script deze datum en koppelt deze aan het Active Directory-account van de gebruiker.
-
-Onderstaand fragment toont de verwerking van de meegegeven einddatum.
-
-\begin{minted}{powershell}
-    $Sam = "%Username%"
-    $DateString = "%ExpirationDate%"
+    \begin{lstlisting}[
+        caption={Samenstelling van de departementen},
+        label={lst:ComposeDepartement}]
+        if(site == "Gemeentehuis",
+        dienst_gemeentehuis,
+        if(site == "Onthaalpoort",
+        dienst_onthaalpoort,
+        if(site == "Cultuurhuis Stroming",
+        dienst_cultuurhuis,
+        andere_dienst)))
+    \end{lstlisting}
     
-    if (![string]::IsNullOrWhiteSpace($DateString)) {
+    Door gebruik te maken van deze conditionele verwerking kan de flow steeds de correcte dienst ophalen, ongeacht welke site geselecteerd werd binnen het formulier. Deze waarden worden later gebruikt voor het bepalen van de correcte OU-structuur en groepsconfiguraties binnen Active Directory.
+    
+    Naast het bepalen van de dienst wordt binnen de flow eveneens een rolcode samengesteld op basis van het departement van de gebruiker. Deze rolcodes worden later gebruikt binnen de PowerShell-scripts voor het toekennen van groepen, rechten en bijkomende configuraties.
+    
+    Hiervoor wordt opnieuw gebruikgemaakt van een ``Compose''-stap waarin conditionele logica toegepast wordt. Afhankelijk van het gekozen departement wordt een specifieke rolcode toegekend.
+    
+    Onderstaande vereenvoudigde expressie toont een voorbeeld van deze verwerking.
+    
+    \begin{lstlisting}[
+        caption={Samenstelling van de rollen},
+        label={lst:ComposeRole}]
+        if(departement == "Informatica",
+        "IT-user",
+        if(departement == "Personeelsdienst",
+        "HR-user",
+        if(departement == "Financien",
+        "FI-user",
+        "user")))
+    \end{lstlisting}
+    
+    Door gebruik te maken van gestandaardiseerde rolcodes kan de verdere verwerking binnen PowerShell en Active Directory eenvoudiger en consistenter verlopen. Daarnaast maakt deze aanpak het mogelijk om rechten en groepslidmaatschappen centraal te beheren op basis van functie of dienst.
+    
+    Binnen de flow worden daarnaast verschillende variabelen samengesteld die later gebruikt worden binnen de PowerShell-scripts. Hierbij gaat het onder andere om de naam van de gebruiker, de dienst, de organisatorische eenheid binnen Active Directory en bijkomende configuraties zoals distributielijsten of gedeelde postvakken.
+    
+    Tijdens de eerste ontwikkelingsfase werd gebruikgemaakt van een tijdelijke tussenstap waarbij de gegevens eerst naar een Excelbestand geschreven werden. Deze aanpak maakte het mogelijk om de verwerking van gegevens eenvoudig te controleren voordat de effectieve automatisering binnen Active Directory werd uitgevoerd. Daarnaast bood deze tussenfase een extra controlemogelijkheid tijdens het testen van de oplossing.
+    
+    \clearpage
+    
+    \begin{figure}[htbp]
+        \centering
+        \includegraphics[width=0.9\textwidth]{Cloudflow_deel1.png}
+        \caption[Cloudflow binnen Power Automate]{Overzicht van de cloudflow binnen Microsoft Power Automate.}
+        \label{fig:Cloudflow_deel1}
+    \end{figure}
+    
+    
+    \section{Desktopflow en PowerShell-integratie}
+    
+    Omdat Active Directory lokaal beheerd wordt binnen de infrastructuur van het gemeentebestuur, volstaat een gewone cloudflow binnen Microsoft Power Automate niet om gebruikersaccounts rechtstreeks aan te maken of aan te passen. De gebruikers dienen lokaal aangemaakt te worden aangezien er sprake is van een hybride omgeving. Hiervoor is communicatie nodig met de lokale serveromgeving waarop Active Directory beschikbaar is. 
+    
+    Om deze communicatie mogelijk te maken, wordt gebruikgemaakt van Power Automate Desktop in combinatie met Power Automate Machine Runtime. Deze componenten vormen de verbinding tussen de cloudomgeving van Microsoft Power Automate en de lokale infrastructuur van de gemeente. Power Automate Desktop zal de scripts uitvoeren in een lokale flow en Power Automate Runtime zorgt voor de connectie tussen Power Automate Cloud en Power Automate Desktop. 
+    
+    Wanneer de cloudflow alle gegevens verwerkt heeft, wordt automatisch een desktopflow gestart op de lokale server. Hierbij worden verschillende parameters doorgestuurd, waaronder de naam van de gebruiker, de dienst, de gekozen site, de rolcode en eventuele bijkomende configuraties zoals distributielijsten of gedeelde postvakken.
+    
+    \subsection{Automatisch aanmaken en instellen van Active Directory-gebruikers}
+    
+    Binnen de desktopflow wordt een PowerShell-script uitgevoerd dat verantwoordelijk is voor het automatisch aanmaken en configureren van nieuwe gebruikersaccounts binnen Active Directory. Het script ontvangt verschillende parameters vanuit Power Automate, waaronder de voornaam, achternaam, dienst, site, functietitel en rolcode van de gebruiker.
+    
+    Op basis van deze gegevens worden automatisch de correcte accountgegevens samengesteld, de juiste Organizational Unit bepaald en de noodzakelijke groepslidmaatschappen toegekend.
+    
+    Onderstaand fragment toont de parameters die vanuit de desktopflow doorgestuurd worden naar het PowerShell-script.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Parameters},
+        label={lst:Parameters}]
+        param(
+        [string]$FirstName,
+        [string]$LastName,
+        [string]$Department,
+        [string]$Site,
+        [string]$Role,
+        [string]$Telephone,
+        [string]$Title
+        )
+    \end{lstlisting}
+    
+    Door gebruik te maken van parameters kan hetzelfde script hergebruikt worden voor verschillende gebruikers en diensten zonder manuele aanpassingen aan de code.
+    
+    \subsubsection{Verwerking van invoergegevens}
+    
+    Voor het aanmaken van de account worden de ontvangen gegevens eerst gevalideerd en genormaliseerd. Speciale tekens en niet-alfabetische karakters worden verwijderd om problemen met accountnamen en e-mailadressen te vermijden. Door de tekst eerst te normaliseren, worden speciale tekens opgesplitst zodat deze eenvoudiger verwijderd kunnen worden.
+    
+    Dezelfde verwerking wordt toegepast op zowel de voornaam als de achternaam van de gebruiker.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Aanpassen naam},
+        label={lst:AanpassenNaam}]
+        $FirstClean = $First.Normalize(
+        [Text.NormalizationForm]::FormD
+        ) -replace '\p{Mn}', ''
         
-        $DateObj = [datetime]::ParseExact(
-        $DateString,
-        "yyyy-MM-dd",
-        $null
+        $FirstClean = $FirstClean -replace '[^a-zA-Z]', ''
+    \end{lstlisting}
+    
+    Deze verwerking zorgt ervoor dat gebruikersnamen consistent opgebouwd worden en compatibel blijven met de naamgevingsconventies binnen Active Directory.
+    
+    Na het opschonen van de invoergegevens worden automatisch verschillende accountgegevens samengesteld. Hierbij gaat het onder andere om de \textit{SamAccountName}, het e-mailadres, de weergavenaam en bijkomende beschrijvende attributen.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Variabelen toekennen},
+        label={lst:VariabelenToekennen}]
+        $Sam = ($LastClean + $FirstClean.Substring(0,1)).ToLower()
+        $Email = ($FirstClean + "." + $LastClean + "@berlare.be").ToLower()
+        
+        $DisplayName = "$First $Last"
+        $Description = $Title
+        $Company     = "Berlare"
+    \end{lstlisting}
+    
+    Door deze waarden automatisch op te bouwen, wordt een uniforme naamgeving binnen de Active Directory-omgeving gegarandeerd.
+    
+    Voordat een nieuwe gebruiker wordt aangemaakt, controleert het script eerst of reeds een account bestaat met dezelfde gebruikersnaam.
+    
+    \begin{lstlisting}[
+        caption={Dubbele controle},
+        label={lst:DuplicateCheck}]{powershell}
+        $Existing = Get-ADUser -Filter "SamAccountName -eq '$Sam'"
+        
+        if ($Existing) {
+            Write-Warning "User already exists"
+            return
+        }
+    \end{lstlisting}
+    
+    Hierdoor wordt vermeden dat dubbele accounts aangemaakt worden binnen Active Directory.
+    
+    \subsubsection{Bepalen van de Organizational Unit}
+    
+    Om gebruikers automatisch op de correcte locatie binnen Active Directory te plaatsen, worden eerst mogelijke OU-paden opgebouwd op basis van de gekozen site en dienst.
+    
+    \begin{lstlisting}[
+        language=PowerShell,
+        caption={Samenstelling van de OU},
+        label={lst:SamenstellingOU}]
+        $BaseOU = "OU=Berlare Gemeente,DC=intranet,DC=berlare,DC=be"
+        $UsersOUName = "OU=Users"
+        
+        $DeptOU = "$UsersOUName,OU=$Department,OU=Site $Site,$BaseOU"
+        $SiteOU = "$UsersOUName,OU=Site $Site,$BaseOU"
+    \end{lstlisting}
+    
+    Vervolgens controleert het script automatisch of een specifieke dienst-OU beschikbaar is. Indien deze niet gevonden wordt, valt het script terug op de algemene site-OU.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Controle van de OU},
+        label={lst:ControleOU}]
+        if ($DeptCheck) {
+            $TargetOU = $DeptOU
+        }
+        else {
+            $TargetOU = $SiteOU
+        }
+    \end{lstlisting}
+    
+    Deze aanpak zorgt ervoor dat het script flexibel kan omgaan met verschillen binnen de directorystructuur van de gemeente.
+    
+    \subsubsection{Aanmaken van het gebruikersaccount}
+    
+    Na het bepalen van de correcte OU wordt het gebruikersaccount effectief aangemaakt via het cmdlet \texttt{New-ADUser}. Hierbij worden verschillende attributen automatisch ingevuld, waaronder de naam, gebruikersnaam, functietitel, afdeling en het e-mailadres.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Creatie van de gebruiker},
+        label={lst:UserCreation}]
+        try {
+            New-ADUser `
+            -Name $DisplayName `
+            -GivenName $First `
+            -Surname $Last `
+            -SamAccountName $Sam `
+            -UserPrincipalName $Email `
+            -Department $Department `
+            -Title $Title `
+            -Enabled $true `
+            -Path $TargetOU
+        }
+        catch {
+            Write-Error "Failed to create user $Sam"
+            return
+        }
+    \end{lstlisting}
+    
+    Tijdens het aanmaken van de gebruiker wordt eveneens een tijdelijk wachtwoord ingesteld en wordt afgedwongen dat de gebruiker dit wachtwoord moet wijzigen bij de eerste aanmelding.
+    
+    Door gebruik te maken van \texttt{try-catch}-constructies kunnen fouten gecontroleerd opgevangen en gelogd worden zonder dat het volledige script onverwacht stopt.
+    
+    \subsubsection{Toekennen van groepslidmaatschappen}
+    
+    Naast het aanmaken van het account worden automatisch verschillende groepslidmaatschappen toegekend. Hiervoor wordt gebruikgemaakt van vooraf gedefinieerde mappings tussen rolcodes en Active Directory-groepen.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Samenstelling rollen},
+        label={lst:Rolemappings}]
+        $RoleGroups = @{
+            "IT-USER" = @("GG_GE_Informatica")
+            "HR-USER" = @("GG_GE_Per")
+            "FI-USER" = @("GG_GE_FINANCIEN")
+        }
+    \end{lstlisting}
+    
+    Daarnaast worden ook standaardgroepen toegevoegd die iedere gebruiker binnen de organisatie moet ontvangen.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Samenstelling groepen},
+        label={lst:SamenstellingGroepen}]
+        $DefaultGroups = @(
+        "SEC_DR_Data2",
+        "GG_GE_UNIFLOW",
+        "SEC_DR_Fotoarchief"
         )
         
-        Set-ADAccountExpiration `
-        -Identity $Sam `
-        -DateTime $DateObj
-    }
-\end{minted}
-
-Het script controleert eerst of effectief een einddatum werd meegegeven. Indien dit niet het geval is, wordt geen vervaldatum ingesteld en blijft het account actief.
-
-Wanneer wel een einddatum aanwezig is, wordt deze geconverteerd naar een geldig \texttt{DateTime}-object zodat Active Directory deze correct kan verwerken. Vervolgens wordt via het cmdlet \texttt{Set-ADAccountExpiration} automatisch een accountvervaldatum ingesteld voor de gebruiker.
-
-Binnen het uiteindelijke script werd bijkomende logica toegevoegd waarbij twee extra dagen toegevoegd worden aan de opgegeven einddatum. Daarnaast wordt het tijdstip ingesteld op 23:59:59 zodat het account actief blijft gedurende de volledige laatste werkdag van de medewerker.
-
-\begin{minted}{powershell}
-    $DateObj = $DateObj.AddDays(2)
-    $DateObj = $DateObj.Date
-    .AddHours(23)
-    .AddMinutes(59)
-    .AddSeconds(59)
-\end{minted}
-
-Deze aanpak voorkomt dat accounts te vroeg gedeactiveerd worden door verschillen in synchronisatietijdstippen of tijdsinstellingen tussen systemen.
-
-Ook binnen dit script wordt gebruikgemaakt van \texttt{try-catch}-constructies zodat fouten tijdens het instellen van de vervaldatum gecontroleerd opgevangen kunnen worden.
-
-\begin{minted}{powershell}
-    try {
-        Set-ADAccountExpiration `
-        -Identity $Sam `
-        -DateTime $DateObj
-    }
-    catch {
-        Write-Output "ERROR:"
-        Write-Output $_
-    }
-\end{minted}
-
-Door de vervaldatum automatisch te configureren, wordt de nood aan manuele opvolging verminderd en blijft het gebruikersbeheer consistenter en veiliger verlopen.
-
+        $AllGroups = @()
+        $AllGroups += $DefaultGroups
+        
+        foreach ($Group in $AllGroups) {
+            Add-ADGroupMember -Identity $Group -Members $Sam
+        }
+    \end{lstlisting}
+    
+    Door groepslidmaatschappen automatisch toe te kennen, kunnen rechten en configuraties centraal beheerd worden via Active Directory-groepen.
+    
+    \subsubsection{Terugkoppeling naar Power Automate}
+    
+    Tot slot schrijft het script een beperkte uitvoer weg die opnieuw opgehaald kan worden binnen Power Automate. Hierbij wordt onder andere de User Principal Name teruggekoppeld naar de cloudflow.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Terugkoppeling UPN},
+        label={lst:TerugkoppelingUPN}]
+        $Result = [PSCustomObject]@{
+            UPN = $Email
+        }
+        
+        $Result | ConvertTo-Json -Compress
+    \end{lstlisting}
+    
+    Deze terugkoppeling wordt later gebruikt binnen verdere automatiseringsstappen, zoals de synchronisatiecontrole met Entra ID en het toekennen van cloudlicenties.
+    
+    \subsubsection{Instellen van accountvervaldatums}
+    
+    Voor medewerkers met een tijdelijk contract moet het gebruikersaccount automatisch gedeactiveerd worden op het einde van de contractperiode. Om te vermijden dat deze vervaldatums manueel beheerd moeten worden, werd binnen de desktopflow een bijkomend PowerShell-script voorzien dat automatisch een accountvervaldatum instelt binnen Active Directory. Wanneer deze code binnen het algemene onboardingscript werd geplaatst, reageerde PowerShell hier niet op en stelde het de datum niet in. 
+    
+    De einddatum wordt vanuit het Microsoft Forms-formulier doorgestuurd naar de desktopflow als parameter. Indien een einddatum ingevuld werd, verwerkt het script deze datum en koppelt deze aan het Active Directory-account van de gebruiker.
+    
+    Onderstaand fragment toont de verwerking van de meegegeven einddatum.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Verwerking van de mogelijke einddatum},
+        label={lst:Einddatum}]
+        $Sam = "%Username%"
+        $DateString = "%ExpirationDate%"
+        
+        if (![string]::IsNullOrWhiteSpace($DateString)) {
+            
+            $DateObj = [datetime]::ParseExact(
+            $DateString,
+            "yyyy-MM-dd",
+            $null
+            )
+            
+            Set-ADAccountExpiration `
+            -Identity $Sam `
+            -DateTime $DateObj
+        }
+    \end{lstlisting}
+    
+    Het script controleert eerst of effectief een einddatum werd meegegeven. Indien dit niet het geval is, wordt geen vervaldatum ingesteld en blijft het account actief.
+    
+    Wanneer wel een einddatum aanwezig is, wordt deze geconverteerd naar een geldig \texttt{DateTime}-object zodat Active Directory deze correct kan verwerken. Vervolgens wordt via het cmdlet \texttt{Set-ADAccountExpiration} automatisch een accountvervaldatum ingesteld voor de gebruiker.
+    
+    Binnen het uiteindelijke script werd bijkomende logica toegevoegd waarbij twee extra dagen toegevoegd worden aan de opgegeven einddatum. Daarnaast wordt het tijdstip ingesteld op 23:59:59 zodat het account actief blijft gedurende de volledige laatste werkdag van de medewerker.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Extra toevoegen 2 dagen bij einddatum},
+        label={lst:Extra dagen}]
+        $DateObj = $DateObj.AddDays(2)
+        $DateObj = $DateObj.Date
+        .AddHours(23)
+        .AddMinutes(59)
+        .AddSeconds(59)
+    \end{lstlisting}
+    
+    Deze aanpak voorkomt dat accounts te vroeg gedeactiveerd worden door verschillen in synchronisatietijdstippen of tijdsinstellingen tussen systemen.
+    
+    Ook binnen dit script wordt gebruikgemaakt van \texttt{try-catch}-constructies zodat fouten tijdens het instellen van de vervaldatum gecontroleerd opgevangen kunnen worden.
+    
+    \begin{lstlisting}[language=PowerShell,
+        caption={Try catch bij de einddatum},
+        label={lst:TryCatchEinddatum}]
+        try {
+            Set-ADAccountExpiration `
+            -Identity $Sam `
+            -DateTime $DateObj
+        }
+        catch {
+            Write-Output "ERROR:"
+            Write-Output $_
+        }
+    \end{lstlisting}
+    
+    Door de vervaldatum automatisch te configureren, wordt de nood aan manuele opvolging verminderd en blijft het gebruikersbeheer consistenter en veiliger verlopen.
+    
 
 
 
