@@ -65,17 +65,27 @@ Door gebruik te maken van gestandaardiseerde rolcodes kan de verdere verwerking 
 
 Binnen de flow worden daarnaast verschillende variabelen samengesteld die later gebruikt worden binnen de PowerShell-scripts. Hierbij gaat het onder andere om de naam van de gebruiker, de dienst, de organisatorische eenheid binnen Active Directory en bijkomende configuraties zoals distributielijsten of gedeelde postvakken.
 
-Tijdens de eerste ontwikkelingsfase werd gebruikgemaakt van een tijdelijke tussenstap waarbij de gegevens eerst naar een Excelbestand geschreven werden. Deze aanpak maakte het mogelijk om de verwerking van gegevens eenvoudig te controleren voordat de effectieve automatisering binnen Active Directory werd uitgevoerd. Daarnaast bood deze tussenfase een extra controlemogelijkheid tijdens het testen van de oplossing.
+Tijdens de eerste ontwikkelingsfase werd gebruikgemaakt van een tijdelijke tussenstap waarbij de gegevens eerst naar een Excelbestand geschreven werden. Deze aanpak maakte het mogelijk om de verwerking van gegevens eenvoudig te controleren voordat de effectieve automatisering binnen Active Directory werd uitgevoerd. Daarnaast bood deze tussenfase een extra controlemogelijkheid tijdens het testen van de oplossing. 
+
+Figuur \ref{fig:VoorbeeldOutput} toont voorbeeldoutput die gebruikt werd om te valideren dat de gegevens correct gebruikt werden.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{Voorbeeldoutput.png}
+    \caption[Voorbeeld output Power Automate]{Deze afbeelding is een voorbeeld van de tijdelijke output van de Power Automate flow}
+    \label{fig:VoorbeeldOutput}
+\end{figure}
 
 \clearpage
+
+Figuur \ref{fig:Cloudflow_deel1} toont het eerste deel van de cloudflow binnen Microsoft Power Automate.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=0.9\textwidth]{Cloudflow_deel1.png}
-    \caption[Cloudflow binnen Power Automate]{Overzicht van de cloudflow binnen Microsoft Power Automate.}
+    \caption[Cloudflow binnen Power Automate]{Overzicht van het eerste deel van de cloudflow binnen Microsoft Power Automate.}
     \label{fig:Cloudflow_deel1}
 \end{figure}
-
 
 \section{Desktopflow en PowerShell-integratie}
 
@@ -331,6 +341,7 @@ Ook binnen dit script wordt gebruikgemaakt van \texttt{try-catch}-constructies z
 
 Door de vervaldatum automatisch te configureren, wordt de nood aan manuele opvolging verminderd en blijft het gebruikersbeheer consistenter en veiliger verlopen.
 
+Figuur \ref{fig:DesktopFlow_deel1} toont het eerste deel van de desktopflow binnen Microsoft Power Automate.
 
 \begin{figure}[htbp]
     \centering
@@ -373,6 +384,8 @@ De gebruiker wordt naast de groep voor licenties van Microsoft 365 ook nog toege
 
 Door gebruik te maken van groepsgebaseerde licentietoekenning blijft het beheer eenvoudiger, consistenter en schaalbaarder. Nieuwe gebruikers ontvangen automatisch de correcte cloudconfiguraties zonder dat manuele tussenkomst vereist is.
 
+Figuur \ref{fig:Do_until} toont de do until statement die in Power Automate gebruikt wordt.
+
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{Do_Until.png}
@@ -393,8 +406,6 @@ Binnen deze automatiseringsstap wordt gebruikgemaakt van de Exchange Online Powe
 Binnen de cloudflow worden de geselecteerde gedeelde postvakken en distributiegroepen opgehaald vanuit het Microsoft Forms-formulier. Omdat gebruikers meerdere opties kunnen selecteren, worden deze waarden verwerkt als lijsten die later doorgestuurd worden naar de desktopflow.
 
 Bij het doorsturen van de informatie zonder ``Compose'' stappen, gaven ze niet altijd de correcte informatie door. Af en toe werden de arrays niet goed opgesteld. Hierdoor werden er toch ``Compose'' stappen toegevoegd zodat de gegevens telkens netjes in correcte arrays terecht kwamen. 
-
-\subsection{Toekennen van rechten op gedeelde postvakken}
 
 \subsection{Toekennen van mailboxrechten en distributiegroepen}
 
@@ -558,6 +569,250 @@ Door meerdere pogingen uit te voeren met een tussentijdse wachttijd, kan het scr
 
 Deze aanpak verhoogt de betrouwbaarheid van het onboardingproces en vermindert de nood aan manuele correcties wanneer tijdelijke fouten of synchronisatievertragingen optreden.
 
+\section{Automatische terugkoppeling via e-mail}
+
+Na het succesvol uitvoeren van de onboardingflow wordt automatisch een e-mail verstuurd vanuit een gedeeld postvak van de ICT-dienst. Deze e-mail bevat bijkomende informatie en handleidingen voor de nieuwe medewerker.
+
+In deze handleidingen zijn stappenplannen te vinden met betrekking tot het gebruik van de VPN, mails vrijgeven die tegengehouden worden door de spamfilter en printen. In de mail zelf zijn ook een paar praktische afspraken in verband met het gebruik van wifi. Ook de uitleg over MFA is te vinden in deze mail. Ook is er in de mail een linkje naar de helpdesk waar ze al hun problemen moeten melden en uiteraard ook geholpen worden indien nodig. 
+
+Binnen Power Automate moeten deze bijlagen eerst geladen worden. Dit gebeurd met de stap ``Get file content''. Voor de 4 bijlagen gebeurd dit dus op identieke, parallelle wijze. Eens deze opgeladen zijn in Power Automate, kunnen ze geselecteerd worden in de stap ``Send an email from a shared mailbox''. Hierin staat de mailadres dat de mail verstuurd, als ook de ontvanger. Dit is dan op dynamische wijze ook weer de UPN variabele die initieel via de desktopflow naar de cloud wordt gestuurd. Net zoals bij een normale mail hoort er ook een onderwerp en de gehele mail bij. 
+
+Figuur \ref{fig:Mails} toont hoe de bijlagen worden aangemaakt en hoe de mail verstuurd wordt.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{Mails.png}
+    \caption[Stappen om een mail te versturen]{Deze afbeelding toont de stappen die nodig zijn in een flow om een automatische mail met bijlagen te versturen}
+    \label{fig:Mails}
+\end{figure}
+
+\section{Logging van uitgevoerde onboardings}
+
+Om opvolging en controle mogelijk te maken, wordt na een succesvolle onboarding automatisch een logregistratie toegevoegd binnen een Excelbestand. Deze registratie bevat onder andere de naam van de gebruiker, de uitvoeringsdatum en de status van de onboarding.
+
+Binnen de cloudflow wordt hiervoor gebruikgemaakt van de actie ``Update a row''. Hiermee wordt de bestaande aanvraag bijgewerkt zodat zichtbaar wordt dat de onboarding succesvol uitgevoerd werd.
+
+Door gebruik te maken van deze logging kan de ICT-dienst eenvoudig controleren welke onboardings reeds uitgevoerd werden en kunnen eventuele problemen later sneller opgespoord worden. Ook voor de medewerkers van andere diensten is dit handig om te zien of alles van IT in orde is voor de nieuwe collega.
+
+Figuur \ref{fig:Voorbeeld_output_logging} toont het loggen wanneer de gebruiker aangemaakt is.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{VoorbeeldoutputLogging.png}
+    \caption[Voorbeeld output van logging]{Deze afbeelding toont de aangepaste rij nadat de gebruiker is aangemaakt. Kolom ``Processed'' is veranderd van ``No'' naar ``Yes''}
+    \label{fig:Voorbeeld_output_logging}
+\end{figure}
+
+\section{Geautomatiseerde offboarding van gebruikers}
+
+Naast het onboardingproces werd eveneens een geautomatiseerde offboardingflow ontwikkeld binnen Microsoft Power Automate. Deze flow zorgt ervoor dat gebruikersaccounts en bijhorende configuraties automatisch aangepast worden wanneer een medewerker de organisatie verlaat.
+
+De offboarding start vanuit een afzonderlijk Microsoft Forms-formulier waarin onder andere de User Principal Name van de gebruiker, de einddatum van het contract en de reden van uitdiensttreding ingevuld worden. Nadat het formulier verzonden werd, start automatisch een cloudflow binnen Power Automate die de verdere verwerking uitvoert.
+
+Net zoals bij de onboarding wordt gebruikgemaakt van een hybride aanpak waarbij cloudflows gecombineerd worden met desktopflows en PowerShell-scripts. Hierdoor kunnen zowel cloudconfiguraties binnen Microsoft 365 als lokale configuraties binnen Active Directory automatisch aangepast worden.
+
+Tijdens de offboarding worden verschillende acties uitgevoerd. Hierbij wordt de mailbox van de gebruiker eerst omgezet naar een gedeeld postvak waarna rechten op gedeelde postvakken en distributiegroepen verwijderd worden. Vervolgens wordt het Active Directory-account gedeactiveerd, verborgen uit de globale adreslijst en verwijderd uit beveiligingsgroepen en andere groepslidmaatschappen.
+
+Daarnaast worden ook Microsoft 365-groepen aangepast zodat gekoppelde licenties automatisch vrijgegeven worden. Door deze stappen automatisch uit te voeren, verloopt de offboarding consistenter en wordt de nood aan manuele tussenkomst verminderd.
+
+\subsection{Cloudflow voor offboarding}
+
+De offboardingflow start binnen Microsoft Power Automate wanneer een nieuwe reactie verzonden wordt via het Microsoft Forms-formulier voor offboarding. Net zoals bij de onboarding worden de ingevulde gegevens automatisch opgehaald aan de hand van het unieke reactie-id van het formulier.
+
+Na het ophalen van de gegevens wordt gecontroleerd welke einddatum voor de medewerker werd opgegeven. Deze datum bepaalt wanneer de effectieve offboarding uitgevoerd mag worden. Zolang de einddatum nog niet bereikt werd, blijft de flow in wachtstatus staan zodat de verdere automatiseringsstappen nog niet uitgevoerd worden.
+
+Deze aanpak voorkomt dat een gebruikersaccount te vroeg gedeactiveerd wordt terwijl de medewerker nog actief is binnen de organisatie. Aangezien de personeelsdienst de einddatum reeds kent bij het registreren van de uitdiensttreding, kan deze informatie vooraf meegegeven worden binnen het formulier.
+
+Binnen de cloudflow wordt hiervoor gebruikgemaakt van een wachttijd op basis van datum en tijd. Zodra de opgegeven einddatum bereikt wordt, hervat de flow automatisch en worden de verdere offboardingstappen uitgevoerd.
+
+\subsection{Desktopflow en verwerking binnen Exchange Online}
+
+Wanneer de opgegeven einddatum bereikt werd, start de cloudflow automatisch een desktopflow binnen Power Automate Desktop. Deze desktopflow is verantwoordelijk voor het uitvoeren van de PowerShell-scripts die de effectieve offboarding van de gebruiker uitvoeren binnen Exchange Online.
+
+Net zoals bij de onboarding wordt gebruikgemaakt van een hybride aanpak waarbij Power Automate Cloud communiceert met de lokale infrastructuur via Power Automate Desktop en Power Automate Machine Runtime. Hierdoor kunnen lokale Active Directory-configuraties gecombineerd worden met cloudconfiguraties binnen Microsoft 365.
+
+Vanuit de cloudflow worden verschillende parameters doorgestuurd naar de desktopflow, waaronder de User Principal Name van de gebruiker, de reden van uitdiensttreding en de einddatum van het contract.
+
+Onderstaand fragment toont de parameters die gebruikt worden binnen het Exchange Online-script.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Parameters voor Exchange Online-offboarding},
+    label={lst:OffboardingExchangeParameters}]
+    param(
+    [string]$UPN
+    )
+\end{lstlisting}
+
+Binnen het script wordt eerst verbinding gemaakt met Exchange Online via de module \texttt{ExchangeOnlineManagement}. Hierdoor kunnen mailboxen, rechten en distributiegroepen automatisch aangepast worden tijdens de offboarding.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Verbinding met Exchange Online},
+    label={lst:ConnectExchangeOffboarding}]
+    Import-Module ExchangeOnlineManagement
+    
+    Connect-ExchangeOnline
+\end{lstlisting}
+
+\subsubsection{Omzetten naar gedeeld postvak}
+
+De mailbox van de gebruiker wordt eerst automatisch omgezet naar een gedeeld postvak. Hierdoor blijven bestaande e-mails en agenda-items behouden nadat de gebruiker uit dienst gegaan is.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Omzetten naar gedeeld postvak},
+    label={lst:ConvertSharedMailbox}]
+    Set-Mailbox `
+    -Identity $UserMailbox.PrimarySmtpAddress `
+    -Type Shared
+\end{lstlisting}
+
+Door de mailbox om te zetten naar een gedeeld postvak kan de Microsoft 365-licentie later verwijderd worden zonder dat historische communicatie verloren gaat. Dit maakt het mogelijk om oude e-mails nog tijdelijk te raadplegen indien nodig.
+
+\subsubsection{Verwijderen van mailboxrechten en distributiegroepen}
+
+Na het omzetten van de mailbox worden bestaande rechten en groepslidmaatschappen verwijderd. Hierbij wordt eerst gecontroleerd op mailboxen waarvoor de gebruiker \textit{Full Access}-rechten bezit.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Verwijderen van Full Access-rechten},
+    label={lst:RemoveFullAccess}]
+    Remove-MailboxPermission `
+    -Identity $Mailbox.PrimarySmtpAddress `
+    -User $UPN `
+    -AccessRights FullAccess `
+    -Confirm:$false
+\end{lstlisting}
+
+Daarnaast wordt eveneens gecontroleerd of de gebruiker \textit{Send on Behalf}-rechten bezit op andere mailboxen. Indien deze rechten aanwezig zijn, worden ze automatisch verwijderd.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Verwijderen van Send on Behalf},
+    label={lst:RemoveSendOnBehalf}]
+    Set-Mailbox `
+    -Identity $Mailbox.PrimarySmtpAddress `
+    -GrantSendOnBehalfTo @{
+        Remove = $UserMailbox.DistinguishedName
+    }
+\end{lstlisting}
+
+Tot slot wordt de gebruiker automatisch verwijderd uit distributiegroepen binnen Exchange Online.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Verwijderen uit distributiegroepen},
+    label={lst:RemoveDistributionGroups}]
+    Remove-DistributionGroupMember `
+    -Identity $_.PrimarySmtpAddress `
+    -Member $UPN `
+    -Confirm:$false
+\end{lstlisting}
+
+Door deze rechten en groepslidmaatschappen automatisch te verwijderen, wordt vermeden dat voormalige medewerkers nog toegang behouden tot gedeelde mailboxen of interne communicatiestromen.
+
+\subsection{Desktopflow en verwerking binnen Active Directory}
+
+Naast de configuraties binnen Exchange Online worden tijdens de offboarding eveneens verschillende aanpassingen uitgevoerd binnen de lokale Active Directory-omgeving. Hiervoor wordt een tweede PowerShell-script uitgevoerd vanuit Power Automate Desktop.
+
+Dit script ontvangt verschillende parameters vanuit de cloudflow, waaronder de User Principal Name van de gebruiker, de reden van uitdiensttreding en de einddatum van het contract.
+
+Onderstaand fragment toont de parameters die gebruikt worden binnen het Active Directory-script.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Parameters voor Active Directory-offboarding},
+    label={lst:ADOffboardingParameters}]
+    param(
+    [string]$UPN,
+    [string]$Reason,
+    [string]$EndDate
+    )
+\end{lstlisting}
+
+Binnen het script wordt eerst gecontroleerd of het gebruikersaccount effectief bestaat binnen Active Directory. Hiervoor wordt de gebruiker opgezocht aan de hand van de User Principal Name.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Opzoeken van de gebruiker},
+    label={lst:GetADUserOffboarding}]
+    $User = Get-ADUser `
+    -Filter "UserPrincipalName -eq '$UPN'" `
+    -Properties MemberOf,Description
+\end{lstlisting}
+
+Na het ophalen van het account kunnen de verdere offboardingstappen automatisch uitgevoerd worden.
+
+\subsubsection{Deactiveren van gebruikersaccounts}
+
+Tijdens de offboarding wordt het gebruikersaccount automatisch gedeactiveerd binnen Active Directory. Hierdoor kan de voormalige medewerker niet langer aanmelden binnen de omgeving van de organisatie.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Deactiveren van gebruikersaccounts},
+    label={lst:DisableADAccount}]
+    Disable-ADAccount -Identity $User
+\end{lstlisting}
+
+Daarnaast wordt het account verborgen uit de Global Address List van Exchange. Hierdoor verschijnt de gebruiker niet langer binnen adreslijsten van Microsoft Outlook of andere Microsoft 365-toepassingen.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Verbergen uit de Global Address List},
+    label={lst:HideFromGAL}]
+    Set-ADUser `
+    -Identity $User `
+    -Replace @{
+        msExchHideFromAddressLists=$true
+    }
+\end{lstlisting}
+
+Naast het uitschakelen van het account wordt eveneens de beschrijving van de gebruiker aangepast. Hierbij wordt automatisch geregistreerd sinds wanneer de medewerker uit dienst is en wat de reden van uitdiensttreding was.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Aanpassen van de beschrijving},
+    label={lst:DescriptionOffboarding}]
+    $NewDescription = 
+    "Uit dienst sinds $FormattedDate - $Reason"
+    
+    Set-ADUser `
+    -Identity $User `
+    -Description $NewDescription
+\end{lstlisting}
+
+Door deze informatie rechtstreeks binnen Active Directory op te slaan, blijft bijkomende administratieve informatie beschikbaar voor de ICT-dienst en systeembeheerders.
+
+\subsubsection{Verwijderen van groepslidmaatschappen}
+
+Na het deactiveren van het account worden bestaande groepslidmaatschappen automatisch verwijderd. Hierdoor verliest de gebruiker alle gekoppelde rechten en toegangen binnen de infrastructuur van de organisatie.
+
+Binnen het script wordt eerst een beperkte lijst samengesteld van groepen die behouden moeten blijven. In de huidige implementatie blijft enkel de standaardgroep \texttt{Domain Users} behouden.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Groepen die behouden blijven},
+    label={lst:GroupsToKeep}]
+    $GroupsToKeep = @(
+    "Domain Users"
+    )
+\end{lstlisting}
+
+Vervolgens worden alle groepslidmaatschappen van de gebruiker opgehaald en gecontroleerd. Indien een groep niet voorkomt binnen de uitzonderingslijst, wordt de gebruiker automatisch uit deze groep verwijderd.
+
+\begin{lstlisting}[language=PowerShell,
+    caption={Verwijderen van groepslidmaatschappen},
+    label={lst:RemoveADGroups}]
+    Remove-ADGroupMember `
+    -Identity $_ `
+    -Members $User `
+    -Confirm:$false
+\end{lstlisting}
+
+Door groepslidmaatschappen automatisch te verwijderen, wordt vermeden dat voormalige medewerkers nog toegang behouden tot netwerkshares, beveiligingsgroepen of andere interne systemen die gekoppeld zijn aan Active Directory-groepen.
+
+Net zoals bij de onboarding wordt ook binnen deze scripts gebruikgemaakt van \texttt{try-catch}-constructies zodat fouten gecontroleerd opgevangen kunnen worden zonder dat het volledige proces abrupt stopt.
+
+\subsection{Verwijderen van groepslidmaatschappen en licenties}
+
+Naast de lokale Active Directory-groepen moeten tijdens de offboarding eveneens verschillende cloudgroepen binnen Microsoft 365 verwijderd worden. Deze groepen werden tijdens de onboarding automatisch toegekend via Power Automate en zijn verantwoordelijk voor het toewijzen van licenties en bijkomende toegangsrechten.
+
+Binnen de implementatie gaat het onder andere om de Microsoft 365 E3-licentie, een Power Automate-licentie en een groep die toegang verleent tot de VPN-omgeving van de organisatie.
+
+Het verwijderen van deze groepen gebeurt volledig binnen de cloudflow van Power Automate. Hiervoor wordt gebruikgemaakt van de actie ``Lid uit groep verwijderen''. Via deze stap wordt de gebruiker automatisch verwijderd uit de vooraf gedefinieerde Microsoft 365-groepen.
+
+Voor het identificeren van de gebruiker wordt het e-mailadres gebruikt dat eerder via het formulier en de desktopflow verwerkt werd. Hierdoor kan de correcte gebruiker automatisch opgezocht en verwijderd worden uit de overeenkomstige groepen binnen Entra ID.
+
+Door gebruikers automatisch uit deze groepen te verwijderen, worden gekoppelde licenties en toegangsrechten eveneens automatisch ingetrokken. Dit vermindert het risico op ongewenste toegang na uitdiensttreding en zorgt ervoor dat ongebruikte licenties opnieuw beschikbaar worden binnen de organisatie. Dit is dus zowel positief voor veiligheid van gegevens, als ook voor het niet verspillen van licenties. 
 
 
 %Om een automatische werking op te stellen, werd door een collega gekozen voor Power Automate. Power Automate is een programma van Microsoft zelf dat gebruikt kan worden om automatische flows te maken. Power automate is voornamelijk een tool dat in de cloud draait, maar het kan ook voor automatisatie zorgen on prem. \newline
@@ -576,12 +831,7 @@ Deze aanpak verhoogt de betrouwbaarheid van het onboardingproces en vermindert d
 
 %Omdat Power Automate een betalende licentie heeft, werd er eerst een tussenstap gemaakt. De gegevens werden naar een Excel gestuurd. In deze Excel werden de kolommen exact hetzelfde aangemaakt als in de test Excel voor het script. Deze zorgden voor een duidelijke verwerking van de gegevens. Op deze manier kon er ook eenvoudig gecontroleerd worden of de gebruikers de correcte gegevens meekregen. Dit was een tijdelijke, noodzakelijke tussenstap. \newline
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=1\textwidth]{Voorbeeldoutput.png}
-\caption[Voorbeeld output Power Automate]{Deze afbeelding is een voorbeeld van de tijdelijke output van de Power Automate flow}
-\label{fig:Voorbeeld output}
-\end{figure}
+
 
 %De volgende stap is het script op de server aanroepen. Dit kan je doen door een stap toe te voegen in de cloud. De stap heeft de naam ``Run a flow built with Power Automate for desktop''. Hierin kan je een flow kiezen, die je op de desktop gemaakt hebt. 
 
@@ -609,9 +859,9 @@ Deze aanpak verhoogt de betrouwbaarheid van het onboardingproces en vermindert d
 
 %Figuur \ref{fig:PowerAutomateCloud} toont een visuele voorstelling van de PowerAutomate flow.
 
-\begin{figure}[htbp]
-\centering
-\includegraphics[width=0.8\textwidth]{PowerAutomate.png}
-\caption[Complete Power Automate Cloud flow]{Deze afbeelding is de complete flow die in de cloud is. Deze flow heeft alle tussenstappen die hierboven beschreven zijn en waar er duidelijk vermeld staat dat het een cloud stap is. }
-\label{fig:PowerAutomateCloud}
-\end{figure}
+%\begin{figure}[htbp]
+%\centering
+%\includegraphics[width=0.8\textwidth]{PowerAutomate.png}
+%\caption[Complete Power Automate Cloud flow]{Deze afbeelding is de complete flow die in de cloud is. Deze flow heeft alle tussenstappen die hierboven beschreven zijn en waar er duidelijk vermeld staat dat het een cloud stap is. }
+%\label{fig:PowerAutomateCloud}
+%\end{figure}
