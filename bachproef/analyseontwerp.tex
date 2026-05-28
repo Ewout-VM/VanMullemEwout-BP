@@ -7,11 +7,11 @@
 
 \section{Doelstellingen van de oplossing}
 
-Op basis van de analyse van het huidige onboardingproces werd vastgesteld dat verschillende stappen binnen de ICT-dienst repetitief en manueel uitgevoerd worden. Hierdoor neemt het verwerken van nieuwe medewerkers relatief veel tijd in beslag en ontstaat een verhoogde kans op menselijke fouten. Daarnaast zijn verschillende diensten afhankelijk van elkaar voor het uitvoeren van bepaalde configuraties, waardoor vertragingen kunnen ontstaan wanneer terugkoppelingen ontbreken.
+Op basis van de analyse van het huidige onboarding- en offboardingsprocedures werd vastgesteld dat verschillende stappen binnen de ICT-dienst repetitief en manueel uitgevoerd worden. Hierdoor neemt het verwerken van nieuwe medewerkers relatief veel tijd in beslag en ontstaat een verhoogde kans op menselijke fouten. Daarnaast zijn verschillende diensten afhankelijk van elkaar voor het uitvoeren van bepaalde configuraties, waardoor vertragingen kunnen ontstaan wanneer terugkoppelingen ontbreken.
 
-Het doel van dit onderzoek is daarom het ontwerpen van een oplossing die een deel van het onboardingproces automatiseert binnen de bestaande ICT-omgeving van het gemeentebestuur van Berlare. De focus ligt hierbij voornamelijk op het automatisch verwerken van gebruikersgegevens en het automatisch aanmaken van gebruikersaccounts binnen de Active Directory-omgeving.
+Het doel van dit onderzoek is daarom het ontwerpen van een oplossing die een deel van het onboarding- en van het offboardingsproces automatiseert binnen de bestaande ICT-omgeving van het gemeentebestuur van Berlare. De focus ligt hierbij voornamelijk op het automatisch verwerken van gebruikersgegevens en het automatisch aanmaken of uitschakelen van gebruikersaccounts binnen de Active Directory-omgeving.
 
-Daarnaast moet de oplossing zorgen voor een betere opvolging van uitgevoerde taken en een efficiëntere samenwerking tussen verschillende diensten binnen het onboardingproces. Het uiteindelijke doel is om de administratieve belasting te verminderen, de foutmarge te verkleinen en de doorlooptijd van het onboardingproces te beperken.
+Daarnaast moet de oplossing zorgen voor een betere opvolging van uitgevoerde taken en een efficiëntere samenwerking tussen verschillende diensten binnen het onboarding- en offboardingsproces. Het uiteindelijke doel is om de administratieve belasting te verminderen, de foutmarge te verkleinen en de doorlooptijd van beide processen te beperken.
 
 \section{Analyse van automatiseerbare processen}
 
@@ -25,6 +25,13 @@ Ook het toekennen van licenties binnen Entra ID gebeurt momenteel afzonderlijk p
 
 Verder werden ook terugkerende communicatieve taken geïdentificeerd. Zo kunnen meldingen of terugkoppelingen automatisch verstuurd worden wanneer bepaalde configuraties succesvol uitgevoerd werden. Hierdoor kunnen andere diensten sneller verder werken met hun eigen configuraties.
 
+Naast onboarding werden ook verschillende onderdelen van het offboardingproces geïdentificeerd die zich lenen tot automatisering. Wanneer een medewerker de organisatie verlaat, moeten verschillende toegangen en configuraties aangepast of verwijderd worden binnen zowel Active Directory als Microsoft 365.
+
+Momenteel gebeurt dit grotendeels manueel door de ICT-dienst. Hierbij worden gebruikersaccounts gedeactiveerd, groepslidmaatschappen verwijderd, mailboxrechten aangepast en licenties ingetrokken. Omdat deze stappen volgens vaste procedures verlopen, kunnen ook deze processen gedeeltelijk geautomatiseerd worden.
+
+Daarnaast is offboarding vanuit beveiligingsoogpunt een belangrijk proces. Het tijdig verwijderen van toegangsrechten vermindert het risico op ongewenste toegang tot interne systemen en gegevens nadat een medewerker uit dienst gegaan is.
+
+
 \subsection{Niet-automatiseerbare taken}
 
 Niet alle onderdelen van het onboardingproces lenen zich tot automatisering. Bepaalde taken vereisen fysieke tussenkomst of individuele beoordeling door medewerkers van de ICT-dienst.
@@ -35,6 +42,9 @@ Ook het fysiek verwerken van documenten, zoals het afdrukken en overhandigen van
 
 De focus van dit onderzoek ligt daarom voornamelijk op het automatiseren van digitale configuraties en identiteitsbeheer binnen de bestaande IT-omgeving.
 
+Ook binnen het offboardingproces blijven bepaalde taken afhankelijk van fysieke tussenkomst door de ICT-dienst. Zo kunnen het ophalen van hardware, het fysiek controleren van toestellen en het volledig herinstalleren van laptops niet automatisch uitgevoerd worden binnen de scope van deze oplossing.
+
+
 \section{Technische vereisten}
 
 Binnen de bestaande infrastructuur van het gemeentebestuur wordt gebruikgemaakt van een hybride omgeving waarbij zowel cloudtoepassingen als lokale on-premisesystemen aanwezig zijn. Hierdoor moet de oplossing kunnen communiceren met beide omgevingen.
@@ -44,6 +54,8 @@ De gebruikersaccounts worden lokaal beheerd binnen Active Directory, terwijl bep
 Daarnaast vormt compatibiliteit met bestaande Microsoft-diensten een belangrijke vereiste binnen het project. Binnen de organisatie wordt reeds gebruikgemaakt van Microsoft Power Automate, Microsoft 365 en PowerShell-gebaseerde beheertools. Hierdoor moet de oplossing integreren met deze bestaande infrastructuur.
 
 Verder moet de oplossing voldoende flexibel zijn om rekening te houden met verschillende diensten, sites en organisatorische structuren binnen de Active Directory-omgeving.
+
+Daarnaast moet de oplossing voldoende veilig functioneren binnen de bestaande infrastructuur. Omdat gevoelige configuraties uitgevoerd worden binnen zowel Active Directory als Microsoft 365, moet toegangsbeheer correct afgeschermd worden en mogen enkel bevoegde medewerkers de automatiseringsflows kunnen uitvoeren.
 
 \section{Keuze van technologieën}
 
@@ -59,6 +71,8 @@ Verder ondersteunt Power Automate de combinatie van cloudflows en lokale desktop
 
 Op basis van deze vereisten werd gekozen om de verdere implementatie uit te werken met Microsoft Power Automate in combinatie met PowerShell-gebaseerde automatisering.
 
+Daarnaast moet de oplossing niet alleen nieuwe accounts kunnen aanmaken, maar ook bestaande gebruikersaccounts veilig kunnen aanpassen of deactiveren tijdens het offboardingproces. Hiervoor moet eveneens communicatie mogelijk zijn met Exchange Online voor het beheren van mailboxrechten, distributiegroepen en gedeelde postvakken.
+
 \section{Ontwerp van de oplossing}
 \subsection{Algemene oplossing}
 
@@ -68,26 +82,26 @@ De invoer van gebruikersgegevens gebeurt via Microsoft Forms. Wanneer een nieuwe
 
 Omdat Active Directory lokaal beheerd wordt, moet de cloudomgeving kunnen communiceren met een on-premisesysteem. Hiervoor wordt gebruikgemaakt van Power Automate Desktop en Power Automate Machine Runtime. Deze componenten vormen de brug tussen de cloudflow en de lokale serveromgeving.
 
-Binnen de lokale omgeving wordt een PowerShell-script uitgevoerd dat verantwoordelijk is voor het aanmaken van gebruikersaccounts, het toewijzen van groepen en het configureren van verschillende Active Directory-attributen.
+Binnen de lokale omgeving wordt een PowerShell-script uitgevoerd dat verantwoordelijk is voor het aanmaken of uitschakelen van gebruikersaccounts, het toewijzen of verwijderen van groepen en het configureren van verschillende Active Directory-attributen.
 
-Na het aanmaken van de gebruiker wordt gewacht tot de synchronisatie tussen Active Directory en Entra ID voltooid is. Vervolgens kunnen bijkomende cloudconfiguraties uitgevoerd worden, zoals het toekennen van licenties via groepen binnen Entra ID.
+Bij onboarding moet eerst gewacht worden tot de synchronisatie tussen Active Directory en Entra ID voltooid is voordat cloudconfiguraties uitgevoerd kunnen worden. Bij offboarding is deze synchronisatie minder kritisch omdat het uitschakelen van accounts voornamelijk lokaal verwerkt wordt en de blokkering van cloudtoegang automatisch volgt via synchronisatie.
 
-Nadien worden de distributielijsten en gedeelde postvakken toegevoegd bij de nieuwe gebruiker. Ondanks dat dit handmatig in de cloud gebeurt, gebeurt dit via automatisering in PowerShell. De reden hiervoor is dat Power Automate tot op heden geen connectoren heeft om aanpassingen te doen in Microsoft Exchange Online. Hierdoor wordt er dus wederom een PowerShell-script uitgevoerd dat verantwoordelijk is voor het toevoegen van distributielijsten en gedeelde postvakken. 
+Nadien worden de distributielijsten en gedeelde postvakken toegevoegd of verwijderd bij de gebruiker. ODe configuratie van distributielijsten en gedeelde postvakken gebeurt via PowerShell-scripts die communiceren met Exchange Online. Hiervoor werd gekozen omdat Power Automate momenteel geen volwaardige connectoren aanbiedt voor het beheren van mailboxrechten binnen Exchange Online.
 
 Als laatste stap binnen het configuratieproces wordt automatisch een welkomstmail verzonden naar de nieuwe medewerker. Deze mail bevat verschillende handleidingen en praktische informatie die noodzakelijk zijn om vlot van start te kunnen gaan tijdens de eerste werkdag. Hierbij kan gedacht worden aan informatie over het verbinden met het draadloze netwerk, het gebruik van printers en andere interne ICT-toepassingen.
 
 Na het voltooien van alle configuratiestappen wordt een terugkoppeling uitgevoerd binnen het opvolgsysteem. Omdat het algemene opvolgingssysteem van een parallel project momenteel nog in ontwikkeling is, werd tijdelijk gekozen voor een tussenoplossing op basis van Excel. Hierbij wordt de status van de verwerking automatisch aangepast binnen hetzelfde Excelbestand dat tijdens de testfase gebruikt werd. Op deze manier kan eenvoudig gecontroleerd worden of de volledige flow succesvol werd uitgevoerd en de gebruiker correct werd aangemaakt.
 
-Figuur~\ref{fig:Architectuur} toont een vereenvoudigd overzicht van de algemene architectuur van de oplossing.
+Figuur~\ref{fig:ArchitectuurOnboarding} toont een vereenvoudigd overzicht van de algemene architectuur van de oplossing voor onboarding.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{Architectuur.png}
-    \caption[Power Automate flow]{Vereenvoudigde voorstelling van de Power Automate Flow}
-    \label{fig:Architectuur}
+    \caption[Power Automate flow]{Vereenvoudigde voorstelling van de Power Automate Flow voor onboarding}
+    \label{fig:ArchitectuurOnboarding}
 \end{figure}
 
-\subsection{Ontwerp van de automatiseringsflow}
+\subsection{Ontwerp van de onboardingsflow}
 
 De automatiseringsflow werd ontworpen op basis van de bestaande onboardingprocedure binnen de ICT-dienst. Hierbij werd een verwerking voorzien waarbij gebruikersgegevens automatisch vertaald worden naar configuraties binnen Active Directory en Entra ID.
 
@@ -96,6 +110,20 @@ Binnen Microsoft Forms worden verschillende gegevens verzameld, waaronder voorna
 Omdat bepaalde vragen binnen het formulier afhankelijk zijn van eerder gekozen antwoorden, moet de flow rekening houden met dynamische gegevensstructuren. Hiervoor worden conditionele controles gebruikt om de correcte diensten en bijhorende OU-structuren te bepalen.
 
 Daarnaast moet de oplossing rekening houden met verschillen tussen cloud- en on-premisesystemen. Hierdoor werd gekozen voor een architectuur waarbij de cloudflow verantwoordelijk is voor gegevensverwerking en orchestration, terwijl lokale PowerShell-scripts instaan voor de configuratie van Active Directory.
+
+\subsection{Ontwerp van de offboardingflow}
+
+Naast het automatiseren van onboarding werd eveneens een geautomatiseerde offboardingflow ontworpen. Deze flow heeft als doel om gebruikersaccounts en toegangsrechten automatisch af te bouwen wanneer een medewerker uit dienst gaat.
+
+De offboarding start vanuit een afzonderlijk Microsoft Forms-formulier waarin de personeelsdienst de gegevens van de medewerker invoert, waaronder het e-mailadres, de einddatum van het contract en de reden van uitdiensttreding.
+
+Omdat gebruikers pas gedeactiveerd mogen worden nadat de laatste werkdag verstreken is, werd een wachmechanisme voorzien binnen de cloudflow van Power Automate. De flow blijft actief totdat de opgegeven einddatum bereikt werd.
+
+Na het bereiken van deze datum wordt automatisch een desktopflow gestart die verschillende PowerShell-scripts uitvoert binnen zowel Exchange Online als Active Directory. Hierbij wordt de mailbox van de gebruiker omgezet naar een gedeeld postvak, worden mailboxrechten verwijderd, groepslidmaatschappen aangepast en wordt het Active Directory-account gedeactiveerd.
+
+Daarnaast worden Microsoft 365-groepen en licenties automatisch verwijderd zodat ongebruikte cloudlicenties opnieuw beschikbaar worden binnen de organisatie.
+
+Door deze automatisering wordt het offboardingproces consistenter uitgevoerd en wordt het risico verminderd dat voormalige medewerkers nog toegang behouden tot interne systemen of gegevens.
 
 \subsection{OU-structuur binnen Active Directory}
 
@@ -127,6 +155,8 @@ Deze synchronisatie gebeurt echter niet onmiddellijk maar volgens vaste synchron
 Omdat bepaalde cloudconfiguraties, zoals licentietoewijzingen, pas uitgevoerd kunnen worden nadat de gebruiker beschikbaar is binnen Entra ID, moet de automatiseringsflow rekening houden met deze wachttijd.
 
 Hiervoor werd een controlemechanisme ontworpen waarbij periodiek gecontroleerd wordt of de gebruiker reeds beschikbaar is binnen Entra ID. Pas wanneer de synchronisatie succesvol voltooid werd, kunnen bijkomende cloudconfiguraties uitgevoerd worden.
+
+Ook tijdens offboarding blijft deze synchronisatie belangrijk zodat wijzigingen aan gebruikersaccounts en groepslidmaatschappen correct doorstromen naar de cloudomgeving.
 
 \section{Testomgeving en validatieaanpak}
 

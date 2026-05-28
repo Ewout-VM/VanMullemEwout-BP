@@ -19,7 +19,9 @@
 
 De afgelopen jaren is de digitalisering binnen lokale besturen sterk toegenomen. Gemeenten maken steeds meer gebruik van digitale systemen om administratieve processen efficiënter te laten verlopen. Tegelijkertijd neemt de werkdruk binnen overheidsorganisaties toe, onder andere doordat het takenpakket van lokale besturen blijft uitbreiden. Dit zorgt ervoor dat administratieve processen steeds complexer worden en vaak verschillende diensten met elkaar moeten samenwerken. \newline
 
-Een belangrijk administratief proces binnen organisaties is het onboardingproces van nieuwe medewerkers. Tijdens dit proces moeten verschillende stappen worden uitgevoerd om ervoor te zorgen dat een nieuwe medewerker toegang krijgt tot de nodige systemen, applicaties en infrastructuur. Binnen een gemeentebestuur betekent dit bijvoorbeeld het aanmaken van gebruikersaccounts, het instellen van toegangsrechten, het activeren van badge-toegang tot gebouwen en het registreren van medewerkers in verschillende interne systemen. Omdat meerdere diensten hierbij betrokken zijn, is een goede coördinatie essentieel. \newline
+Een belangrijk administratief proces binnen organisaties is het onboarding- en offboardingproces van nieuwe medewerkers. Tijdens het onboardingsproces moeten verschillende stappen worden uitgevoerd om ervoor te zorgen dat een nieuwe medewerker toegang krijgt tot de nodige systemen, applicaties en infrastructuur. Binnen een gemeentebestuur betekent dit bijvoorbeeld het aanmaken van gebruikersaccounts, het instellen van toegangsrechten, het activeren van badge-toegang tot gebouwen en het registreren van medewerkers in verschillende interne systemen. Omdat meerdere diensten hierbij betrokken zijn, is een goede coördinatie essentieel. 
+
+Tijdens het offboardingsproces moeten verschillende stappen worden uitgevoerd om ervoor te zorgen dat alles van een uittredende werknemer wordt verwijderd. Deze stappen zijn cruciaal voor het behouden van veiligheid van zowel de systemen als de gegevens. Binnen de gemeente betekent dat het verwijderen van toegangsrechten, licenties en het blokkeren van gebruikersaccounts.
 
 
 \section{\IfLanguageName{dutch}{Probleemstelling}{Problem Statement}}%
@@ -29,28 +31,30 @@ Een belangrijk administratief proces binnen organisaties is het onboardingproces
 
 Het huidige onboardingproces binnen het gemeentebestuur van Berlare verloopt grotendeels manueel en vereist tussenkomst van meerdere diensten en systemen.Hierdoor ontstaat een proces dat tijdrovend en foutgevoelig is. Informatie moet vaak manueel worden ingevoerd of doorgegeven tussen verschillende medewerkers, wat het risico op miscommunicatie of vertragingen verhoogt. Ook is het huidige proces op basis van een Excelbestand dat niet meer up to date is. Hierdoor gaat informatie verloren of worden er overbodige gegevens meegegeven.\newline
 
-De primaire doelgroep van dit onderzoek zijn de medewerkers van het gemeentebestuur van Berlare die betrokken zijn bij het onboardingproces van nieuwe werknemers. Dit omvat onder andere medewerkers van de personeelsdienst en de IT-dienst. Voor deze groep kan een efficiënter onboardingproces leiden tot minder administratieve lasten, minder fouten en een betere samenwerking tussen diensten.\newline
+Ook het huidige offboardingsproces verloopt manueel. Hiervoor is de informatie die wordt doorgegeven van kleiner belang, aangezien alle rechten van de persoon verwijderd mogen worden. Enkel het mailadres is dus cruciaal. \newline
 
-Indirect kan ook de dienstverlening aan inwoners van de gemeente baat hebben bij een efficiëntere interne werking. Wanneer interne processen vlotter verlopen, kunnen medewerkers sneller en efficiënter hun taken uitvoeren, wat uiteindelijk de kwaliteit van de gemeentelijke dienstverlening kan verbeteren.
+De primaire doelgroep van dit onderzoek zijn de medewerkers van het gemeentebestuur van Berlare die betrokken zijn bij deze processen van nieuwe werknemers. Dit omvat onder andere medewerkers van de personeelsdienst en de IT-dienst. Voor deze groep kunnen efficiëntere processen leiden tot minder administratieve lasten, minder fouten en een betere samenwerking tussen diensten.\newline
+
+Indirect kan ook de dienstverlening aan inwoners van de gemeente baat hebben bij een efficiëntere interne werking. Wanneer interne processen vlotter verlopen, kunnen medewerkers sneller en efficiënter hun taken uitvoeren, wat uiteindelijk de kwaliteit van de gemeentelijke dienstverlening kan verbeteren. Als ook wanneer hun gegevens beter beschermd worden door betere opvolging van gebruikersrechten.
 
 \section{\IfLanguageName{dutch}{Onderzoeksvraag}{Research question}}%
 \label{sec:onderzoeksvraag}
 
 %Wees zo concreet mogelijk bij het formuleren van je onderzoeksvraag. Een onderzoeksvraag is trouwens iets waar nog niemand op dit moment een antwoord heeft (voor zover je kan nagaan). Het opzoeken van bestaande informatie (bv. ``welke tools bestaan er voor deze toepassing?'') is dus geen onderzoeksvraag. Je kan de onderzoeksvraag verder specifiëren in deelvragen. Bv.~als je onderzoek gaat over performantiemetingen, dan 
 
-Op basis van de vastgestelde problematiek wordt in deze bachelorproef onderzocht hoe het onboardingproces binnen het gemeentebestuur kan worden geoptimaliseerd door middel van automatisatie. \newline
+Op basis van de vastgestelde problematiek wordt in deze bachelorproef onderzocht hoe het onboarding- en offboardingproces binnen het gemeentebestuur kan worden geoptimaliseerd door middel van automatisatie. \newline
 
 De centrale onderzoeksvraag luidt als volgt:
 
-Op welke manier kan een geautomatiseerd systeem ontwikkeld worden dat, op basis van gegevens uit de personeelsdienst, een volledige en correcte onboarding kan uitvoeren binnen de IT-infrastructuur van het gemeentebestuur van Berlare? \newline
+Op welke manier kan een geautomatiseerd systeem ontwikkeld worden dat, op basis van gegevens uit de personeelsdienst, een volledige en correcte onboarding en offboarding kan uitvoeren binnen de IT-infrastructuur van het gemeentebestuur van Berlare? \newline
 
 Om deze onderzoeksvraag te beantwoorden worden een aantal deelvragen onderzocht:
 \begin{itemize}
-    \item Hoe verloopt het huidige onboardingproces binnen het gemeentebestuur van Berlare?
-    \item Welke stappen en systemen zijn momenteel betrokken bij dit proces?
-    \item Welke technologieën en systemen bestaan er die automatisatie van onboardingprocessen mogelijk maken?
+    \item Hoe verloopt het huidige onboarding- en offboardingproces binnen het gemeentebestuur van Berlare?
+    \item Welke stappen en systemen zijn momenteel betrokken bij deze processen?
+    \item Welke technologieën en systemen bestaan er die automatisatie van deze processen mogelijk maken?
     \item Op welke manier kan een geautomatiseerde oplossing geïntegreerd worden binnen de bestaande IT-infrastructuur?
-    \item Hoeveel tijdswinst is er ten opzichte van het huidige onboardingsproces?
+    \item Hoeveel tijdswinst is er ten opzichte van de huidige processen?
     \item Aan welke vereisten moet de oplossing voldoen?
 \end{itemize}
     
@@ -60,9 +64,9 @@ Om deze onderzoeksvraag te beantwoorden worden een aantal deelvragen onderzocht:
 
 %Wat is het beoogde resultaat van je bachelorproef? Wat zijn de criteria voor succes? Beschrijf die zo concreet mogelijk. Gaat het bv.\ om een proof-of-concept, een prototype, een verslag met aanbevelingen, een vergelijkende studie, enz.
 
-Het doel van deze bachelorproef is het ontwikkelen van een proof-of-concept of prototype dat het onboardingproces gedeeltelijk of volledig kan automatiseren. In dit prototype moet een medewerker van de personeelsdienst het onboardingproces kunnen starten, waarna de verdere stappen automatisch worden uitgevoerd binnen de verschillende betrokken systemen. \newline
+Het doel van deze bachelorproef is het ontwikkelen van een proof-of-concept of prototype dat het onboardingproces en het offboardingsproces gedeeltelijk of volledig kan automatiseren. In dit prototype moet een medewerker van de personeelsdienst de processen kunnen starten, waarna de verdere stappen automatisch worden uitgevoerd binnen de verschillende betrokken systemen. \newline
 
-Het succes van het onderzoek wordt beoordeeld aan de hand van verschillende criteria. Zo moet het prototype aantonen dat het onboardingproces efficiënter kan verlopen dan in de huidige situatie. Daarnaast moet de oplossing het aantal manuele handelingen verminderen en het risico op fouten verkleinen. Tot slot zal een vergelijking worden gemaakt tussen de huidige tijdsbesteding van het onboardingproces en de tijd die nodig is bij gebruik van de voorgestelde oplossing.
+Het succes van het onderzoek wordt beoordeeld aan de hand van verschillende criteria. Zo moet het prototype aantonen dat de processen efficiënter kunnen verlopen dan in de huidige situatie. Daarnaast moet de oplossing het aantal manuele handelingen verminderen en het risico op fouten verkleinen. Tot slot zal een vergelijking worden gemaakt tussen de huidige tijdsbesteding van beide processen en de tijd die nodig is bij gebruik van de voorgestelde oplossing.
 
 \section{\IfLanguageName{dutch}{Opzet van deze bachelorproef}{Structure of this bachelor thesis}}%
 \label{sec:opzet-bachelorproef}
@@ -79,10 +83,12 @@ In Hoofdstuk~\ref{ch:methodologie} wordt de methodologie toegelicht en worden de
 
 % TODO: Vul hier aan voor je eigen hoofstukken, één of twee zinnen per hoofdstuk
 
-In Hoofdstuk~\ref{ch:Huidig-Onboardingsproces} wordt het huidige onboardingsproces besproken. Hierbij komen de valkuilen aan bod die er momenteel zijn. 
+In Hoofdstuk~\ref{ch:HuidigeProcessen} wordt het huidige onboardingsproces en offboardingsproces besproken. Hierbij komen de valkuilen aan bod die er momenteel zijn. 
 
 In Hoofdstuk~\ref{ch:analyseontwerp} worden de analyse en het ontwerp van de proof of concept uitgeschreven. Hierbij wordt er gekeken naar een mogelijke oplossing voor de uitwerking. 
 
 In Hoofdstuk~\ref{ch:ImplementatieVanDeOplossing} wordt de uitwerking van de proof of concept uitgeschreven. Dit hoofdstuk bevat de nodige stappen om tot de uitwerking van de oplossing te komen.
+
+In Hoofdstuk~\ref{ch:Evaluatie} wordt de evaluatie van de proof of concept uitgeschreven. In dit hoofdstuk wordt de vergelijking gemaakt tussen de huidige processen en de geautomatiseerde processen.
 
 In Hoofdstuk~\ref{ch:conclusie}, tenslotte, wordt de conclusie gegeven en een antwoord geformuleerd op de onderzoeksvragen. Daarbij wordt ook een aanzet gegeven voor toekomstig onderzoek binnen dit domein.

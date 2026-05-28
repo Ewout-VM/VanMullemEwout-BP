@@ -1,0 +1,129 @@
+%%
+%%Huidig onboardingsproces
+%%
+
+\chapter{Huidige onboarding- en offboardingprocessen}
+\label{ch:HuidigeProcessen}
+
+\section{Beschrijving van de huidige processen}
+
+\subsection{Huidig onboardingsproces}
+
+\subsubsection{Algemene werking}
+
+Binnen het kader van dit onderzoek werd het bestaande onboardingproces van nieuwe medewerkers binnen het gemeentebestuur geanalyseerd. Het doel van deze analyse is om inzicht te verkrijgen in de huidige werkwijze, de betrokken diensten en de verschillende stappen die uitgevoerd worden tijdens het onboarden van nieuwe medewerkers.
+
+Het onboardingproces bestaat uit een combinatie van administratieve, technische en communicatieve handelingen die uitgevoerd worden door verschillende diensten binnen het gemeentebestuur. Hierbij zijn onder andere de personeelsdienst, de ICT-dienst en andere interne diensten betrokken. Elke dienst voert specifieke taken uit afhankelijk van de fase van het onboardingproces.
+
+Wanneer een nieuwe medewerker in dienst treedt, verzamelt de personeelsdienst eerst de noodzakelijke persoonsgegevens en functiegerelateerde informatie. Deze gegevens worden vervolgens doorgestuurd naar de ICT-dienst zodat de benodigde digitale accounts en toegangen kunnen worden aangemaakt.
+
+Figuur~\ref{fig:HuidigeOnboarding} geeft een vereenvoudigd overzicht van de huidige onboardingflow binnen het gemeentebestuur.
+
+\subsubsection{Huidige werkwijze binnen de ICT-dienst}
+
+Binnen de ICT-dienst verloopt een groot deel van het onboardingproces momenteel manueel. Gebruikersaccounts worden individueel aangemaakt binnen Active Directory, waarna gebruikers handmatig toegevoegd worden aan relevante beveiligingsgroepen en distributielijsten.
+
+Daarnaast worden mailboxen geconfigureerd en worden rechten ingesteld voor verschillende interne systemen en gedeelde mappen. Ook licenties worden afzonderlijk toegekend afhankelijk van de functie en de benodigde softwaretoegang van de medewerker.
+
+Naast de configuratie van gebruikersaccounts worden eveneens verschillende communicatieve taken uitgevoerd. Zo worden welkomstmails met handleidingen en interne documentatie afzonderlijk verzonden naar nieuwe medewerkers. Daarnaast wordt een tijdelijke wachtwoordbrief gegenereerd, afgedrukt en fysiek verwerkt alvorens deze aan de medewerker wordt bezorgd.
+
+\subsubsection{Fysieke configuratiehandelingen}
+
+Naast digitale configuraties omvat het onboardingproces eveneens verschillende fysieke handelingen binnen de ICT-dienst. Hierbij gaat het onder andere om het voorbereiden van hardware, het installeren van toestellen en het configureren van softwarepakketten.
+
+Deze handelingen worden momenteel individueel uitgevoerd afhankelijk van de functie en de noden van de nieuwe medewerker. Hierdoor bestaat het onboardingproces uit een combinatie van digitale configuraties en fysieke installatietaken.
+
+\subsection{Huidig offboardingsproces}
+
+\subsubsection{Algemene werking}
+
+Wanneer een medewerker uit dienst gaat binnen het gemeentebestuur van Berlare, moeten verschillende administratieve en technische stappen uitgevoerd worden om de toegang tot interne systemen correct af te bouwen. Dit proces wordt uitgevoerd door zowel de personeelsdienst als de ICT-dienst.
+
+De personeelsdienst of het diensthoofd communiceert de uitdiensttreding van een medewerker naar de ICT-dienst, waarna verschillende configuraties handmatig aangepast worden binnen de IT-omgeving. Het gaat hierbij onder andere om het uitschakelen van gebruikersaccounts, het verwijderen van toegangsrechten en het aanpassen van configuraties van gedeelde postvakken.
+
+Omdat deze stappen vaak afhankelijk zijn van de einddatum van het contract, gebeurt de verwerking meestal op of kort na de laatste werkdag van de medewerker.
+
+\subsubsection{Werkwijze binnen de ICT-dienst}
+
+Binnen de ICT-dienst verloopt het offboardingproces momenteel grotendeels manueel. Medewerkers moeten handmatig gebruikersaccounts opzoeken binnen Active Directory en deze vervolgens uitschakelen of aanpassen.
+
+Daarnaast worden gebruikers verwijderd uit beveiligingsgroepen, distributielijsten en Microsoft 365-groepen. Ook mailboxrechten op gedeelde postvakken moeten afzonderlijk verwijderd worden.
+
+De mailbox van een voormalige medewerker wordt altijd omgezet naar een gedeeld postvak zodat historische communicatie tijdelijk behouden blijft. Ook dit gebeurt momenteel handmatig via Exchange Online. Wel wordt op deze mailbox nog een Out of Office gezet zodat mensen, zowel binnen als buiten het bedrijf, weten dat de mails niet worden gelezen of doorgestuurd. In de out of Office komt dat ook het mailadres van de dienst waar deze werkzaam was.
+
+Verder moeten toegekende Microsoft 365-licenties verwijderd worden zodat deze opnieuw beschikbaar worden binnen de organisatie.
+
+Verder moeten van de laptops de gebruikersaccounts verwijderd worden. Ook op de servers moeten deze opnieuw verwijderd worden. Op deze manier verdwijnen de gegevens van de persoon die lokaal op laptops opgeslagen waren, waardoor er dus ruimte vrij komt op een laptop en deze dus opnieuw gebruikt kan worden. 
+
+\subsubsection{Beheer van toegangen en mailboxen}
+
+Een belangrijk onderdeel van het offboardingproces bestaat uit het correct verwijderen van toegangsrechten. Wanneer accounts of rechten niet tijdig verwijderd worden, bestaat het risico dat voormalige medewerkers nog toegang behouden tot interne systemen of gevoelige gegevens.
+
+Omdat toegangsrechten verspreid beheerd worden over verschillende platformen, waaronder Active Directory, Entra ID en Exchange Online, vereist dit proces momenteel meerdere afzonderlijke handelingen binnen verschillende beheertools.
+
+Daarnaast bestaat er momenteel geen centrale opvolging waarmee eenvoudig gecontroleerd kan worden welke onderdelen van het offboardingproces reeds uitgevoerd werden.
+
+\section{Communicatie en samenwerking tussen diensten}
+
+\subsection{Afhankelijkheden tussen diensten}
+
+Binnen het huidige onboardingproces zijn meerdere diensten afhankelijk van elkaar om bepaalde stappen correct te kunnen uitvoeren. De personeelsdienst levert bijvoorbeeld de noodzakelijke gegevens aan voor het aanmaken of uitschakelen van gebruikersaccounts, terwijl andere interne diensten afhankelijk zijn van het beschikbaar zijn van een e-mailadres of gebruikersaccount om toegang te voorzien of verwijderen tot dienstspecifieke toepassingen.
+
+Hierdoor ontstaat een proces waarbij verschillende stappen pas uitgevoerd kunnen worden nadat voorgaande configuraties succesvol voltooid zijn. Een correcte communicatie tussen diensten speelt daarom een belangrijke rol binnen het onboardingproces.
+
+\subsection{Terugkoppeling van uitgevoerde taken}
+
+Binnen de huidige processen gebeurt de terugkoppeling van uitgevoerde taken voornamelijk manueel. Medewerkers communiceren onderling wanneer bepaalde configuraties of administratieve stappen voltooid zijn.
+
+Andere diensten zijn afhankelijk van meldingen of terugkoppelingen wanneer gebruikersaccounts succesvol aangemaakt werden. Deze informatie is noodzakelijk om bijkomende configuraties uit te voeren binnen dienstspecifieke softwaretoepassingen.
+
+Doordat deze communicatie momenteel grotendeels handmatig verloopt, ontstaat er regelmatig onduidelijkheid over de voortgang van bepaalde stappen binnen het onboardingproces.
+
+\section{Knelpunten binnen de huidige processen}
+
+\subsection{Manuele configuraties}
+
+Doordat een groot deel van het onboarding- en ofboardingproces manueel uitgevoerd wordt, vereist het proces aanzienlijke administratieve en technische inspanningen van de ICT-dienst. Het individueel aanmaken van gebruikersaccounts, het toekennen van rechten en het configureren van mailboxen zorgen voor repetitieve handelingen binnen het proces. Ook het vergrendelen van gebruikersaccounts en het verwijderen van de groepen en licenties zijn repetitieve handelingen. 
+
+Daarnaast verhoogt manuele configuratie de kans op inconsistenties en menselijke fouten. Foutieve groepslidmaatschappen, ontbrekende rechten of vergeten configuraties kunnen leiden tot bijkomende correcties en vertragingen. Verder kan het niet verwijderen van gebruikers doordat dit vergeten wordt, leiden tot veiligheidsrisico's
+
+\subsection{Gebrek aan centrale opvolging}
+
+Een bijkomend knelpunt binnen de huidige processen is het ontbreken van een centrale opvolging van uitgevoerde taken. Omdat verschillende stappen verspreid uitgevoerd worden door meerdere medewerkers en diensten, ontstaat er soms onduidelijkheid over de voortgang van het proces.
+
+Wanneer een bepaalde taak reeds uitgevoerd werd maar nog niet gecommuniceerd is naar andere betrokken medewerkers, kunnen vervolgstappen vertraging oplopen. Hierdoor ontstaan afhankelijkheden waarbij medewerkers moeten navragen of bepaalde configuraties reeds voltooid zijn.
+
+\subsection{Complexiteit van onboarding en offboarding}
+
+Zowel het onboardingproces als het offboardingproces bestaan uit verschillende onderling verbonden stappen waarbij meerdere systemen betrokken zijn. Naast gebruikersbeheer in Active Directory moeten eveneens mailboxen, licenties, distributielijsten en interne toepassingen correct geconfigureerd of aangepast worden.
+
+Binnen onboarding moeten nieuwe gebruikersaccounts aangemaakt worden, rechten toegekend worden en cloudconfiguraties uitgevoerd worden. Bij offboarding moeten deze configuraties opnieuw aangepast of verwijderd worden zodat voormalige medewerkers geen toegang meer behouden tot interne systemen.
+
+Door deze combinatie van administratieve, technische en communicatieve handelingen ontstaan processen met meerdere afhankelijkheden en manuele tussenstappen. Verschillende diensten zijn hierbij afhankelijk van elkaar voor het correct uitvoeren van bepaalde configuraties.
+
+Daarnaast verhoogt de hybride infrastructuur, waarbij zowel Active Directory als Microsoft 365 en Entra ID gebruikt worden, de complexiteit van beide processen. Synchronisaties tussen lokale en cloudomgevingen zorgen ervoor dat bepaalde configuraties pas uitgevoerd kunnen worden nadat eerdere stappen succesvol voltooid werden.
+
+Deze combinatie van afhankelijkheden, verschillende beheersystemen en manuele configuraties bemoeilijkt een efficiënte opvolging van onboarding en offboarding binnen de huidige werking van het gemeentebestuur.
+
+Figuur \ref{fig:HuidigeOnboarding} toont een visuele voorstelling van het huidige onboardingsproces.
+
+Figuur \ref{fig:HuidigeOffboarding} toont een visuele voorstelling van het huidige offboardingsproces.
+
+\clearpage
+\section{Overzicht van het onboardingproces}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{HuidigeOnboarding.png}
+    \caption[Huidig onboardingsproces]{Overzicht van het huidige onboardingproces en de interactie tussen de betrokken diensten}
+    \label{fig:HuidigeOnboarding}
+\end{figure}
+
+\section{Overzicht van het onboardingproces}
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{HuidigeOffboarding.png}
+    \caption[Huidig offboardingsproces]{Overzicht van het huidige offboardingproces}
+    \label{fig:HuidigeOffboarding}
+\end{figure}
