@@ -13,6 +13,48 @@ Het doel van dit onderzoek is daarom het ontwerpen van een oplossing die een dee
 
 Daarnaast moet de oplossing zorgen voor een betere opvolging van uitgevoerde taken en een efficiëntere samenwerking tussen verschillende diensten binnen het onboarding- en offboardingsproces. Het uiteindelijke doel is om de administratieve belasting te verminderen, de foutmarge te verkleinen en de doorlooptijd van beide processen te beperken.
 
+\section{Requirements van de oplossing}
+
+\subsection{Functionele requirements}
+
+\subsubsection{Must-have requirements}
+
+De belangrijkste doelstelling van deze bachelorproef is het ontwikkelen van een geautomatiseerd systeem waarbij gebruikersaccounts automatisch aangemaakt worden op basis van gegevens die aangeleverd worden door de personeelsdienst.
+
+De focus ligt hierbij voornamelijk op het automatisch aanmaken van gebruikersaccounts binnen Active Directory, het instellen van relevante attributen binnen de lokale infrastructuur, het toekennen van Microsoft 365-licenties en het automatisch voorzien van basisrechten afhankelijk van de dienst van de medewerker.
+
+Daarnaast moet de oplossing voorzien in een vorm van terugkoppeling zodat de status van uitgevoerde onboardings beschikbaar is voor andere betrokken diensten binnen de organisatie.
+
+\subsubsection{Should-have requirements}
+
+Naast de basisfunctionaliteiten zijn er verschillende uitbreidingen die bij voorkeur aanwezig zijn binnen de oplossing. Hieronder vallen onder andere het automatisch toekennen van rechten op gedeelde postvakken en het automatisch toevoegen van gebruikers aan distributielijsten binnen Microsoft 365.
+
+Deze functionaliteiten verhogen de gebruiksvriendelijkheid van het systeem en verminderen bijkomende manuele configuraties binnen de ICT-dienst.
+
+\subsubsection{Could-have requirements}
+
+Binnen deze categorie vallen functionaliteiten die een meerwaarde bieden, maar niet noodzakelijk zijn voor de basiswerking van de oplossing.
+
+Een eerste uitbreiding is het automatisch versturen van een welkomstmail naar nieuwe medewerkers met praktische informatie en handleidingen. Daarnaast behoort ook het automatiseren van het offboardingproces tot deze categorie.
+
+Hoewel offboarding een belangrijk onderdeel vormt van identiteits- en toegangsbeheer binnen organisaties, lag de primaire focus van deze bachelorproef op onboarding. Indien mogelijk werd echter ook een gedeeltelijke automatisering van offboarding opgenomen binnen de oplossing.
+
+\subsubsection{Would-have requirements}
+
+De laatste categorie omvat uitbreidingen die wenselijk zijn, maar momenteel moeilijk realiseerbaar zijn binnen de bestaande infrastructuur.
+
+Hieronder valt het volledig automatiseren van rechtenbeheer op de file server. Binnen de huidige omgeving bestaat een complexe rechtenstructuur waarbij bepaalde toegangen historisch rechtstreeks aan individuele gebruikers toegewezen werden in plaats van via veiligheidsgroepen.
+
+Door deze inconsistente structuur is het momenteel niet mogelijk om alle rechten volledig automatisch en betrouwbaar toe te wijzen. Een volledige herstructurering van de bestaande rechtenomgeving zou hiervoor noodzakelijk zijn.
+
+\subsection{Niet-functionele requirements}
+
+De oplossing moet compatibel zijn met de bestaande hybride infrastructuur van het gemeentebestuur van Berlare. Zowel lokale on-premisesystemen als cloudtoepassingen binnen Microsoft 365 moeten ondersteund worden.
+
+Daarnaast moet de oplossing veilig functioneren binnen de bestaande infrastructuur. Enkel bevoegde medewerkers mogen toegang hebben tot de automatiseringsflows en gevoelige configuraties.
+
+Verder moet de oplossing voldoende flexibel en onderhoudbaar zijn zodat toekomstige uitbreidingen en aanpassingen mogelijk blijven.
+
 \section{Analyse van automatiseerbare processen}
 
 \subsection{Automatiseerbare taken}
