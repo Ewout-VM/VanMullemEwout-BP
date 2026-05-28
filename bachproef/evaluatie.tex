@@ -1,0 +1,254 @@
+%%
+%%Implementatie van de oplossing
+%%
+
+\chapter{Evaluatie}
+\label{ch:Evaluatie}
+
+\section{Evaluatie van de onboardingautomatisering}
+
+\subsection{Vergelijking van het manuele en geautomatiseerde proces}
+
+Binnen het oorspronkelijke onboardingproces van het lokaal gemeentebestuur van Berlare verliepen vrijwel alle stappen volledig manueel. Zowel het aanmaken van gebruikersaccounts als het toekennen van rechten, groepslidmaatschappen en licenties moesten handmatig uitgevoerd worden door medewerkers van de ICT-dienst.
+
+Deze werkwijze was tijdrovend en zorgde ervoor dat medewerkers van de ICT-dienst een aanzienlijk deel van hun tijd moesten besteden aan repetitieve administratieve taken. Hierdoor bleef minder tijd beschikbaar voor complexere technische problemen en andere ondersteunende opdrachten binnen de organisatie. Ook werd de onboarding vaak niet doorgegeven op voorhand. Daardoor moest er meteen geschakeld worden om het in orde te brengen en moesten de andere taken aan de kant geschoven worden. 
+
+Door het onboardingproces te automatiseren via Microsoft Power Automate en PowerShell wordt een groot deel van deze manuele tussenkomsten geëlimineerd. De personeelsdienst kan nu zelfstandig een onboardingaanvraag starten via Microsoft Forms, waarna de verdere verwerking grotendeels automatisch verloopt.
+
+Binnen het oorspronkelijke proces werden gebruikersaccounts eerst handmatig aangemaakt binnen Active Directory. Vervolgens moesten gebruikers afzonderlijk toegevoegd worden aan de correcte groepen en Organizational Units. Nadien moest gewacht worden tot de synchronisatie met Microsoft 365 afgerond was voordat bijkomende cloudconfiguraties uitgevoerd konden worden.
+
+Ook het toekennen van licenties gebeurde manueel. Hoewel de licenties reeds gekoppeld waren aan groepen binnen Microsoft 365, moesten gebruikers nog steeds handmatig toegevoegd worden aan deze groepen nadat de synchronisatie voltooid was. Door deze stappen te automatiseren wordt de werkdruk van de ICT-dienst verminderd en verloopt de configuratie consistenter.
+
+Daarnaast gebeurde ook het toekennen van rechten op gedeelde postvakken volledig manueel. Medewerkers van de ICT-dienst moesten telkens de correcte mailboxen opzoeken en vervolgens afzonderlijk rechten zoals \textit{Full Access} en \textit{Send on Behalf} configureren. Wanneer gebruikers toegang nodig hadden tot meerdere mailboxen, nam deze configuratie bijkomende tijd in beslag.
+
+Hetzelfde gold voor distributiegroepen binnen Microsoft 365. Gebruikers moesten manueel opgezocht worden binnen het Microsoft 365 Admin Center waarna de correcte distributiegroepen één voor één toegevoegd moesten worden.
+
+Binnen de geautomatiseerde oplossing worden deze configuraties automatisch uitgevoerd op basis van de gegevens die ingevuld worden binnen het onboardingformulier. Hierdoor verloopt het volledige proces sneller, consistenter en met een kleinere kans op menselijke fouten.
+
+Als laatste werd ook de communicatie handmatig gedaan. Interne communicatie is een werkpunt voor de gemeente en daardoor wordt het soms vergeten. Aangezien de communicatie handmatig gebeurde, als ook soms vergeten werd, waren er vaak andere collega's die niet op de hoogte waren van de status. Met de automatische terugkoppeling die in dit project werd geconfigureerd, wordt de communicatie consistenter en betrouwbaarder. 
+
+In tabel ~\ref{tab:VergelijkingOnboarding} vind je een overzichtelijke vergelijking tussen het manuele en geautomatiseerde proces.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Vergelijking tussen het manuele en geautomatiseerde onboardingproces}
+    \label{tab:VergelijkingOnboarding}
+    
+    \begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{Processtap} & \textbf{Manueel proces} & \textbf{Geautomatiseerd proces} \\
+        \hline
+        
+        Gebruiker aanmaken &
+        Handmatig via Active Directory Users and Computers &
+        Automatisch via PowerShell-script \\
+        \hline
+        
+        Groepslidmaat-schappen &
+        Handmatig toevoegen per gebruiker &
+        Automatisch via rolgebaseerde mappings \\
+        \hline
+        
+        Licenties toekennen &
+        Handmatig toevoegen aan cloudgroepen &
+        Automatisch via Power Automate \\
+        \hline
+        
+        Mailboxrechten &
+        Manueel configureren binnen Exchange Online &
+        Automatisch via Exchange PowerShell \\
+        \hline
+        
+        Logging &
+        Geen centrale registratie &
+        Automatische logging binnen Excel \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Tijdsbesparing}
+Om de impact van de automatisering correct te evalueren, werd eerst gekeken naar de tijdsduur van het oorspronkelijke manuele onboardingproces binnen het lokaal gemeentebestuur van Berlare.
+
+Het manueel aanmaken van een gebruikersaccount binnen Active Directory nam gemiddeld ongeveer één tot twee minuten in beslag. Hierbij moesten onder andere de voornaam, achternaam, gebruikersnaam, User Principal Name en een tijdelijk wachtwoord ingevoerd worden.
+
+Na het aanmaken van het account moesten bijkomende attributen geconfigureerd worden, zoals de functietitel, het telefoonnummer, de beschrijving, het departement, de locatie en een mogelijke accountvervaldatum. Deze configuratie nam gemiddeld ongeveer vijf minuten in beslag.
+
+Daarnaast moesten gebruikers manueel toegevoegd worden aan verschillende Active Directory-groepen. Hierbij ging het zowel om beveiligingsgroepen voor toegang tot netwerkschijven als om groepen voor lokale toepassingen. Afhankelijk van het aantal benodigde groepen duurde deze stap gemiddeld drie tot vijf minuten.
+
+Vervolgens moest het account gesynchroniseerd worden naar Microsoft 365 via Entra ID Connect. De automatische synchronisatiecyclus loopt standaard één keer per half uur, maar kon indien nodig handmatig gestart worden. Een handmatige synchronisatie duurde gemiddeld vijf tot tien minuten voordat het account volledig beschikbaar was binnen de cloudomgeving.
+
+Na de synchronisatie moesten bijkomende cloudconfiguraties uitgevoerd worden. Hierbij werden gebruikers toegevoegd aan licentiegroepen en distributielijsten binnen Microsoft 365. Deze stap nam gemiddeld twee tot vier minuten in beslag.
+
+Tot slot moesten rechten op gedeelde postvakken handmatig geconfigureerd worden. Voor ieder postvak moesten afzonderlijk \textit{Full Access}- en \textit{Send on Behalf}-rechten toegekend worden. Afhankelijk van het aantal mailboxen duurde deze configuratie gemiddeld twee tot vijf minuten.
+
+Tabel \ref{tab:TijdsvergelijkingOnboarding} toont een overzicht van de geschatte tijdsduur van de verschillende stappen binnen het oorspronkelijke onboardingproces.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Geschatte tijdsduur van het manuele onboardingproces}
+    \label{tab:TijdsvergelijkingOnboarding}
+    
+    \begin{tabular}{|p{8cm}|p{4cm}|}
+        \hline
+        \textbf{Processtap} & \textbf{Geschatte tijd} \\
+        \hline
+        
+        Aanmaken gebruikersaccount & 1 -- 2 minuten \\
+        \hline
+        
+        Configureren van attributen & 5 minuten \\
+        \hline
+        
+        Toevoegen van AD-groepen & 3 -- 5 minuten \\
+        \hline
+        
+        Synchronisatie met Entra ID & 5 -- 10 minuten \\
+        \hline
+        
+        Toevoegen van cloudgroepen en licenties & 2 -- 4 minuten \\
+        \hline
+        
+        Configureren van mailboxrechten & 2 -- 5 minuten \\
+        \hline
+    \end{tabular}
+\end{table}
+
+Wanneer de synchronisatietijd buiten beschouwing gelaten wordt, duurde het oorspronkelijke onboardingproces gemiddeld ongeveer twintig minuten actieve werktijd voor de ICT-dienst.
+
+Binnen de geautomatiseerde oplossing verlopen deze stappen grotendeels automatisch via Power Automate en PowerShell. De personeelsdienst start het proces via Microsoft Forms, waarna de verdere configuratie automatisch uitgevoerd wordt zonder voortdurende tussenkomst van de ICT-dienst.
+
+Voor de ICT-dienst blijft voornamelijk nog het voorbereiden van hardware en het toekennen van specifieke uitzonderingsrechten over. Hierdoor wordt een aanzienlijke tijdsbesparing gerealiseerd en kunnen medewerkers zich meer focussen op complexere technische taken en ondersteuning binnen de organisatie.
+
+\subsection{Vermindering van fouten}
+
+Binnen het oorspronkelijke onboardingproces verliepen alle configuratiestappen manueel. Hierdoor bestond een verhoogde kans op menselijke fouten tijdens het overnemen en verwerken van gegevens. Fouten konden onder andere ontstaan bij het invoeren van gebruikersgegevens, het toekennen van groepslidmaatschappen of het configureren van licenties en mailboxrechten.
+
+Daarnaast moesten dezelfde gegevens vaak meerdere keren manueel verwerkt worden binnen verschillende systemen. Hierdoor nam niet alleen de verwerkingstijd toe, maar steeg eveneens de kans op inconsistenties tussen Active Directory, Microsoft 365 en Exchange Online.
+
+Door het onboardingproces te automatiseren wordt deze foutmarge aanzienlijk verkleind. Gegevens worden slechts één keer ingevoerd via Microsoft Forms en vervolgens automatisch verwerkt binnen de verschillende systemen. Hierdoor wordt vermeden dat gegevens opnieuw manueel overgenomen moeten worden.
+
+Binnen de oplossing werden bijkomende controles voorzien om foutieve invoer verder te beperken. Zo moet de personeelsdienst expliciet bevestigen dat de ingevoerde gegevens gecontroleerd werden voordat het formulier verzonden kan worden. Daarnaast worden verschillende waarden automatisch samengesteld via vaste logica binnen Power Automate en PowerShell, waardoor de configuratie consistenter verloopt.
+
+Hoewel menselijke fouten nog steeds mogelijk blijven bij het initiële invullen van het formulier, vermindert de automatisering het aantal manuele handelingen aanzienlijk. Hierdoor wordt de kans op configuratiefouten, vergeten rechten of foutieve groepslidmaatschappen sterk beperkt.
+
+\section{Evaluatie van de offboardingautomatisering}
+
+\subsection{Vergelijking van het manuele en geautomatiseerde proces}
+
+Binnen het oorspronkelijke offboardingproces werden gebruikersaccounts en toegangsrechten volledig manueel beheerd. Wanneer een medewerker uit dienst ging, moest de ICT-dienst handmatig verschillende acties uitvoeren binnen zowel Active Directory als Microsoft 365.
+
+Hierbij moesten gebruikersaccounts gedeactiveerd worden, groepslidmaatschappen verwijderd worden en mailboxrechten aangepast worden. Daarnaast moesten licenties handmatig verwijderd worden zodat deze opnieuw beschikbaar kwamen voor andere medewerkers.
+
+Deze werkwijze vereiste verschillende manuele controles binnen meerdere beheertools zoals Active Directory Users and Computers, Exchange Online en Microsoft 365 Admin Center. Hierdoor was het proces niet alleen tijdrovend, maar bestond eveneens het risico dat bepaalde rechten of groepen vergeten werden.
+
+Binnen de geautomatiseerde oplossing wordt het volledige offboardingproces centraal gestart via Microsoft Forms. Vervolgens worden de noodzakelijke acties automatisch uitgevoerd via Power Automate en PowerShell.
+
+Hierdoor verloopt de verwerking consistenter en wordt de kans verminderd dat gebruikers ongewenst toegang behouden tot systemen, gedeelde postvakken of distributiegroepen nadat zij uit dienst gegaan zijn.
+
+In tabel ~\ref{tab:VergelijkingOnboarding} vind je een overzichtelijke vergelijking tussen het manuele en geautomatiseerde proces.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Vergelijking tussen het manuele en geautomatiseerde offboardingproces}
+    \label{tab:VergelijkingOffboarding}
+    
+    \begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{Processtap} & \textbf{Manueel proces} & \textbf{Geautomatiseerd proces} \\
+        \hline
+        
+        Gebruiker uitschakelen &
+        Handmatig via Active Directory Users and Computers &
+        Automatisch via PowerShell-script \\
+        \hline
+        
+        Groepslidmaat-schrappen &
+        Handmatig verwijderen per gebruiker &
+        Automatisch via PowerShell-script \\
+        \hline
+        
+        Licenties verwijderen &
+        Handmatig verwijderen van cloudgroepen &
+        Automatisch via Power Automate \\
+        \hline
+        
+        Mailboxrechten &
+        Manueel verwijderen binnen Exchange Online &
+        Automatisch via Exchange PowerShell \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Tijdsbesparing}
+
+Ook binnen het offboardingproces zorgt de automatisering voor een duidelijke vermindering van de benodigde verwerkingstijd. In het oorspronkelijke proces moesten verschillende configuraties handmatig uitgevoerd worden binnen meerdere platformen.
+
+Het uitschakelen van een gebruikersaccount binnen Active Directory verliep relatief snel, maar bijkomende taken zoals het verwijderen van groepslidmaatschappen, mailboxrechten en Microsoft 365-licenties namen extra tijd in beslag. Daarnaast moest gecontroleerd worden of alle toegangen effectief verwijderd waren.
+
+Afhankelijk van het aantal groepen, mailboxen en cloudconfiguraties kon een volledige offboarding gemiddeld tien tot vijftien minuten actieve verwerkingstijd vereisen. Dit zeker omdat er geen optie bestaat om bij een gebruiker te zien welke toegang ze hebben op alle mailboxen. Er moet dus handmatig elke mailbox gecontroleerd worden om te zien of de gebruiker hier toegang tot had. 
+
+Binnen de geautomatiseerde oplossing worden deze stappen automatisch uitgevoerd zodra de ingestelde einddatum bereikt wordt. Hierdoor moet de ICT-dienst niet langer handmatig verschillende systemen controleren of configureren.
+
+De automatisering vermindert hierdoor niet alleen de actieve verwerkingstijd, maar zorgt er eveneens voor dat offboardings consistenter en sneller uitgevoerd worden.
+
+Tabel \ref{tab:TijdsvergelijkingOffboarding} toont een overzicht van de geschatte tijdsduur van de verschillende stappen binnen het oorspronkelijke onboardingproces.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Geschatte tijdsduur van het manuele onboardingproces}
+    \label{tab:TijdsvergelijkingOffboarding}
+    
+    \begin{tabular}{|p{8cm}|p{4cm}|}
+        \hline
+        \textbf{Processtap} & \textbf{Geschatte tijd} \\
+        \hline
+        
+        Blokkeren gebruikersaccount & 20 seconden \\
+        \hline
+        
+        Verwijderen van AD-groepen & 1 minuut \\
+        \hline
+        
+        Verwijderen van cloudgroepen en licenties & 1 minuut \\
+        \hline
+        
+        Verwijderen van mailboxrechten & 10 -- 15 minuten \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Verbetering van beveiliging en toegangsbeheer}
+
+Een belangrijk voordeel van de geautomatiseerde offboarding is de verbetering van de beveiliging binnen de organisatie. Wanneer gebruikersaccounts of rechten niet tijdig verwijderd worden, ontstaat het risico dat voormalige medewerkers nog steeds toegang hebben tot interne systemen of gegevens.
+
+Binnen het oorspronkelijke proces bestond de mogelijkheid dat bepaalde rechten vergeten werden, bijvoorbeeld toegang tot gedeelde postvakken, distributiegroepen of beveiligingsgroepen binnen Active Directory.
+
+Door gebruik te maken van automatische scripts worden gebruikersaccounts systematisch gedeactiveerd en worden groepslidmaatschappen, mailboxrechten en cloudlicenties automatisch verwijderd. Daarnaast worden gebruikers verborgen uit de globale adreslijst en wordt de mailbox omgezet naar een gedeeld postvak zodat historische communicatie behouden blijft zonder actieve gebruikerslicentie.
+
+Deze aanpak vermindert de kans op ongewenste toegang aanzienlijk en zorgt ervoor dat toegangsrechten consistenter beheerd worden binnen zowel de lokale infrastructuur als Microsoft 365.
+
+\section{Betrouwbaarheid en beheerbaarheid}
+
+Binnen de ontwikkelde oplossing werd sterk ingezet op betrouwbaarheid en centraal beheer. Door gebruik te maken van Power Automate in combinatie met PowerShell kunnen verschillende configuraties automatisch en op een consistente manier uitgevoerd worden.
+
+Om onverwachte fouten gecontroleerd op te vangen, wordt binnen de PowerShell-scripts gebruikgemaakt van \texttt{try-catch}-constructies. Hierdoor kunnen fouten tijdens het uitvoeren van opdrachten geregistreerd worden zonder dat het volledige proces onmiddellijk stopt. Daarnaast werden op verschillende plaatsen retry-mechanismen voorzien zodat tijdelijke synchronisatieproblemen tussen Active Directory, Entra ID en Exchange Online automatisch opgevangen kunnen worden.
+
+Ook de beheerbaarheid van de oplossing werd meegenomen tijdens de ontwikkeling. Door gebruik te maken van centrale PowerShell-scripts kunnen wijzigingen eenvoudig doorgevoerd worden zonder de volledige flow opnieuw op te bouwen. Groepslidmaatschappen, rolcodes en standaardconfiguraties worden centraal beheerd binnen variabelen en mappings, waardoor uitbreidingen eenvoudiger uitgevoerd kunnen worden.
+
+Daarnaast zorgt het gebruik van Microsoft Forms ervoor dat gegevens op een gestandaardiseerde manier aangeleverd worden. Hierdoor blijft de invoer consistenter en wordt het onboarding- en offboardingproces minder afhankelijk van individuele werkwijzen binnen de organisatie.
+
+Door de combinatie van centrale flows, herbruikbare scripts en automatische logging blijft de oplossing overzichtelijk en relatief eenvoudig te onderhouden binnen de bestaande IT-omgeving van het lokaal gemeentebestuur van Berlare.
+
+\section{Beperkingen van de oplossing}
+
+Hoewel de ontwikkelde oplossing een groot deel van het onboarding- en offboardingproces automatiseert, zijn er nog verschillende beperkingen aanwezig.
+
+Een eerste beperking is dat bepaalde configuraties nog steeds manueel uitgevoerd moeten worden. Zo worden rechten op specifieke netwerkschijven en bepaalde lokale toepassingen momenteel nog niet automatisch toegekend. Daarnaast blijft ook het voorbereiden van hardware, zoals laptops en randapparatuur, een manuele taak binnen de ICT-dienst.
+
+Verder is de oplossing afhankelijk van verschillende synchronisatieprocessen tussen Active Directory, Entra ID en Exchange Online. Hierdoor kunnen bepaalde stappen pas uitgevoerd worden nadat de synchronisatie volledig afgerond is. Hoewel hiervoor retry-mechanismen voorzien werden, blijven deze wachttijden afhankelijk van externe synchronisatiecycli.
+
+Binnen de configuratie van Exchange Online wordt momenteel eveneens gebruikgemaakt van interactieve aanmeldingen. Hierdoor is het proces nog niet volledig automatisch en moet er bij bepaalde stappen handmatig authenticatie uitgevoerd worden. Een mogelijke verbetering voor de toekomst is het implementeren van certificaatgebaseerde authenticatie zodat ook deze onderdelen volledig automatisch uitgevoerd kunnen worden.
+
+Daarnaast is de oplossing specifiek ontwikkeld voor de infrastructuur en werkwijze van het lokaal gemeentebestuur van Berlare. Hierdoor zijn bepaalde scripts, groepsstructuren en Organizational Units sterk afhankelijk van de bestaande omgeving. Bij gebruik binnen andere organisaties zouden verschillende configuraties aangepast moeten worden.
+
+Ondanks deze beperkingen zorgt de oplossing reeds voor een aanzienlijke vermindering van manuele handelingen, een betere consistentie binnen gebruikersbeheer en een efficiëntere verwerking van onboarding- en offboardingprocessen.
