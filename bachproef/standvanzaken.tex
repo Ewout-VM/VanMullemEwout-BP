@@ -76,7 +76,7 @@ Waar onboarding gericht is op de integratie van nieuwe medewerkers, focust offbo
 
 Ook van de kant van een werknemer van de ICT-dienst is offboarding belangrijk, binnen organisaties omvat dit onder meer het intrekken van toegangsrechten, het deactiveren van gebruikersaccounts en het terugnemen van bedrijfsmiddelen zoals laptops en badges \autocite{Detsika2025}. Dit is belangrijk aangezien gebruikers die na het eindigen van hun contract, toegang blijven behouden, mogelijk bedrijfsgegevens aan andere bedrijven kunnen geven. Er kunnen dus zowel gegevens van de file server overgenomen worden als ook toegangen tot het netwerk behouden worden.
 
-Een effectief offboardingproces is belangrijk voor zowel organisatorische continuïteit als informatiebeveiliging. Bij het vertrek van medewerkers moeten organisaties niet enkel administratieve en juridische stappen uitvoeren, maar ook toegangsrechten beheren, gebruikersaccounts deactiveren en bedrijfsmiddelen correct innemen. Een gebrekkig offboardingproces kan leiden tot beveiligingsrisico’s en verlies van organisatorische kennis \parencite{Detsika2025}.
+Een effectief offboardingproces is belangrijk voor zowel organisatorische continuïteit als informatiebeveiliging. Bij het vertrek van medewerkers moeten organisaties niet enkel administratieve en juridische stappen uitvoeren, maar ook toegangsrechten beheren, gebruikersaccounts deactiveren en bedrijfsmiddelen correct innemen. Een gebrekkig offboardingproces kan leiden tot beveiligingsrisico’s en verlies van organisatorische kennis \autocite{Detsika2025}.
 
 \subsection{Manuele versus geautomatiseerde processen}
 
@@ -104,7 +104,7 @@ Automatische provisioning wordt daarom beschouwd als een belangrijke stap richti
 
 \subsection{Identity and Access Management}
 
-Identity and Access Management (IAM) omvat processen en technologieën die instaan voor het beheren van digitale identiteiten en toegangsrechten binnen organisaties. IAM-systemen ondersteunen organisaties bij het controleren van welke gebruikers toegang krijgen tot bepaalde systemen, applicaties en gegevens.
+Identity and Access Management (IAM) omvat processen en technologieën die instaan voor het beheren van digitale identiteiten en toegangsrechten binnen organisaties. IAM-systemen ondersteunen organisaties bij het controleren van welke gebruikers toegang krijgen tot bepaalde systemen, applicaties en gegevens. Volgens \textcite{Baumer2026} omvatten identity lifecycle modellen onder meer het proces van “joining, moving and leaving identities”, evenals provisioning- en deprovisioningprocessen binnen applicatielandschappen.
 
 Het IT-departement van een organisatie heeft manieren nodig om te controleren wat gebruikers kunnen raadplegen \autocite{Microsoft2026}. Hierover gaat het dan over zowel mappen en documenten op de file server, als ook programma's en web toepassingen. Dit moet omdat medewerkers enkel toegang krijgen tot documenten en toepassingen waar zij recht op hebben. Denk ook aan licenties toewijzen aan gebruikers. 
 
@@ -160,65 +160,172 @@ Volgens \textcite{Nwibe2026} behoren Activepieces, Zapier en Make tot de meest g
 
 \subsection{Microsoft Power Automate}
 
-Microsoft Power Automate is een workflowplatform binnen het Microsoft-ecosysteem dat gebruikt wordt voor het automatiseren van processen tussen cloud- en on-premisesomgevingen. Het platform ondersteunt integraties met Microsoft 365, SharePoint, Teams, Forms en diverse externe applicaties.
+Microsoft Power Automate is een workflowautomatiseringsplatform binnen het Microsoft-ecosysteem dat gebruikt wordt voor het automatiseren van processen tussen cloud- en on-premisesomgevingen. Het platform ondersteunt integraties met verschillende Microsoft-diensten zoals Microsoft 365, SharePoint, Teams, Forms en Outlook, evenals met diverse externe applicaties en services.
 
-Volgens \autocite{Microsoft2024} kan Power Automate gebruikt worden voor het automatisch verwerken van gegevens afkomstig uit Microsoft Forms en Excel. Daarnaast ondersteunt het platform het uitvoeren van scripts en het aanroepen van externe systemen via connectors en API-koppelingen.
+Volgens \autocite{Microsoft2024} kan Power Automate gebruikt worden voor het automatisch verwerken van gegevens afkomstig uit toepassingen zoals Microsoft Forms en Excel. Daarnaast ondersteunt het platform het uitvoeren van scripts en het communiceren met externe systemen via connectors en API-koppelingen.
 
-Verder beschrijft \textcite{Microsoft2021} dat er integraties bestaan tussen Power Automate en PowerShell, waardoor automatiseringsprocessen gecombineerd kunnen worden met systeembeheer en Active Directory-functionaliteiten.
+Verder beschrijft \textcite{Microsoft2021} dat Power Automate geïntegreerd kan worden met PowerShell, waardoor workflowautomatisering gecombineerd kan worden met systeembeheer en Active Directory-functionaliteiten. Hierdoor is het mogelijk om administratieve taken binnen Windows-omgevingen gedeeltelijk te automatiseren.
+
+Een belangrijk voordeel van Power Automate is de sterke integratie met het bredere Microsoft-ecosysteem. Hierdoor kunnen organisaties relatief eenvoudig koppelingen realiseren tussen verschillende Microsoft-toepassingen en bestaande infrastructuurcomponenten. Daarnaast beschikt het platform over een uitgebreide bibliotheek van connectors voor externe applicaties en diensten. Volgens \textcite{Botcity2025} ondersteunt Power Automate integraties met ongeveer 400 applicaties en services via vooraf gebouwde connectors. Hierdoor kunnen gebruikers zonder uitgebreide programmeerkennis automatiseringsprocessen ontwikkelen binnen ondersteunde platformen.
+
+Naast deze voordelen kent het platform ook enkele beperkingen. Volgens \textcite{Kothari2026} is het niet mogelijk om vanuit een flow rechtstreeks een afzonderlijke cloudflow conditioneel op te starten zonder bijkomende configuraties. Hierdoor moeten complexe processen vaak binnen één centrale flow uitgewerkt worden, wat de overzichtelijkheid en onderhoudbaarheid van grote automatiseringsflows kan bemoeilijken.
+
+Verder maakt Microsoft Power Automate gebruik van verschillende licentiemodellen waarbij bijkomende functionaliteiten afhankelijk zijn van uitgebreidere abonnementen. Hoewel een gratis versie beschikbaar is, zijn bepaalde geavanceerde functionaliteiten enkel toegankelijk via betalende licenties \autocite{Microsoft}. Hierdoor kunnen de kosten oplopen naarmate organisaties gebruikmaken van uitgebreidere automatiseringsmogelijkheden.
 
 \subsection{Zapier}
 
-Zapier is een cloudgebaseerd automatiseringsplatform dat integraties aanbiedt tussen een groot aantal online diensten en applicaties. Het platform richt zich voornamelijk op eenvoudige workflowautomatisering via vooraf gedefinieerde connectors.
+Zapier is een cloudgebaseerd workflowautomatiseringsplatform dat organisaties toelaat om verschillende applicaties en online diensten met elkaar te integreren \autocite{Cosar2021}. Het platform werkt volgens een trigger-actionmodel waarbij een gebeurtenis binnen één applicatie automatisch een actie uitvoert binnen een andere applicatie \autocite{Jobtoolz}. Hierdoor kunnen repetitieve administratieve processen geautomatiseerd worden zonder dat uitgebreide programmeerkennis vereist is.
 
-Hoewel Zapier ondersteuning biedt voor scripting via onder andere JavaScript en Python, beschikt het platform niet over een ingebouwde PowerShell-integratie. Integraties met PowerShell verlopen daarom doorgaans via API-aanroepen of externe systemen.
+Het platform richt zich voornamelijk op gebruiksvriendelijke cloudautomatisering en ondersteunt een groot aantal vooraf gebouwde integraties met externe diensten. Hierdoor wordt Zapier vaak toegepast binnen organisaties die snel eenvoudige workflows willen opzetten tussen verschillende SaaS-toepassingen.
+
+Hoewel Zapier ondersteuning biedt voor scripting via programmeertalen zoals JavaScript en Python, beschikt het platform niet over een ingebouwde integratie met PowerShell. Integratie met lokale Windows-omgevingen en Active Directory vereist daarom doorgaans bijkomende API-koppelingen of externe tussenlagen.
+
+Daarnaast hanteert Zapier verschillende abonnementsformules met functionele beperkingen afhankelijk van het gekozen plan. Volgens \textcite{Baserow2025} is de gratis versie voornamelijk geschikt om het platform te verkennen, maar blijven de mogelijkheden voor productieomgevingen beperkt. Het basisabonnement ondersteunt slechts één trigger en één bijkomende actie per workflow \autocite{Zapier}. Complexere workflows met meerdere stappen vereisen duurdere abonnementen waarbij uitgebreidere automatiseringsmogelijkheden beschikbaar worden gesteld.
+
+Door zijn sterke focus op cloudintegraties en gebruiksgemak vormt Zapier een toegankelijk automatiseringsplatform voor algemene bedrijfsprocessen. Voor hybride infrastructuren met uitgebreide PowerShell-integraties en lokaal systeembeheer zijn echter bijkomende configuraties noodzakelijk.
 
 \subsection{Make}
 
-Make is een visueel workflowplatform dat organisaties toelaat om complexe automatiseringsprocessen op te bouwen via een grafische interface. Het platform ondersteunt uitgebreide API-integraties en conditionele workflows.
+Make (voorheen Integromat) is een no-code automatiseringsplatform waarmee gebruikers complexe workflows kunnen ontwikkelen via een visuele interface \autocite{Digidop}. Het platform ondersteunt meer dan 2000 integraties tussen applicaties en laat toe om geavanceerde automatiseringsscenario’s op te bouwen met voorwaarden, filters, lussen en webhooks.
 
-Net zoals Zapier beschikt Make niet over een directe ingebouwde PowerShell-module. Integratie met PowerShell vereist daarom bijkomende configuraties of externe tussenlagen.
+In tegenstelling tot eenvoudigere workflowplatformen biedt Make uitgebreide mogelijkheden voor het verwerken en manipuleren van gestructureerde gegevens zoals JSON-objecten en arrays \autocite{Nwibe2026}. Hierdoor kunnen workflows flexibeler opgebouwd worden en kunnen standaardconnectoren gedeeltelijk aangepast worden aan specifieke noden binnen een organisatie. Ondanks deze uitgebreide mogelijkheden blijft het platform echter beperkt door het ontbreken van volledige programmeerondersteuning binnen de standaardinterface.
+
+Net zoals Zapier beschikt Make niet over een ingebouwde PowerShell-module. Integratie met lokale Windows-omgevingen en systeembeheer via PowerShell vereist daarom bijkomende configuraties of externe tussenlagen.
+
+Daarnaast maakt Make gebruik van een abonnementsmodel gebaseerd op het aantal uitgevoerde acties binnen workflows. Volgens de officiële documentatie wordt elke uitgevoerde module beschouwd als één actie \autocite{Make}. Hierdoor is het totale verbruik afhankelijk van de complexiteit en het aantal stappen binnen een workflow. \textcite{Nwibe2026} stelt dat dit prijsmodel flexibel is, maar dat de kosten kunnen oplopen bij intensief gebruik van uitgebreide automatiseringsflows.
+
+Door zijn visuele workflowopbouw en uitgebreide ondersteuning voor gegevensverwerking vormt Make een flexibel automatiseringsplatform voor organisaties die complexe cloudworkflows wensen te ontwikkelen. Voor hybride infrastructuren met uitgebreide lokale systeemintegraties blijven echter bijkomende configuraties noodzakelijk.
 
 \subsection{Activepieces}
 
-Activepieces is een open-source automatiseringsplatform dat zich richt op flexibele workflowautomatisering en integraties tussen cloudtoepassingen. Het platform ondersteunt verschillende connectors en uitbreidingen via API-koppelingen.
+Activepieces is een workflowautomatiseringsplatform gebaseerd op een trigger-actionmodel waarbij workflows opgebouwd worden uit triggers, acties en integraties, zogenaamde ``pieces'' \autocite{Ulili2025}. Het platform ondersteunt meer dan 500 integraties en kan via Docker self-hosted ingezet worden. Hierdoor vormt Activepieces een alternatief voor cloudgebaseerde oplossingen zoals Zapier en Make, vooral voor organisaties die belang hechten aan controle over gegevens, schaalbaarheid en voorspelbare kosten.
 
-Volgens de officiële documentatie beschikt Activepieces momenteel niet over een directe integratie met PowerShell, waardoor bijkomende configuratie noodzakelijk kan zijn voor systeembeheer binnen Windows-omgevingen.
+Net zoals Microsoft Power Automate beschikt Activepieces over een visuele drag-and-dropinterface waarmee workflows zonder uitgebreide programmeerkennis opgebouwd kunnen worden \autocite{Nwibe2026}. Hierdoor blijft het platform toegankelijk voor gebruikers die automatiseringsprocessen wensen te ontwikkelen via een grafische workflowomgeving.
+
+Daarnaast hanteert Activepieces een prijsmodel gebaseerd op het aantal actieve workflows. Volgens de officiële documentatie ondersteunt de gratis versie maximaal tien actieve flows in de eerste maand, waarbij gedurende de eerste maand een onbeperkt aantal uitvoeringen mogelijk is \autocite{Activepieces}. Voor bijkomende actieve workflows worden extra kosten aangerekend. Ook vanaf de tweede maand moet er per flow betaald worden en is niets meer gratis.
+
+Ondanks de flexibiliteit van het platform beschikt Activepieces momenteel niet over een directe integratie met PowerShell. Hierdoor zijn bijkomende configuraties of externe koppelingen noodzakelijk voor systeembeheer en automatisering binnen Windows-omgevingen.
+
+Door de mogelijkheid tot self-hosting en de focus op open workflowautomatisering biedt Activepieces voordelen op vlak van datacontrole en flexibiliteit. Tegelijk blijft de integratie met lokale Microsoft-infrastructuren beperkter in vergelijking met platformen die specifiek gericht zijn op hybride Windows-omgevingen.
 
 \subsection{n8n}
 
-n8n is een open-source workflowplatform dat organisaties toelaat om workflows lokaal of in de cloud te hosten. Het platform onderscheidt zich door zijn uitbreidbaarheid en uitgebreide ondersteuning voor API-integraties.
+n8n is een open-source workflowautomatiseringsplatform waarmee organisaties processen kunnen automatiseren via visuele processtromen en integraties tussen verschillende systemen. In tegenstelling tot veel cloudgebaseerde automatiseringsplatformen kan n8n zowel in de cloud als lokaal self-hosted worden ingezet. Hierdoor behouden organisaties meer controle over hun gegevens, infrastructuur en beveiligingsinstellingen. Dit maakt het platform voornamelijk interessant voor technisch georiënteerde organisaties en omgevingen waar privacy en gegevenscontrole een belangrijke rol spelen.
 
-Daarnaast biedt n8n ondersteuning voor scripting en technische configuraties via JSON-verwerking en aangepaste modules. Hierdoor biedt het platform meer flexibiliteit, maar vereist het doorgaans ook meer technische expertise voor implementatie en onderhoud.
+Volgens \textcite{Nakavisute2025} kan een self-hosted implementatie van n8n een kostenefficiënt en controleerbaar alternatief vormen voor commerciële cloudgebaseerde automatiseringsplatformen. De onderzoekers benadrukken dat n8n voordelen biedt op vlak van transparantie, voorspelbare prestaties en gegevensbeheer, vooral binnen organisaties die gevoelige data verwerken of specifieke beveiligingsvereisten hebben. Tegelijk vereist een self-hosted omgeving bijkomende technische kennis voor configuratie, onderhoud en beveiliging van de infrastructuur.
+
+Daarnaast onderscheidt n8n zich door de mogelijkheid om workflows uit te breiden via scripting, JSON-verwerking en aangepaste modules \autocite{Nwibe2026}. Hierdoor biedt het platform meer flexibiliteit dan veel traditionele no-code oplossingen. Deze flexibiliteit gaat echter gepaard met een hogere technische complexiteit tijdens implementatie en beheer.
+
+Verder stellen \textcite{Nakavisute2025} dat n8n steeds vaker gepositioneerd wordt als open-source alternatief voor commerciële workflowplatformen zoals Zapier en Make. Het platform combineert hierbij visuele workflowautomatisering met uitbreidbare technische configuraties, waardoor het geschikt is voor zowel eenvoudige automatiseringen als complexere integratiescenario’s.
+
+Ondanks de voordelen van workflowautomatisering blijft menselijke tussenkomst noodzakelijk bij complexe beslissingen of situaties waarbij interpretatie, controle of ethische afwegingen vereist zijn \autocite{Cunha2025}. Hierdoor wordt automatisering in de praktijk vaak gecombineerd met menselijke validatie en opvolging.
 
 \subsection{Vergelijking van workflowplatformen}
 
-Workflowplatformen verschillen onderling op vlak van integratiemogelijkheden, gebruiksgemak, schaalbaarheid, prijsmodellen en ondersteuning voor scripting. Sommige platformen richten zich voornamelijk op cloudintegraties en gebruiksvriendelijke interfaces, terwijl andere oplossingen meer flexibiliteit bieden via open-source-functionaliteiten en technische configuratiemogelijkheden.
+Workflowplatformen verschillen onderling op vlak van integratiemogelijkheden, gebruiksgemak, schaalbaarheid, prijsmodellen en ondersteuning voor scripting. Sommige platformen richten zich voornamelijk op eenvoudige cloudintegraties via gebruiksvriendelijke interfaces, terwijl andere oplossingen meer flexibiliteit bieden door ondersteuning voor self-hosting, scripting en technische configuraties.
 
-Bij de selectie van een workflowplatform spelen factoren zoals beveiliging, compatibiliteit met bestaande infrastructuur, ondersteuning voor PowerShell en integratie met hybride IT-omgevingen een belangrijke rol.
+Binnen de context van dit onderzoek vormden vooral compatibiliteit met Microsoft-technologieën, ondersteuning voor hybride infrastructuren en integratie met PowerShell belangrijke selectiecriteria. Omdat het gemeentebestuur van Berlare gebruikmaakt van een omgeving waarin zowel cloudtoepassingen als lokale Active Directory-systemen aanwezig zijn, moest de gekozen oplossing kunnen communiceren met on-premisesystemen.
 
-\section{PowerShell en Active Directory}
+Platformen zoals Zapier en Make bieden sterke ondersteuning voor cloudintegraties en gebruiksvriendelijke workflowautomatisering, maar beschikken niet over een rechtstreekse integratie met PowerShell. Hierdoor zijn bijkomende tussenlagen of externe API-oplossingen noodzakelijk om lokale systeemconfiguraties uit te voeren. Dit bemoeilijkt de implementatie binnen hybride Windows-omgevingen.
 
-\subsection{PowerShell binnen systeembeheer}
+Open-sourceplatformen zoals Activepieces en n8n bieden dan weer meer flexibiliteit op vlak van self-hosting, uitbreidbaarheid en controle over gegevens. Deze platformen vereisen echter doorgaans meer technische expertise voor configuratie, onderhoud en beveiliging. Binnen kleinere IT-teams of publieke organisaties kan dit een bijkomende beheerslast vormen.
 
-PowerShell wordt binnen Windows-omgevingen veel gebruikt voor systeembeheer en automatisering. Via scripts kunnen beheerders repetitieve taken automatiseren en configuraties centraal beheren.
+Microsoft Power Automate onderscheidt zich voornamelijk door de nauwe integratie met Microsoft 365, Entra ID, SharePoint, Teams en andere Microsoft-diensten. Daarnaast ondersteunt het platform via Power Automate Desktop en Machine Runtime de uitvoering van lokale PowerShell-scripts binnen een hybride infrastructuur. Hierdoor kunnen cloudflows gecombineerd worden met lokale systeemconfiguraties binnen Active Directory.
 
-Binnen identity- en accessmanagement wordt PowerShell vaak toegepast voor het beheren van gebruikersaccounts, groepsrechten en directorystructuren.
-
-\subsection{De cmdlet New-ADUser}
-
-De PowerShell-cmdlet New-ADUser maakt deel uit van de Active Directory-module en wordt gebruikt om nieuwe gebruikersobjecten aan te maken binnen een domeinomgeving \autocite{Microsoft2024a}.
-
-Deze cmdlet ondersteunt uitgebreide configuratiemogelijkheden, waaronder het instellen van gebruikersattributen zoals accountnamen, wachtwoorden, organisatorische eenheden en groepslidmaatschappen. Hierdoor kunnen organisaties consistente gebruikersaccounts implementeren binnen een Active Directory-omgeving.
-
-Verder benadrukt \textcite{Microsoft2024a} dat New-ADUser frequent wordt toegepast binnen scripts en automatiseringsprocessen voor onboarding en gebruikersbeheer. Door parameters en standaardconfiguraties te combineren kunnen beheerders efficiënter werken en menselijke fouten beperken.
-
-\section{Hybride IT-omgevingen}
+\section{Hybride omgevingen en GDPR}
 
 \subsection{Cloud- en on-premisesomgevingen}
 
 Veel organisaties maken vandaag gebruik van hybride IT-omgevingen waarbij bepaalde systemen in de cloud draaien terwijl andere toepassingen lokaal on-premises blijven functioneren. Deze aanpak combineert de schaalbaarheid en flexibiliteit van cloudplatformen met de controle en gegevensbescherming van lokale infrastructuren.
 
+On premises omgevingen betekenen dat alles van de organisatie lokaal wordt beheerd op fysieke servers. Deze servers zitten dan op het eigen netwerk en er kan van buiten het eigen netwerk geen connectie gemaakt worden met de servers. Volgens \textcite{Cooper2025} is het opzetten van een on prem systeem een grote kost. Er moet apparatuur aangekocht worden en het moet daarna ook goed onderhouden worden. Hiervoor zijn experts nodig. 
+
+Bij cloud omgevingen, wordt er gebruik gemaakt van subscripties die per maand worden betaald. Volgens \textcite{Cooper2025} is het eenvoudiger om dit te gebruiken. Zo heb je ook geen kosten aan het onderhoud en de opzet. Ook moet je geen extra experts betalen. Een nadeel hiervan is echter dat de data wordt opgeslagen bij de provider. Afhankelijk van het soort gegevens, kan dit verboden worden door de GDPR. 
+
+In tabel ~\ref{tab:cloud_onprem} wordt een vergelijking opgesteld tussen cloud- en on-premises oplossingen.
+
+\begin{table}[H]
+    \centering
+    \caption{Vergelijking tussen cloud- en on-premisesoplossingen}
+    \label{tab:cloud_onprem}
+    \begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+        \hline
+        \textbf{Aspect} & \textbf{Cloud} & \textbf{On-premises} \\ \hline
+        
+        Infrastructuur &
+        Gehost op externe servers van een provider &
+        Gehost op eigen servers en infrastructuur \\ \hline
+        
+        Kosten &
+        Abonnementsmodel met terugkerende kosten &
+        Hogere initiële investering, lagere langetermijnkosten mogelijk \\ \hline
+        
+        Onderhoud &
+        Uitgevoerd door de provider &
+        Uitgevoerd door interne IT-afdeling \\ \hline
+        
+        Controle over data &
+        Data wordt beheerd door een externe partij &
+        Volledige controle over data en opslag \\ \hline
+        
+        Beveiliging &
+        Afhankelijk van beveiligingsmaatregelen van de provider &
+        Eigen beveiligingsmaatregelen en configuraties mogelijk \\ \hline
+        
+        Schaalbaarheid &
+        Eenvoudig en snel schaalbaar &
+        Uitbreiding vereist bijkomende hardware \\ \hline
+        
+        Toegankelijkheid &
+        Toegang mogelijk via internet vanaf verschillende locaties &
+        Vaak beperkt tot intern netwerk of VPN \\ \hline
+        
+        Maatwerk &
+        Beperkte aanpassingsmogelijkheden &
+        Uitgebreide mogelijkheden voor maatwerk \\ \hline
+        
+        Compliance &
+        Afhankelijk van de provider en diens certificeringen &
+        Meer controle over naleving van regelgeving \\ \hline
+        
+        Implementatie &
+        Snelle implementatie &
+        Complexere en tijdsintensievere installatie \\ \hline
+        
+    \end{tabular}
+\end{table}
+
 Volgens \textcite{Ahuja2024} kiezen organisaties vaak voor hybride infrastructuren om privacygevoelige gegevens lokaal te bewaren terwijl andere diensten via cloudplatformen worden aangeboden.
+
+\subsection{Microsoft 365 en Entra-ID}
+\subsubsection{Microsoft 365}
+Microsoft 365 is een cloudgebaseerd productiviteitsplatform dat verschillende toepassingen en diensten combineert, waaronder Office-applicaties, e-mail, bestandsopslag, samenwerkingstools en identiteitsbeheer \autocite{Microsoftc}. Het platform ondersteunt organisaties bij veilige samenwerking en communicatie via desktop-, web- en mobiele apparaten. 
+
+Microsoft 365 maakt gebruik van verschillende licenties. Deze zijn allemaal betalend. Hiervoor wordt per maand betaald voor een licentie per gebruiker \autocite{Microsoftd}. Afhankelijk van het type licentie, worden meer toepassingen beschikbaar. Zo heeft de basis licentie enkel recht op cloudgebaseerde toepassingen. Deze kan dan wel de mobiele applicaties gebruiken van de toepassingen, maar niet de desktop versies. Verder valt Exchange Online hier ook onder. Net zoals Teams, SharePoint en OneDrive
+
+\subsubsection{Microsoft Entra en identity- en accessmanagement}
+
+Binnen moderne organisaties speelt identity- en accessmanagement (IAM) een cruciale rol in het beheren van gebruikersidentiteiten en toegangsrechten tot digitale systemen en applicaties. IAM-oplossingen zorgen ervoor dat gebruikers op een veilige en gecontroleerde manier toegang krijgen tot de juiste middelen binnen een organisatie. Daarnaast ondersteunen deze systemen organisaties bij het toepassen van beveiligingsprincipes zoals least privilege en Zero Trust\autocite{Microsoft2026a}.
+
+Microsoft Entra is een cloudgebaseerd identity- en accessmanagementplatform van Microsoft dat organisaties ondersteunt bij het beheren van identiteiten, authenticatie en toegangscontrole \autocite{Microsoft2026a}. Het platform maakt deel uit van het Microsoft-ecosysteem en wordt automatisch geïntegreerd binnen omgevingen zoals Microsoft 365 en Azure.
+
+De kern van het platform wordt gevormd door Microsoft Entra ID, een cloudgebaseerde dienst voor authenticatie en autorisatie. Microsoft Entra ID maakt het mogelijk om gebruikersaccounts, groepen, applicaties en apparaten centraal te beheren. Organisaties kunnen hiermee onder andere Single Sign-On (SSO), multifactor-authenticatie (MFA) en conditionele toegangsregels implementeren om de beveiliging van hun IT-omgeving te versterken \autocite{Microsoft2026a}.
+
+Microsoft Entra ondersteunt eveneens het Zero Trust-principe, waarbij gebruikers en apparaten continu gevalideerd worden alvorens toegang wordt verleend tot bedrijfsresources \autocite{Microsoft2026a}. Hierbij wordt niet automatisch vertrouwd op basis van locatie of netwerktoegang, maar wordt elke aanmelding geëvalueerd op basis van risico, identiteit en context. Dit verhoogt de beveiliging van gevoelige bedrijfsgegevens en vermindert het risico op ongeautoriseerde toegang.
+
+Verder biedt Microsoft Graph uitgebreide mogelijkheden voor automatisering en integratie binnen het Microsoft-ecosysteem. Microsoft Graph functioneert als een centrale toegangspoort tot data en intelligentie binnen cloudservices zoals Microsoft Entra en Microsoft 365 \autocite{Microsoft2026b}. Via één centrale API-endpoint kunnen ontwikkelaars en beheerders gegevens en functionaliteiten benaderen van verschillende Microsoft-diensten, waaronder Outlook, Teams, SharePoint, OneDrive en Microsoft Entra ID.
+
+Microsoft Graph maakt gebruik van REST API’s en software development kits (SDK’s) om applicaties en automatiseringsprocessen te ontwikkelen \autocite{Microsoft2026b}. Hierdoor kunnen administratieve taken programmatisch uitgevoerd worden, zoals gebruikersbeheer, groepsbeheer, licentietoewijzing en toegangscontrole. Binnen onboardingprocessen kan Microsoft Graph bijvoorbeeld gebruikt worden om automatisch gebruikersaccounts aan te maken, medewerkers toe te voegen aan groepen en rechten toe te wijzen op basis van hun functie binnen de organisatie.
+
+Daarnaast ondersteunt Microsoft Graph integraties tussen verschillende Microsoft-diensten, waardoor gegevens centraal beheerd en uitgewisseld kunnen worden. De API biedt toegang tot zowel gebruikersgegevens als organisatorische informatie, zoals agenda’s, bestanden, groepen en communicatiediensten \autocite{Microsoft2026b}. Dit maakt het mogelijk om geavanceerde automatiseringsscenario’s te ontwikkelen waarbij meerdere systemen met elkaar samenwerken.
+
+Een bijkomend voordeel van Microsoft Graph is dat het beveiligings- en compliancefunctionaliteiten integreert binnen dezelfde omgeving. Volgens Microsoft omvat Graph eveneens diensten voor identity management, beveiliging en toegangscontrole, waardoor organisaties hun automatiseringen kunnen combineren met centrale beveiligingsmaatregelen \autocite{Microsoft2026b}. Hierdoor vormt Microsoft Graph een belangrijke component binnen moderne cloudgebaseerde automatiserings- en identitymanagementoplossingen.
+
+\subsection{Synchronisatie tussen Active Directory en Entra ID}
+
+Om de gegevens van de Active Directory en Entra ID te synchroniseren, wordt gebruik gemaakt van Microsoft Entra Connect. Microsoft Entra Connect (voorheen Azure AD Connect) is een Microsoft-tool die is ontworpen om uw lokale identiteitsinfrastructuur te koppelen aan de cloud \autocite{Cloudway2024}. De tool synchroniseert continu gebruikers, groepen en wachtwoorden vanuit uw lokale Active Directory (AD) met Microsoft Entra ID, waardoor gebruikers met één enkele identiteit toegang krijgen tot zowel cloud- als lokale bronnen. 
+
+Door de connectie, worden dezelfde gebruikersaccounts zowel on-premisis als in de cloud gebruikt. Hierdoor is wachtwoord management eenvoudig. Men kan gebruik maken van het lokale account om gegevens in de lokale omgeving te raadplegen, als ook gegevens in systemen die inloggen met een Microsoft account ondersteunen. Hierdoor wordt inloggen centraler en gaat het meer om het enkele gebruikersaccount. 
 
 \subsection{Microsoft On-Premises Data Gateway}
 
@@ -226,19 +333,124 @@ Binnen hybride Microsoft-omgevingen wordt de On-Premises Data Gateway gebruikt o
 
 Deze gateway maakt het mogelijk om gegevens en workflows vanuit cloudplatformen zoals Microsoft Power Automate of Microsoft Forms te koppelen aan lokale systemen zoals Active Directory of lokale databanken.
 
-\section{Wetgeving en gegevensbescherming}
+\subsection{Gegevensbescherming en GDPR binnen hybride omgevingen}
 
-\subsection{GDPR binnen gebruikersbeheer}
+\subsubsection{Persoonsgegevens binnen onboarding}
 
 Bij onboardingprocessen worden persoonsgegevens verwerkt zoals namen, contactgegevens, functietitels en gebruikersrechten. Organisaties dienen daarom rekening te houden met de Europese General Data Protection Regulation (GDPR).
 
 De GDPR legt organisaties verplichtingen op rond gegevensbescherming, toegangscontrole en veilige verwerking van persoonsgegevens. Binnen gebruikersbeheer betekent dit onder andere dat toegangsrechten beperkt moeten blijven tot noodzakelijke systemen en dat persoonsgegevens beveiligd verwerkt moeten worden.
+
+Anderzijds komen er bij de personeelsdienst ook gegevens binnen die extra beschermd moeten worden. Deze gegevens bevatten onder meer het adres, rijksregisternummer en leeftijd. Dat zijn dus echt de gegevens die buitenom de organisatie ook echt bij de werknemer horen.
+
+\subsubsection{GDPR binnen gebruikersbeheer}
+
+De verwerking van persoonsgegevens binnen hybride IT-omgevingen moet voldoen aan de bepalingen van de GDPR. Deze Europese regelgeving legt organisaties verschillende verplichtingen op met betrekking tot het verzamelen, verwerken, beveiligen en bewaren van persoonsgegevens. Binnen onboardingprocessen is dit bijzonder relevant, aangezien hierbij persoonsgegevens van nieuwe medewerkers verwerkt worden, zoals namen, e-mailadressen, functies, telefoonnummers en toegangsrechten.
+
+Volgens de GDPR moeten persoonsgegevens op een rechtmatige, behoorlijke en transparante manier verwerkt worden. Organisaties dienen duidelijk te communiceren welke gegevens verzameld worden en voor welk doel deze gebruikt zullen worden. Daarnaast mogen persoonsgegevens enkel verwerkt worden voor een welbepaald en gerechtvaardigd doeleinde en mogen deze niet verder verwerkt worden op een manier die onverenigbaar is met dat oorspronkelijke doel \autocite{Vlaanderen}.
+
+Verder stelt de regelgeving dat persoonsgegevens correct en actueel moeten zijn. Organisaties moeten daarom maatregelen nemen om foutieve of onvolledige gegevens te corrigeren of te verwijderen. Binnen hybride IT-omgevingen is dit bijzonder belangrijk aangezien gebruikersgegevens vaak gesynchroniseerd worden tussen lokale Active Directory-omgevingen en cloudplatformen zoals Microsoft Entra ID. Inconsistente of verouderde gegevens kunnen hierbij leiden tot fouten in toegangsbeheer en beveiligingsproblemen.
+
+De GDPR verplicht organisaties eveneens om persoonsgegevens te beschermen via passende technische en organisatorische maatregelen \autocite{Vlaanderen}. Binnen IT-omgevingen omvat dit onder andere toegangscontrole, authenticatie, logging, encryptie en het beperken van gebruikersrechten volgens het principe van least privilege. Geautomatiseerde provisioningprocessen kunnen hierbij bijdragen aan een consistenter en veiliger beheer van toegangsrechten.
+
+Daarnaast bepaalt de GDPR dat enkel persoonsgegevens verwerkt mogen worden die noodzakelijk zijn voor het vooraf bepaalde doel. Dit principe van dataminimalisatie betekent dat organisaties enkel relevante gegevens mogen verzamelen tijdens onboardingprocessen. Ook de bewaartermijn van persoonsgegevens moet beperkt blijven. Zodra gegevens niet langer noodzakelijk zijn voor het oorspronkelijke doel, moeten deze ontoegankelijk gemaakt of verwijderd worden \autocite{Vlaanderen}.
+
+Binnen grotere organisaties moet bovendien een Data Protection Officer (DPO) aangesteld worden om toezicht te houden op de naleving van de gegevensbeschermingswetgeving. Een DPO beschikt over kennis van gegevensbescherming, administratief recht en de verwerkingsactiviteiten binnen de organisatie. De DPO ondersteunt organisaties bij het implementeren van veilige en conforme gegevensverwerking binnen hun IT-infrastructuur \autocite{Vlaanderen}.
+
 
 \subsection{Toegangscontrole en compliance}
 
 Naast gegevensbescherming speelt ook compliance een belangrijke rol binnen identity- en accessmanagement. Organisaties moeten kunnen aantonen welke gebruikers toegang hebben tot bepaalde systemen en op welke manier toegangsrechten worden beheerd.
 
 Automatisering kan hierbij bijdragen aan consistente toegangscontrole, logging en standaardisatie van processen. Hierdoor kunnen organisaties beter voldoen aan beveiligingsrichtlijnen en auditvereisten.
+
+\section{PowerShell en Active Directory}
+
+\subsection{Active Directory}
+
+\subsubsection{Directory services}
+
+Een directory service is een centrale dienst die gebruikt wordt voor het opslaan, beheren en raadplegen van informatie over gebruikers, computers, groepen en andere netwerkobjecten binnen een IT-omgeving. Volgens \textcite{Microsofta} maken directory services het mogelijk om identiteiten en netwerkresources centraal te beheren binnen een organisatie.
+
+Binnen een directory service worden objecten opgeslagen in een hiërarchische structuur. Deze objecten kunnen onder andere gebruikersaccounts, printers, servers, gedeelde mappen en beveiligingsgroepen voorstellen. Door deze centrale opslagstructuur kunnen beheerders gebruikers en toegangsrechten efficiënter beheren \autocite{Microsofta}.
+
+Een belangrijk onderdeel van directory services is authenticatie en autorisatie. Authenticatie verwijst naar het controleren van de identiteit van een gebruiker, bijvoorbeeld via een gebruikersnaam en wachtwoord. Autorisatie bepaalt vervolgens tot welke systemen, bestanden of toepassingen een gebruiker toegang krijgt. Hierdoor vormen directory services een essentieel onderdeel van identity- en accessmanagement binnen moderne organisaties.
+
+Organisaties gebruiken directory services om gebruikersbeheer te centraliseren en consistente toegangscontrole mogelijk te maken. Zonder een centrale directory zouden gebruikersaccounts en rechten afzonderlijk beheerd moeten worden op verschillende systemen, wat leidt tot hogere beheerslasten en een verhoogde kans op fouten.
+
+\subsubsection{Active Directory Domain Services}
+
+Binnen veel organisaties wordt gebruikgemaakt van Microsoft Active Directory als directory service. Active Directory wordt gebruikt voor het centraal beheren van gebruikersaccounts, groepen, computers en toegangsrechten binnen een Windows-omgeving. Waar gebruikersbeheer vroeger voornamelijk lokaal gebeurde op afzonderlijke systemen, wordt dit vandaag steeds vaker centraal georganiseerd via directory services en cloudplatformen.
+
+In Active Directory worden onder andere toegangsrechten voor gedeelde mappen, gebruikersaccounts en groepen beheerd. Hierdoor kunnen organisaties gebruikersbeheer en toegangscontrole consistenter uitvoeren binnen grotere netwerkomgevingen.
+
+Een belangrijk onderdeel van Active Directory is Active Directory Domain Services (AD DS). Om een Active Directory-omgeving correct te laten functioneren, zijn domain controllers noodzakelijk. Dit zijn servers waarop de service Active Directory Domain Services geïnstalleerd is \autocite{Microsoftb}. Domain controllers verwerken onder andere authenticatieverzoeken, aanmeldingen en beleidsinstellingen binnen het netwerk \autocite{Microsoftb}.
+
+\subsubsection{Domeinen en forests}
+
+Binnen Active Directory worden domeinen gebruikt om netwerkobjecten logisch te organiseren. Een domein vormt de basis van een interne netwerkomgeving en bevat onder andere gebruikers, computers, groepen, printers en andere netwerkobjecten.
+
+Daarnaast kunnen meerdere domeinen samengebracht worden binnen een zogenaamd forest. Een forest vormt de hoogste logische structuur binnen Active Directory en maakt het mogelijk om meerdere domeinen centraal te beheren en vertrouwensrelaties tussen deze domeinen op te zetten \autocite{Microsoftb}.
+
+Deze hiërarchische structuur laat organisaties toe om gebruikersbeheer overzichtelijk te organiseren binnen complexe IT-omgevingen met verschillende afdelingen, locaties of organisatorische structuren.
+
+\subsection{PowerShell binnen systeembeheer}
+
+Microsoft PowerShell is een command-line shell en scriptingtaal die gebruikt wordt voor het automatiseren van taken en het beheren van Windows-systemen \autocite{SentinalOne2025}. Dankzij de uitgebreide scriptingmogelijkheden kunnen systeembeheerders repetitieve beheertaken automatiseren en configuraties centraal beheren. Daarnaast ondersteunt PowerShell remote beheer en interactie met verschillende Windows-services en systeemcomponenten.
+
+PowerShell wordt gebruikt voor het uitvoeren van repetitieve taken, als ook voor zaken waarvoor de grafische interface nog geen optie voor biedt. In tegenstelling tot traditionele grafische beheertools maakt PowerShell het mogelijk om grote hoeveelheden configuraties centraal en consistent uit te voeren via scripts en cmdlets.
+
+Een belangrijk voordeel van PowerShell is de mogelijkheid om systeembeheer schaalbaar te automatiseren. Taken zoals het aanmaken van gebruikersaccounts, het beheren van groepsrechten, het configureren van mailboxen en het uitvoeren van controles kunnen automatisch uitgevoerd worden zonder manuele tussenkomst. Hierdoor vermindert niet alleen de administratieve werklast, maar wordt ook de kans op menselijke fouten beperkt.
+
+Aangezien PowerShell standaard geintegreerd is binnen Windows, en ontworpen is door Microsoft, biedt het dus voor verscheidene Windows toepassingen ondersteuning. Ook zijn er Windows servers die enkel bestaan uit PowerShell en dus geen grafische interface hebben. Voor servers is PowerShell dus ideaal om te gebruiken. 
+
+\subsubsection{New-ADUser}
+
+De PowerShell-cmdlet \texttt{New-ADUser} maakt deel uit van de Active Directory-module en wordt gebruikt om nieuwe gebruikersobjecten aan te maken binnen een domeinomgeving \autocite{Microsoft2024a}.
+
+Deze cmdlet ondersteunt uitgebreide configuratiemogelijkheden, waaronder het instellen van gebruikersattributen zoals accountnamen, wachtwoorden, organisatorische eenheden en accountinstellingen. Hierdoor kunnen organisaties consistente gebruikersaccounts implementeren binnen een Active Directory-omgeving.
+
+Verder benadrukt \textcite{Microsoft2024a} dat \texttt{New-ADUser} frequent wordt toegepast binnen scripts en automatiseringsprocessen voor onboarding en gebruikersbeheer. Door parameters en standaardconfiguraties te combineren kunnen beheerders efficiënter werken en menselijke fouten beperken.
+
+Binnen geautomatiseerde onboardingprocessen kan deze cmdlet gebruikt worden om gebruikersaccounts automatisch aan te maken op basis van gegevens afkomstig uit HR-systemen, formulieren of workflowplatformen. Hierdoor wordt de administratieve werklast beperkt en kan een nieuwe medewerker sneller toegang krijgen tot de noodzakelijke systemen en netwerkresources.
+
+\subsubsection{Add-ADGroupMember}
+
+De PowerShell-cmdlet Add-ADGroupMember wordt gebruikt om gebruikers, computers, groepen of serviceaccounts toe te voegen aan een Active Directory-groep \autocite{Microsoft2025a}. Deze cmdlet maakt deel uit van de Active Directory-module voor PowerShell en wordt frequent toegepast binnen automatiseringsscripts voor gebruikersbeheer en toegangscontrole.
+
+Volgens de officiële Microsoft-documentatie ondersteunt de cmdlet verschillende methodes om zowel groepen als gebruikers te identificeren. Groepen kunnen onder andere aangesproken worden via hun distinguished name, GUID, SID of SAM-accountnaam. Ook gebruikersobjecten kunnen op verschillende manieren geïdentificeerd worden \autocite{Microsoft2025a}. Hierdoor biedt de cmdlet een flexibele manier om groepslidmaatschappen programmatisch te beheren binnen complexe Active Directory-omgevingen.
+
+Binnen onboardingprocessen speelt Add-ADGroupMember een belangrijke rol bij het automatisch toekennen van toegangsrechten. In veel organisaties worden rechten namelijk niet rechtstreeks aan individuele gebruikers toegekend, maar via beveiligingsgroepen beheerd. Door nieuwe medewerkers automatisch aan de correcte groepen toe te voegen, kunnen toegangen tot gedeelde mappen, applicaties en netwerkresources centraal en consistent beheerd worden.
+
+Daarnaast ondersteunt de cmdlet het toevoegen van meerdere objecten tegelijk via de parameter Members. Hierdoor kunnen scripts efficiënter uitgevoerd worden en wordt het beheer van grote aantallen gebruikers vereenvoudigd \autocite{Microsoft2025a}. De cmdlet wordt daarom vaak gecombineerd met andere PowerShell-cmdlets zoals New-ADUser binnen geautomatiseerde onboarding- en identitymanagementprocessen.
+
+Microsoft vermeldt eveneens dat de cmdlet gebruikt kan worden in combinatie met pipelines en externe Active Directory-servers, waardoor ook beheer over meerdere domeinen of hybride omgevingen mogelijk wordt \autocite{Microsoft2025a}. Hierdoor vormt Add-ADGroupMember een belangrijke bouwsteen binnen geautomatiseerd toegangsbeheer.
+
+\subsubsection{Disable-ADAccount}
+
+De PowerShell-cmdlet Disable-ADAccount wordt gebruikt om Active Directory-accounts uit te schakelen binnen een domeinomgeving \autocite{Microsoft2025b}. De cmdlet maakt deel uit van de Active Directory-module voor PowerShell en ondersteunt het uitschakelen van gebruikersaccounts, computeraccounts en serviceaccounts.
+
+Volgens de Microsoft-documentatie kan een account geïdentificeerd worden via verschillende eigenschappen, waaronder de distinguished name, GUID, security identifier (SID) of SAM-accountnaam \autocite{Microsoft2025b}. Daarnaast ondersteunt de cmdlet ook pipelineverwerking, waardoor accountobjecten rechtstreeks vanuit andere cmdlets zoals Get-ADUser of Search-ADAccount verwerkt kunnen worden.
+
+Binnen identity- en accessmanagement speelt Disable-ADAccount een belangrijke rol tijdens offboardingprocessen. Wanneer een medewerker een organisatie verlaat, is het noodzakelijk om toegangsrechten zo snel mogelijk te beperken om ongeautoriseerde toegang tot systemen en gegevens te voorkomen. Door accounts automatisch uit te schakelen kunnen organisaties beveiligingsrisico’s verminderen en beter voldoen aan compliance- en beveiligingsrichtlijnen.
+
+Een belangrijk voordeel van Disable-ADAccount is dat het account niet onmiddellijk verwijderd wordt. Hierdoor blijven gebruikersgegevens, groepslidmaatschappen en mailboxkoppelingen behouden voor eventuele audits, tijdelijke blokkeringen of latere heractivering. Dit biedt organisaties meer controle over gebruikersbeheer en voorkomt dat belangrijke gegevens onmiddellijk verloren gaan.
+
+Daarnaast ondersteunt de cmdlet het gelijktijdig uitschakelen van meerdere accounts via scripting en automatisering. Microsoft toont bijvoorbeeld aan dat volledige organisatorische eenheden automatisch verwerkt kunnen worden door Disable-ADAccount te combineren met Get-ADUser \autocite{Microsoft2025b}. Hierdoor kan de cmdlet efficiënt ingezet worden binnen geautomatiseerde offboardingprocessen en periodieke beveiligingscontroles.
+
+Verder ondersteunt Disable-ADAccount het beheer van accounts over verschillende domeinen en Active Directory-servers heen via parameters zoals Server en Credential \autocite{Microsoft2025b}. Hierdoor kan de cmdlet ook gebruikt worden binnen grotere of hybride IT-omgevingen waarin meerdere domeinen of directoryservices aanwezig zijn.
+
+\subsection{Exchange Online PowerShell}
+
+Exchange Online PowerShell vormt een belangrijk onderdeel van het beheer van Microsoft Exchange Online en Microsoft 365-omgevingen. Via PowerShell kunnen beheerders mailboxen, distributiegroepen, gebruikersrechten en e-mailconfiguraties geautomatiseerd beheren. Hierdoor wordt het mogelijk om repetitieve beheertaken efficiënter uit te voeren en integraties op te zetten met bestaande onboarding- en offboardingprocessen.
+
+Volgens de officiële Microsoft-documentatie werkt Exchange PowerShell met cmdlets die bestaan uit parameters en parameterwaarden \autocite{Microsoft2025c}. Parameters worden voorafgegaan door een koppelteken en bepalen welke actie uitgevoerd wordt. Hierdoor kunnen beheerders opdrachten flexibel configureren afhankelijk van de gewenste beheertaak.
+
+Daarnaast ondersteunt Exchange Online PowerShell het gebruik van pipelines, waarbij de uitvoer van een cmdlet automatisch wordt doorgegeven aan een andere cmdlet \autocite{Microsoft2025c}. Dit maakt het mogelijk om meerdere beheeracties te combineren binnen één script of automatiseringsproces. Hierdoor kunnen organisaties grote aantallen mailboxen en gebruikersaccounts op een consistente manier beheren.
+
+Een belangrijk voordeel van Exchange Online PowerShell is de mogelijkheid om administratieve taken te automatiseren binnen hybride Microsoft 365-omgevingen. Cmdlets kunnen gebruikt worden voor het automatisch aanmaken van mailboxen, het toekennen van mailboxrechten, het beheren van distributiegroepen en het configureren van e-mailinstellingen. Hierdoor vormt Exchange Online PowerShell een belangrijk hulpmiddel binnen geautomatiseerde onboarding- en gebruikersprovisioningprocessen.
+
+Daarnaast ondersteunt Exchange Online PowerShell variabelen, scripting en conditionele logica, waardoor complexe beheerprocessen geautomatiseerd kunnen worden \autocite{Microsoft2025c}. Dit verhoogt de schaalbaarheid van systeembeheer en vermindert de kans op menselijke fouten bij repetitieve administratieve taken.
 
 \section{Onderzoekskloof}
 
