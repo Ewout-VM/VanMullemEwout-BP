@@ -385,6 +385,7 @@ De gebruiker wordt naast de groep voor licenties van Microsoft 365 ook nog toege
 Door gebruik te maken van groepsgebaseerde licentietoekenning blijft het beheer eenvoudiger, consistenter en schaalbaarder. Nieuwe gebruikers ontvangen automatisch de correcte cloudconfiguraties zonder dat manuele tussenkomst vereist is.
 
 Figuur \ref{fig:Do_until} toont de do until statement die in Power Automate gebruikt wordt.
+\clearpage
 
 \begin{figure}[htbp]
     \centering
@@ -802,6 +803,15 @@ Door groepslidmaatschappen automatisch te verwijderen, wordt vermeden dat voorma
 
 Net zoals bij de onboarding wordt ook binnen deze scripts gebruikgemaakt van \texttt{try-catch}-constructies zodat fouten gecontroleerd opgevangen kunnen worden zonder dat het volledige proces abrupt stopt.
 
+Figuur ~\ref{fig:DesktopOffboarding} toont de complete desktopflow voor het offboardingsproces.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{DesktopOffboarding.png}
+    \caption[Desktopflow offboarding]{Deze afbeelding toont de desktopflow voor het offboardingsproces}
+    \label{fig:DesktopOffboarding}
+\end{figure}
+
 \subsection{Verwijderen van groepslidmaatschappen en licenties}
 
 Naast de lokale Active Directory-groepen moeten tijdens de offboarding eveneens verschillende cloudgroepen binnen Microsoft 365 verwijderd worden. Deze groepen werden tijdens de onboarding automatisch toegekend via Power Automate en zijn verantwoordelijk voor het toewijzen van licenties en bijkomende toegangsrechten.
@@ -814,6 +824,14 @@ Voor het identificeren van de gebruiker wordt het e-mailadres gebruikt dat eerde
 
 Door gebruikers automatisch uit deze groepen te verwijderen, worden gekoppelde licenties en toegangsrechten eveneens automatisch ingetrokken. Dit vermindert het risico op ongewenste toegang na uitdiensttreding en zorgt ervoor dat ongebruikte licenties opnieuw beschikbaar worden binnen de organisatie. Dit is dus zowel positief voor veiligheid van gegevens, als ook voor het niet verspillen van licenties. 
 
+Figuur ~\ref{fig:CloudOffboarding} toont de complete cloudflow voor het offboardingsproces.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1\textwidth]{CloudOffboarding.png}
+    \caption[Cloudflow offboarding]{Deze afbeelding toont de cloudflow voor het offboardingsproces}
+    \label{fig:CloudOffboarding}
+\end{figure}
 
 %Om een automatische werking op te stellen, werd door een collega gekozen voor Power Automate. Power Automate is een programma van Microsoft zelf dat gebruikt kan worden om automatische flows te maken. Power automate is voornamelijk een tool dat in de cloud draait, maar het kan ook voor automatisatie zorgen on prem. \newline
 
