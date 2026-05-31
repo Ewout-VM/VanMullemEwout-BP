@@ -11,7 +11,7 @@
 
 Binnen het oorspronkelijke onboardingproces van het lokaal gemeentebestuur van Berlare verliepen vrijwel alle stappen volledig manueel. Zowel het aanmaken van gebruikersaccounts als het toekennen van rechten, groepslidmaatschappen en licenties moesten handmatig uitgevoerd worden door medewerkers van de ICT-dienst.
 
-Deze werkwijze was tijdrovend en zorgde ervoor dat medewerkers van de ICT-dienst een aanzienlijk deel van hun tijd moesten besteden aan repetitieve administratieve taken. Hierdoor bleef minder tijd beschikbaar voor complexere technische problemen en andere ondersteunende opdrachten binnen de organisatie. Ook werd de onboarding vaak niet doorgegeven op voorhand. Daardoor moest er meteen geschakeld worden om het in orde te brengen en moesten de andere taken aan de kant geschoven worden. 
+Deze werkwijze was tijdrovend en zorgde ervoor dat medewerkers van de ICT-dienst een aanzienlijk deel van hun tijd moesten besteden aan repetitieve administratieve taken. Hierdoor bleef minder tijd beschikbaar voor complexere technische problemen en andere ondersteunende opdrachten binnen de organisatie. Ook werd de onboarding vaak vooraf niet doorgegeven. Daardoor moest er meteen geschakeld worden om het in orde te brengen en moesten de andere taken aan de kant geschoven worden. 
 
 Door het onboardingproces te automatiseren via Microsoft Power Automate en PowerShell wordt een groot deel van deze manuele tussenkomsten geëlimineerd. De personeelsdienst kan nu zelfstandig een onboardingaanvraag starten via Microsoft Forms, waarna de verdere verwerking grotendeels automatisch verloopt.
 
@@ -25,7 +25,7 @@ Hetzelfde gold voor distributiegroepen binnen Microsoft 365. Gebruikers moesten 
 
 Binnen de geautomatiseerde oplossing worden deze configuraties automatisch uitgevoerd op basis van de gegevens die ingevuld worden binnen het onboardingformulier. Hierdoor verloopt het volledige proces sneller, consistenter en met een kleinere kans op menselijke fouten.
 
-Als laatste werd ook de communicatie handmatig gedaan. Interne communicatie is een werkpunt voor de gemeente en daardoor wordt het soms vergeten. Aangezien de communicatie handmatig gebeurde, als ook soms vergeten werd, waren er vaak andere collega's die niet op de hoogte waren van de status. Met de automatische terugkoppeling die in dit project werd geconfigureerd, wordt de communicatie consistenter en betrouwbaarder. 
+Als laatste werd ook de communicatie handmatig gedaan. Interne communicatie is een werkpunt voor de gemeente en daardoor wordt het soms vergeten. Aangezien de communicatie handmatig gebeurde, alsook soms vergeten werd, waren vaak andere collega's niet op de hoogte van de status. Met de automatische terugkoppeling die in dit project werd geconfigureerd, wordt de communicatie consistenter en betrouwbaarder. 
 
 In tabel ~\ref{tab:VergelijkingOnboarding} vind je een overzichtelijke vergelijking tussen het manuele en geautomatiseerde proces.
 
@@ -79,10 +79,9 @@ Vervolgens moest het account gesynchroniseerd worden naar Microsoft 365 via Entr
 
 Na de synchronisatie moesten bijkomende cloudconfiguraties uitgevoerd worden. Hierbij werden gebruikers toegevoegd aan licentiegroepen en distributielijsten binnen Microsoft 365. Deze stap nam gemiddeld twee tot vier minuten in beslag.
 
-Tot slot moesten rechten op gedeelde postvakken handmatig geconfigureerd worden. Voor ieder postvak moesten afzonderlijk \textit{Full Access}- en \textit{Send on Behalf}-rechten toegekend worden. Afhankelijk van het aantal mailboxen duurde deze configuratie gemiddeld twee tot vijf minuten.
+Tot slot moesten rechten op gedeelde postvakken handmatig geconfigureerd worden. Voor ieder postvak moesten afzonderlijk \textit{Full Access}- en \textit{Send on Behalf}-rechten toegekend worden. Afhankelijk van het aantal mailboxen duurde deze configuratie gemiddeld twee tot vijf minuten.\newline
 
-Tabel \ref{tab:TijdsvergelijkingOnboarding} toont een overzicht van de geschatte tijdsduur van de verschillende stappen binnen het oorspronkelijke onboardingproces.
-
+Tabel ~\ref{tab:TijdsvergelijkingOnboarding} toont een overzicht van de geschatte tijdsduur van de verschillende stappen binnen het oorspronkelijke onboardingproces.
 \clearpage
 
 \begin{table}[htbp]
@@ -193,7 +192,7 @@ Binnen de geautomatiseerde oplossing worden deze stappen automatisch uitgevoerd 
 
 De automatisering vermindert hierdoor niet alleen de actieve verwerkingstijd, maar zorgt er eveneens voor dat offboardings consistenter en sneller uitgevoerd worden.
 
-Tabel \ref{tab:TijdsvergelijkingOffboarding} toont een overzicht van de geschatte tijdsduur van de verschillende stappen binnen het oorspronkelijke onboardingproces.
+Tabel ~\ref{tab:TijdsvergelijkingOffboarding} toont een overzicht van de geschatte tijdsduur van de verschillende stappen binnen het oorspronkelijke onboardingproces.
 
 \begin{table}[htbp]
     \centering
@@ -233,7 +232,7 @@ Deze aanpak vermindert de kans op ongewenste toegang aanzienlijk en zorgt ervoor
 
 Binnen de ontwikkelde oplossing werd sterk ingezet op betrouwbaarheid en centraal beheer. Door gebruik te maken van Power Automate in combinatie met PowerShell kunnen verschillende configuraties automatisch en op een consistente manier uitgevoerd worden.
 
-Om onverwachte fouten gecontroleerd op te vangen, wordt binnen de PowerShell-scripts gebruikgemaakt van \texttt{try-catch}-constructies. Hierdoor kunnen fouten tijdens het uitvoeren van opdrachten geregistreerd worden zonder dat het volledige proces onmiddellijk stopt. Daarnaast werden op verschillende plaatsen retry-mechanismen voorzien zodat tijdelijke synchronisatieproblemen tussen Active Directory, Entra ID en Exchange Online automatisch opgevangen kunnen worden.
+Om onverwachte fouten gecontroleerd op te vangen, wordt binnen de PowerShell-scripts gebruikgemaakt van \texttt{try-catch}-constructies. Hierdoor kunnen fouten tijdens het uitvoeren van opdrachten geregistreerd worden zonder dat het volledige proces onmiddellijk stopt. Daarnaast werden op verschillende plaatsen automatische herhalingsmechanismen voorzien zodat tijdelijke synchronisatieproblemen tussen Active Directory, Entra ID en Exchange Online automatisch opgevangen kunnen worden.
 
 Ook de beheerbaarheid van de oplossing werd meegenomen tijdens de ontwikkeling. Door gebruik te maken van centrale PowerShell-scripts kunnen wijzigingen eenvoudig doorgevoerd worden zonder de volledige flow opnieuw op te bouwen. Groepslidmaatschappen, rolcodes en standaardconfiguraties worden centraal beheerd binnen variabelen en mappings, waardoor uitbreidingen eenvoudiger uitgevoerd kunnen worden.
 
@@ -245,11 +244,11 @@ Door de combinatie van centrale flows, herbruikbare scripts en automatische logg
 
 Hoewel de ontwikkelde oplossing een groot deel van het onboarding- en offboardingproces automatiseert, zijn er nog verschillende beperkingen aanwezig.
 
-Een eerste beperking is dat bepaalde configuraties nog steeds manueel uitgevoerd moeten worden. Zo worden rechten op specifieke netwerkschijven en bepaalde lokale toepassingen momenteel nog niet automatisch toegekend. Daarnaast blijft ook het voorbereiden van hardware, zoals laptops en randapparatuur, een manuele taak binnen de ICT-dienst.
+Een eerste beperking is dat bepaalde configuraties nog steeds manueel uitgevoerd moeten worden. Zo worden rechten op specifieke netwerkschijven en bepaalde lokale toepassingen niet automatisch toegekend. Daarnaast blijft ook het voorbereiden van hardware, zoals laptops en randapparatuur, een manuele taak binnen de ICT-dienst.
 
-Verder is de oplossing afhankelijk van verschillende synchronisatieprocessen tussen Active Directory, Entra ID en Exchange Online. Hierdoor kunnen bepaalde stappen pas uitgevoerd worden nadat de synchronisatie volledig afgerond is. Hoewel hiervoor retry-mechanismen voorzien werden, blijven deze wachttijden afhankelijk van externe synchronisatiecycli.
+Verder is de oplossing afhankelijk van verschillende synchronisatieprocessen tussen Active Directory, Entra ID en Exchange Online. Hierdoor kunnen bepaalde stappen pas uitgevoerd worden nadat de synchronisatie volledig afgerond is. Hoewel hiervoor retry-mechanismen voorzien werden, blijven deze wachttijden afhankelijk van externe synchronisatiecycli.\newline
 
-Binnen de configuratie van Exchange Online wordt momenteel eveneens gebruikgemaakt van interactieve aanmeldingen. Hierdoor is het proces nog niet volledig automatisch en moet er bij bepaalde stappen handmatig authenticatie uitgevoerd worden. Een mogelijke verbetering voor de toekomst is het implementeren van certificaatgebaseerde authenticatie zodat ook deze onderdelen volledig automatisch uitgevoerd kunnen worden.
+Binnen de configuratie van Exchange Online wordt momenteel eveneens gebruikgemaakt van interactieve aanmeldingen. Hierdoor is het proces nog niet volledig automatisch en moet er bij bepaalde stappen een handmatige authenticatie uitgevoerd worden door de IT-dienst. Een mogelijke verbetering voor de toekomst is het implementeren van certificaatgebaseerde authenticatie zodat ook deze onderdelen volledig automatisch uitgevoerd kunnen worden.
 
 Daarnaast is de oplossing specifiek ontwikkeld voor de infrastructuur en werkwijze van het lokaal gemeentebestuur van Berlare. Hierdoor zijn bepaalde scripts, groepsstructuren en Organizational Units sterk afhankelijk van de bestaande omgeving. Bij gebruik binnen andere organisaties zouden verschillende configuraties aangepast moeten worden.
 

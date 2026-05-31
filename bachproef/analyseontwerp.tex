@@ -7,12 +7,12 @@
 
 \section{Doelstellingen van de oplossing}
 
-Op basis van de analyse van het huidige onboarding- en offboardingsprocedures werd vastgesteld dat verschillende stappen binnen de ICT-dienst repetitief en manueel uitgevoerd worden. Hierdoor neemt het verwerken van nieuwe medewerkers relatief veel tijd in beslag en ontstaat een verhoogde kans op menselijke fouten. Daarnaast zijn verschillende diensten afhankelijk van elkaar voor het uitvoeren van bepaalde configuraties, waardoor vertragingen kunnen ontstaan wanneer terugkoppelingen ontbreken.
+Op basis van de analyse van de huidige onboarding- en offboardingsprocedures werd vastgesteld dat verschillende stappen binnen de ICT-dienst repetitief en manueel uitgevoerd worden. Hierdoor neemt het verwerken van nieuwe medewerkers relatief veel tijd in beslag en ontstaat een verhoogde kans op menselijke fouten. Daarnaast zijn verschillende diensten afhankelijk van elkaar voor het uitvoeren van bepaalde configuraties, waardoor vertragingen kunnen ontstaan wanneer terugkoppelingen ontbreken.
 
 Het doel van dit onderzoek is daarom het ontwerpen van een oplossing die een deel van het onboarding- en van het offboardingsproces automatiseert binnen de bestaande ICT-omgeving van het gemeentebestuur van Berlare. De focus ligt hierbij voornamelijk op het automatisch verwerken van gebruikersgegevens en het automatisch aanmaken of uitschakelen van gebruikersaccounts binnen de Active Directory-omgeving.
 
-Daarnaast moet de oplossing zorgen voor een betere opvolging van uitgevoerde taken en een efficiëntere samenwerking tussen verschillende diensten binnen het onboarding- en offboardingsproces. Het uiteindelijke doel is om de administratieve belasting te verminderen, de foutmarge te verkleinen en de doorlooptijd van beide processen te beperken.
-
+Daarnaast moet de oplossing zorgen voor een betere opvolging van uitgevoerde taken en een efficiëntere samenwerking tussen verschillende diensten binnen het onboarding- en offboardingsproces. Het uiteindelijke doel is om de administratieve belasting te verminderen, de foutenmarge te verkleinen en de doorlooptijd van beide processen te beperken.
+\clearpage
 \section{Requirements van de oplossing}
 
 \subsection{Functionele requirements}
@@ -37,7 +37,7 @@ Binnen deze categorie vallen functionaliteiten die een meerwaarde bieden, maar n
 
 Een eerste uitbreiding is het automatisch versturen van een welkomstmail naar nieuwe medewerkers met praktische informatie en handleidingen. Daarnaast behoort ook het automatiseren van het offboardingproces tot deze categorie.
 
-Hoewel offboarding een belangrijk onderdeel vormt van identiteits- en toegangsbeheer binnen organisaties, lag de primaire focus van deze bachelorproef op onboarding. Indien mogelijk werd echter ook een gedeeltelijke automatisering van offboarding opgenomen binnen de oplossing.
+Hoewel offboarding een belangrijk onderdeel vormt van identiteits- en toegangsbeheer binnen organisaties, lag de primaire focus van deze bachelorproef op onboarding. Indien mogelijk wordt echter ook een (gedeeltelijke) automatisering van offboarding opgenomen binnen de oplossing.
 
 \subsubsection{Would-have requirements}
 
@@ -65,13 +65,13 @@ Een eerste belangrijke taak is het automatisch aanmaken van gebruikersaccounts b
 
 Ook het toekennen van licenties binnen Entra ID gebeurt momenteel afzonderlijk per gebruiker. Omdat deze toewijzingen grotendeels gebaseerd zijn op functie en dienst, kan dit proces geautomatiseerd worden door gebruikers automatisch aan de correcte groepen toe te voegen.
 
-Verder werden ook terugkerende communicatieve taken geïdentificeerd. Zo kunnen meldingen of terugkoppelingen automatisch verstuurd worden wanneer bepaalde configuraties succesvol uitgevoerd werden. Hierdoor kunnen andere diensten sneller verder werken met hun eigen configuraties.
+Verder werden ook terugkerende communicatieve taken geïdentificeerd. Zo kunnen meldingen of terugkoppelingen automatisch verstuurd worden wanneer bepaalde configuraties succesvol uitgevoerd werden. Hierdoor kunnen andere diensten sneller verder werken met hun eigen configuraties.\newline
 
 Naast onboarding werden ook verschillende onderdelen van het offboardingproces geïdentificeerd die zich lenen tot automatisering. Wanneer een medewerker de organisatie verlaat, moeten verschillende toegangen en configuraties aangepast of verwijderd worden binnen zowel Active Directory als Microsoft 365.
 
 Momenteel gebeurt dit grotendeels manueel door de ICT-dienst. Hierbij worden gebruikersaccounts gedeactiveerd, groepslidmaatschappen verwijderd, mailboxrechten aangepast en licenties ingetrokken. Omdat deze stappen volgens vaste procedures verlopen, kunnen ook deze processen gedeeltelijk geautomatiseerd worden.
 
-Daarnaast is offboarding vanuit beveiligingsoogpunt een belangrijk proces. Het tijdig verwijderen van toegangsrechten vermindert het risico op ongewenste toegang tot interne systemen en gegevens nadat een medewerker uit dienst gegaan is.
+Daarnaast is offboarding vanuit beveiligingsoogpunt een belangrijk proces. Het tijdig verwijderen van toegangsrechten vermindert het risico op ongewenste toegang tot interne systemen en gegevens nadat een medewerker uit dienst is gegaan.
 
 
 \subsection{Niet-automatiseerbare taken}
@@ -113,7 +113,7 @@ Verder ondersteunt Power Automate de combinatie van cloudflows en lokale desktop
 
 Op basis van deze vereisten werd gekozen om de verdere implementatie uit te werken met Microsoft Power Automate in combinatie met PowerShell-gebaseerde automatisering.
 
-Daarnaast moet de oplossing niet alleen nieuwe accounts kunnen aanmaken, maar ook bestaande gebruikersaccounts veilig kunnen aanpassen of deactiveren tijdens het offboardingproces. Hiervoor moet eveneens communicatie mogelijk zijn met Exchange Online voor het beheren van mailboxrechten, distributiegroepen en gedeelde postvakken.
+Daarnaast moet de oplossing niet alleen nieuwe accounts kunnen aanmaken, maar ook bestaande gebruikersaccounts veilig kunnen aanpassen of deactiveren tijdens het offboardingproces. Voor zowel onboarding als ofboarding moet communicatie mogelijk zijn met Exchange Online voor het beheren van mailboxrechten, distributiegroepen en gedeelde postvakken.
 
 \section{Ontwerp van de oplossing}
 \subsection{Algemene oplossing}
@@ -128,13 +128,14 @@ Binnen de lokale omgeving wordt een PowerShell-script uitgevoerd dat verantwoord
 
 Bij onboarding moet eerst gewacht worden tot de synchronisatie tussen Active Directory en Entra ID voltooid is voordat cloudconfiguraties uitgevoerd kunnen worden. Bij offboarding is deze synchronisatie minder kritisch omdat het uitschakelen van accounts voornamelijk lokaal verwerkt wordt en de blokkering van cloudtoegang automatisch volgt via synchronisatie.
 
-Nadien worden de distributielijsten en gedeelde postvakken toegevoegd of verwijderd bij de gebruiker. ODe configuratie van distributielijsten en gedeelde postvakken gebeurt via PowerShell-scripts die communiceren met Exchange Online. Hiervoor werd gekozen omdat Power Automate momenteel geen volwaardige connectoren aanbiedt voor het beheren van mailboxrechten binnen Exchange Online.
+Nadien worden de distributielijsten en gedeelde postvakken toegevoegd of verwijderd bij de gebruiker. De configuratie van distributielijsten en gedeelde postvakken gebeurt via PowerShell-scripts die communiceren met Exchange Online. Hiervoor werd gekozen omdat Power Automate momenteel geen volwaardige connectoren aanbiedt voor het beheren van mailboxrechten binnen Exchange Online.
 
-Als laatste stap binnen het configuratieproces wordt automatisch een welkomstmail verzonden naar de nieuwe medewerker. Deze mail bevat verschillende handleidingen en praktische informatie die noodzakelijk zijn om vlot van start te kunnen gaan tijdens de eerste werkdag. Hierbij kan gedacht worden aan informatie over het verbinden met het draadloze netwerk, het gebruik van printers en andere interne ICT-toepassingen.
+Als laatste stap binnen het configuratieproces wordt automatisch een welkomstmail verzonden naar de nieuwe medewerker. Deze e-mail bevat verschillende handleidingen en praktische informatie die noodzakelijk zijn om vlot van start te kunnen gaan tijdens de eerste werkdag. Hierbij kan gedacht worden aan de policy over het gebruik van het draadloze netwerk, het gebruik van printers en andere interne ICT-toepassingen.
 
-Na het voltooien van alle configuratiestappen wordt een terugkoppeling uitgevoerd binnen het opvolgsysteem. Omdat het algemene opvolgingssysteem van een parallel project momenteel nog in ontwikkeling is, werd tijdelijk gekozen voor een tussenoplossing op basis van Excel. Hierbij wordt de status van de verwerking automatisch aangepast binnen hetzelfde Excelbestand dat tijdens de testfase gebruikt werd. Op deze manier kan eenvoudig gecontroleerd worden of de volledige flow succesvol werd uitgevoerd en de gebruiker correct werd aangemaakt.
+Na het voltooien van alle configuratiestappen wordt een terugkoppeling uitgevoerd binnen het opvolgsysteem. Omdat het algemene opvolgingssysteem van een parallel project momenteel nog in ontwikkeling is, werd tijdelijk gekozen voor een tussenoplossing op basis van Excel. Hierbij wordt de status van de verwerking automatisch aangepast binnen hetzelfde Excelbestand dat tijdens de testfase gebruikt werd. Op deze manier kan eenvoudig gecontroleerd worden of de volledige flow succesvol werd uitgevoerd en de gebruiker correct werd aangemaakt.\newline
 
-Figuur~\ref{fig:ArchitectuurOnboarding} toont een vereenvoudigd overzicht van de algemene architectuur van de oplossing voor onboarding.
+Figuur~\ref{fig:ArchitectuurOnboarding} toont een vereenvoudigd overzicht van de algemene architectuur van de oplossing voor onboarding. 
+\clearpage
 
 \begin{figure}[htbp]
     \centering
@@ -159,7 +160,7 @@ Naast het automatiseren van onboarding werd eveneens een geautomatiseerde offboa
 
 De offboarding start vanuit een afzonderlijk Microsoft Forms-formulier waarin de personeelsdienst de gegevens van de medewerker invoert, waaronder het e-mailadres, de einddatum van het contract en de reden van uitdiensttreding.
 
-Omdat gebruikers pas gedeactiveerd mogen worden nadat de laatste werkdag verstreken is, werd een wachmechanisme voorzien binnen de cloudflow van Power Automate. De flow blijft actief totdat de opgegeven einddatum bereikt werd.
+Omdat gebruikers pas gedeactiveerd mogen worden nadat de laatste werkdag verstreken is, werd een wachtmechanisme voorzien binnen de cloudflow van Power Automate. De flow blijft actief totdat de opgegeven einddatum bereikt wordt.
 
 Na het bereiken van deze datum wordt automatisch een desktopflow gestart die verschillende PowerShell-scripts uitvoert binnen zowel Exchange Online als Active Directory. Hierbij wordt de mailbox van de gebruiker omgezet naar een gedeeld postvak, worden mailboxrechten verwijderd, groepslidmaatschappen aangepast en wordt het Active Directory-account gedeactiveerd.
 
@@ -173,7 +174,7 @@ Binnen de Active Directory-omgeving van de gemeente wordt gebruikgemaakt van een
 
 Afhankelijk van de organisatorische structuur kunnen diensten zich op verschillende niveaus binnen de directorystructuur bevinden. Sommige sites bevatten afzonderlijke OU's per dienst, terwijl andere diensten gezamenlijk ondergebracht worden binnen één gedeelde OU.
 
-Zo bevat de site ``Gemeentehuis'' afzonderlijke OU's voor diensten zoals personeelsdienst, vergunningen en informatica. Andere locaties, zoals de onthaalpoort aan het Donkmeer, groeperen meerdere diensten binnen dezelfde OU omdat deze organisatorisch nauwer samenwerken.
+Zo bevat de site ``Gemeentehuis'' afzonderlijke OU's voor diensten zoals ``personeelsdienst'', ``vergunningen'' en ``informatica''. Andere locaties, zoals de ``Onthaalpoort'' aan het Donkmeer, groeperen meerdere diensten binnen dezelfde OU omdat deze organisatorisch nauwer samenwerken.
 
 Door deze variatie binnen de directorystructuur moet de automatiseringsoplossing rekening houden met verschillende mappings tussen diensten en hun overeenkomstige OU-locaties.
 
@@ -198,7 +199,7 @@ Omdat bepaalde cloudconfiguraties, zoals licentietoewijzingen, pas uitgevoerd ku
 
 Hiervoor werd een controlemechanisme ontworpen waarbij periodiek gecontroleerd wordt of de gebruiker reeds beschikbaar is binnen Entra ID. Pas wanneer de synchronisatie succesvol voltooid werd, kunnen bijkomende cloudconfiguraties uitgevoerd worden.
 
-Ook tijdens offboarding blijft deze synchronisatie belangrijk zodat wijzigingen aan gebruikersaccounts en groepslidmaatschappen correct doorstromen naar de cloudomgeving.
+Ook tijdens offboarding blijft deze synchronisatie belangrijk zodat wijzigingen aan gebruikersaccounts en groepslidmaatschappen correct doorstromen naar de cloud\-om\-ge\-ving.
 
 \section{Testomgeving en validatieaanpak}
 

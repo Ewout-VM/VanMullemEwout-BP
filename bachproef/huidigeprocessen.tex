@@ -43,17 +43,19 @@ De personeelsdienst of het diensthoofd communiceert de uitdiensttreding van een 
 
 Omdat deze stappen vaak afhankelijk zijn van de einddatum van het contract, gebeurt de verwerking meestal op of kort na de laatste werkdag van de medewerker.
 
+Figuur \ref{fig:HuidigeOffboarding} toont een visuele voorstelling van het huidige offboardingsproces.
+
 \subsubsection{Werkwijze binnen de ICT-dienst}
 
 Binnen de ICT-dienst verloopt het offboardingproces momenteel grotendeels manueel. Medewerkers moeten handmatig gebruikersaccounts opzoeken binnen Active Directory en deze vervolgens uitschakelen of aanpassen.
 
 Daarnaast worden gebruikers verwijderd uit beveiligingsgroepen, distributielijsten en Microsoft 365-groepen. Ook mailboxrechten op gedeelde postvakken moeten afzonderlijk verwijderd worden.
 
-De mailbox van een voormalige medewerker wordt altijd omgezet naar een gedeeld postvak zodat historische communicatie tijdelijk behouden blijft. Ook dit gebeurt momenteel handmatig via Exchange Online. Wel wordt op deze mailbox nog een Out of Office gezet zodat mensen, zowel binnen als buiten het bedrijf, weten dat de mails niet worden gelezen of doorgestuurd. In de out of Office komt dat ook het mailadres van de dienst waar deze werkzaam was.
+De mailbox van een voormalige medewerker wordt altijd omgezet naar een gedeeld postvak zodat historische communicatie tijdelijk behouden blijft. Ook dit gebeurt momenteel handmatig via Exchange Online. Wel wordt op deze mailbox nog een Out of Office gezet zodat mensen, zowel binnen als buiten het bedrijf, weten dat de e-mails niet worden gelezen of doorgestuurd. In de out of office komt dan ook het e-mailadres van de dienst waar deze werknemer werkzaam was.
 
 Verder moeten toegekende Microsoft 365-licenties verwijderd worden zodat deze opnieuw beschikbaar worden binnen de organisatie.
 
-Verder moeten van de laptops de gebruikersaccounts verwijderd worden. Ook op de servers moeten deze opnieuw verwijderd worden. Op deze manier verdwijnen de gegevens van de persoon die lokaal op laptops opgeslagen waren, waardoor er dus ruimte vrij komt op een laptop en deze dus opnieuw gebruikt kan worden. 
+Verder moeten van de laptops de gebruikersaccounts verwijderd worden. Ook op de servers moeten deze opnieuw verwijderd worden. Op deze manier verdwijnen de bestanden die lokaal op laptops opgeslagen waren, waardoor er dus ruimte vrij komt op een laptop en deze dus opnieuw gebruikt kan worden. 
 
 \subsubsection{Beheer van toegangen en mailboxen}
 
@@ -67,7 +69,7 @@ Daarnaast bestaat er momenteel geen centrale opvolging waarmee eenvoudig gecontr
 
 \subsection{Afhankelijkheden tussen diensten}
 
-Binnen het huidige onboardingproces zijn meerdere diensten afhankelijk van elkaar om bepaalde stappen correct te kunnen uitvoeren. De personeelsdienst levert bijvoorbeeld de noodzakelijke gegevens aan voor het aanmaken of uitschakelen van gebruikersaccounts, terwijl andere interne diensten afhankelijk zijn van het beschikbaar zijn van een e-mailadres of gebruikersaccount om toegang te voorzien of verwijderen tot dienstspecifieke toepassingen.
+Binnen het huidige onboardingproces zijn meerdere diensten afhankelijk van elkaar om bepaalde stappen correct te kunnen uitvoeren. De personeelsdienst levert bijvoorbeeld de noodzakelijke gegevens aan voor het aanmaken of uitschakelen van gebruikersaccounts, terwijl andere interne diensten afhankelijk zijn van het beschikbaar zijn van een e-mailadres of gebruikersaccount om toegang te voorzien tot dienstspecifieke toepassingen.
 
 Hierdoor ontstaat een proces waarbij verschillende stappen pas uitgevoerd kunnen worden nadat voorgaande configuraties succesvol voltooid zijn. Een correcte communicatie tussen diensten speelt daarom een belangrijke rol binnen het onboardingproces.
 
@@ -85,7 +87,7 @@ Doordat deze communicatie momenteel grotendeels handmatig verloopt, ontstaat er 
 
 Doordat een groot deel van het onboarding- en ofboardingproces manueel uitgevoerd wordt, vereist het proces aanzienlijke administratieve en technische inspanningen van de ICT-dienst. Het individueel aanmaken van gebruikersaccounts, het toekennen van rechten en het configureren van mailboxen zorgen voor repetitieve handelingen binnen het proces. Ook het vergrendelen van gebruikersaccounts en het verwijderen van de groepen en licenties zijn repetitieve handelingen. 
 
-Daarnaast verhoogt manuele configuratie de kans op inconsistenties en menselijke fouten. Foutieve groepslidmaatschappen, ontbrekende rechten of vergeten configuraties kunnen leiden tot bijkomende correcties en vertragingen. Verder kan het niet verwijderen van gebruikers doordat dit vergeten wordt, leiden tot veiligheidsrisico's
+Daarnaast verhoogt manuele configuratie de kans op inconsistenties en menselijke fouten. Foutieve groepslidmaatschappen, ontbrekende rechten of vergeten configuraties kunnen leiden tot bijkomende correcties en vertragingen. Verder kan het niet verwijderen van gebruikers doordat dit vergeten wordt, leiden tot veiligheidsrisico's.
 
 \subsection{Gebrek aan centrale opvolging}
 
@@ -105,10 +107,6 @@ Daarnaast verhoogt de hybride infrastructuur, waarbij zowel Active Directory als
 
 Deze combinatie van afhankelijkheden, verschillende beheersystemen en manuele configuraties bemoeilijkt een efficiënte opvolging van onboarding en offboarding binnen de huidige werking van het gemeentebestuur.
 
-Figuur \ref{fig:HuidigeOnboarding} toont een visuele voorstelling van het huidige onboardingsproces.
-
-Figuur \ref{fig:HuidigeOffboarding} toont een visuele voorstelling van het huidige offboardingsproces.
-
 \clearpage
 \section{Overzicht van het onboardingproces}
 
@@ -119,7 +117,7 @@ Figuur \ref{fig:HuidigeOffboarding} toont een visuele voorstelling van het huidi
     \label{fig:HuidigeOnboarding}
 \end{figure}
 
-\section{Overzicht van het onboardingproces}
+\section{Overzicht van het offboardingproces}
 
 \begin{figure}[!h]
     \centering

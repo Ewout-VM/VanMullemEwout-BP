@@ -27,7 +27,7 @@ Omdat bepaalde velden binnen het formulier afhankelijk zijn van eerder gekozen a
 
 Om deze gegevens uniform te kunnen verwerken binnen de verdere automatisering, worden ``Compose''-stappen gebruikt. Deze stappen zorgen ervoor dat de correcte dienst automatisch geselecteerd wordt op basis van de gekozen site binnen het formulier.
 
-Onderstaande vereenvoudigde expressie toont de gebruikte logica.
+Codefragment ~\ref{lst:ComposeDepartement} vereenvoudigde expressie toont de gebruikte logica.
 
 \begin{lstlisting}[
     caption={Samenstelling van de departementen},
@@ -47,7 +47,7 @@ Naast het bepalen van de dienst wordt binnen de flow eveneens een rolcode sameng
 
 Hiervoor wordt opnieuw gebruikgemaakt van een ``Compose''-stap waarin conditionele logica toegepast wordt. Afhankelijk van het gekozen departement wordt een specifieke rolcode toegekend.
 
-Onderstaande vereenvoudigde expressie toont een voorbeeld van deze verwerking.
+Codefragment ~\ref{lst:ComposeRole} vereenvoudigde expressie toont een voorbeeld van deze verwerking.
 
 \begin{lstlisting}[
     caption={Samenstelling van de rollen},
@@ -65,20 +65,20 @@ Door gebruik te maken van gestandaardiseerde rolcodes kan de verdere verwerking 
 
 Binnen de flow worden daarnaast verschillende variabelen samengesteld die later gebruikt worden binnen de PowerShell-scripts. Hierbij gaat het onder andere om de naam van de gebruiker, de dienst, de organisatorische eenheid binnen Active Directory en bijkomende configuraties zoals distributielijsten of gedeelde postvakken.
 
-Tijdens de eerste ontwikkelingsfase werd gebruikgemaakt van een tijdelijke tussenstap waarbij de gegevens eerst naar een Excelbestand geschreven werden. Deze aanpak maakte het mogelijk om de verwerking van gegevens eenvoudig te controleren voordat de effectieve automatisering binnen Active Directory werd uitgevoerd. Daarnaast bood deze tussenfase een extra controlemogelijkheid tijdens het testen van de oplossing. 
+Tijdens de eerste ontwikkelingsfase werd gebruikgemaakt van een tijdelijke tussenstap waarbij de gegevens eerst naar een Excelbestand geschreven werden. Deze aanpak maakte het mogelijk om de verwerking van gegevens eenvoudig te controleren voordat de effectieve automatisering binnen Active Directory werd uitgevoerd.
 
-Figuur \ref{fig:VoorbeeldOutput} toont voorbeeldoutput die gebruikt werd om te valideren dat de gegevens correct gebruikt werden.
+Figuur ~\ref{fig:VoorbeeldOutput} toont voorbeeldoutput die gebruikt werd om te valideren dat de gegevens correct verwerkt werden.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{Voorbeeldoutput.png}
-    \caption[Voorbeeld output Power Automate]{Deze afbeelding is een voorbeeld van de tijdelijke output van de Power Automate flow}
+    \caption[Voorbeeld output Power Automate]{Voorbeeld van de tijdelijke output van de Power Automate flow}
     \label{fig:VoorbeeldOutput}
 \end{figure}
 
 \clearpage
 
-Figuur \ref{fig:Cloudflow_deel1} toont het eerste deel van de cloudflow binnen Microsoft Power Automate.
+Figuur ~\ref{fig:Cloudflow_deel1} toont het eerste deel van de cloudflow binnen Microsoft Power Automate.
 
 \begin{figure}[htbp]
     \centering
@@ -95,13 +95,13 @@ Om deze communicatie mogelijk te maken, wordt gebruikgemaakt van Power Automate 
 
 Wanneer de cloudflow alle gegevens verwerkt heeft, wordt automatisch een desktopflow gestart op de lokale server. Hierbij worden verschillende parameters doorgestuurd, waaronder de naam van de gebruiker, de dienst, de gekozen site, de rolcode en eventuele bijkomende configuraties zoals distributielijsten of gedeelde postvakken.
 
-\subsection{Automatisch aanmaken en instellen van Active Directory-gebruikers}
+\subsection{Automatisch aanmaken en instellen van Active Directory-ge\-brui\-kers}
 
 Binnen de desktopflow wordt een PowerShell-script uitgevoerd dat verantwoordelijk is voor het automatisch aanmaken en configureren van nieuwe gebruikersaccounts binnen Active Directory. Het script ontvangt verschillende parameters vanuit Power Automate, waaronder de voornaam, achternaam, dienst, site, functietitel en rolcode van de gebruiker.
 
 Op basis van deze gegevens worden automatisch de correcte accountgegevens samengesteld, de juiste Organizational Unit bepaald en de noodzakelijke groepslidmaatschappen toegekend.
 
-Onderstaand fragment toont de parameters die vanuit de desktopflow doorgestuurd worden naar het PowerShell-script.
+Codefragment ~\ref{lst:Parameters} toont de parameters die vanuit de desktopflow doorgestuurd worden naar het PowerShell-script.
 
 \begin{lstlisting}[language=PowerShell,
     caption={Parameters},
@@ -121,7 +121,7 @@ Door gebruik te maken van parameters kan hetzelfde script hergebruikt worden voo
 
 \subsubsection{Verwerking van invoergegevens}
 
-Voor het aanmaken van de account worden de ontvangen gegevens eerst gevalideerd en genormaliseerd. Speciale tekens en niet-alfabetische karakters worden verwijderd om problemen met accountnamen en e-mailadressen te vermijden. Door de tekst eerst te normaliseren, worden speciale tekens opgesplitst zodat deze eenvoudiger verwijderd kunnen worden.
+Voor het aanmaken van een account worden de ontvangen gegevens eerst gevalideerd en genormaliseerd. Speciale tekens en niet-alfabetische karakters worden verwijderd om problemen met accountnamen en e-mailadressen te vermijden. Door de tekst eerst te normaliseren, worden speciale tekens opgesplitst zodat deze eenvoudiger verwijderd kunnen worden.
 
 Dezelfde verwerking wordt toegepast op zowel de voornaam als de achternaam van de gebruiker.
 
@@ -279,11 +279,11 @@ Deze terugkoppeling wordt later gebruikt binnen verdere automatiseringsstappen, 
 
 \subsubsection{Instellen van accountvervaldatums}
 
-Voor medewerkers met een tijdelijk contract moet het gebruikersaccount automatisch gedeactiveerd worden op het einde van de contractperiode. Om te vermijden dat deze vervaldatums manueel beheerd moeten worden, werd binnen de desktopflow een bijkomend PowerShell-script voorzien dat automatisch een accountvervaldatum instelt binnen Active Directory. Wanneer deze code binnen het algemene onboardingscript werd geplaatst, reageerde PowerShell hier niet op en stelde het de datum niet in. 
+Voor medewerkers met een tijdelijk contract moet het gebruikersaccount automatisch gedeactiveerd worden op het einde van de contractperiode. Om te vermijden dat deze vervaldatums manueel beheerd moeten worden, werd binnen de desktopflow een bijkomend PowerShell-script voorzien dat automatisch een accountvervaldatum instelt binnen Active Directory. Wanneer deze code binnen het algemene onboardingscript werd geplaatst, reageerde PowerShell hier niet op en stelde het de datum niet in. Wanneer deze code in een apart Power Automate blok werd gezet, werd de einddatum wel correct ingesteld. 
 
 De einddatum wordt vanuit het Microsoft Forms-formulier doorgestuurd naar de desktopflow als parameter. Indien een einddatum ingevuld werd, verwerkt het script deze datum en koppelt deze aan het Active Directory-account van de gebruiker.
 
-Onderstaand fragment toont de verwerking van de meegegeven einddatum.
+Codefragment ~\ref{lst:Einddatum} toont de verwerking van de meegegeven einddatum.
 
 \begin{lstlisting}[language=PowerShell,
     caption={Verwerking van de mogelijke einddatum},
@@ -305,7 +305,7 @@ Onderstaand fragment toont de verwerking van de meegegeven einddatum.
     }
 \end{lstlisting}
 
-Het script controleert eerst of effectief een einddatum werd meegegeven. Indien dit niet het geval is, wordt geen vervaldatum ingesteld en blijft het account actief.
+Het script controleert eerst of effectief een einddatum werd meegegeven. Indien dit niet het geval is, wordt geen vervaldatum ingesteld en blijft het account actief.\newline
 
 Wanneer wel een einddatum aanwezig is, wordt deze geconverteerd naar een geldig \texttt{DateTime}-object zodat Active Directory deze correct kan verwerken. Vervolgens wordt via het cmdlet \texttt{Set-ADAccountExpiration} automatisch een accountvervaldatum ingesteld voor de gebruiker.
 
@@ -341,12 +341,12 @@ Ook binnen dit script wordt gebruikgemaakt van \texttt{try-catch}-constructies z
 
 Door de vervaldatum automatisch te configureren, wordt de nood aan manuele opvolging verminderd en blijft het gebruikersbeheer consistenter en veiliger verlopen.
 
-Figuur \ref{fig:DesktopFlow_deel1} toont het eerste deel van de desktopflow binnen Microsoft Power Automate.
+Figuur ~\ref{fig:DesktopFlow_deel1} toont het eerste deel van de desktopflow binnen Microsoft Power Automate.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{DesktopFlow_deel1.png}
-    \caption[Desktop flow deel 1]{Deze afbeelding bevat de eerste flow op de desktop. In deze flow worden de gebruikers aangemaakt en variabelen terug gestuurd naar de cloud flow.}
+    \caption[Desktop flow deel 1]{Eerste flow op de desktop. In deze flow worden de gebruikers aangemaakt en variabelen terug gestuurd naar de cloud flow.}
     \label{fig:DesktopFlow_deel1}
 \end{figure}
 
@@ -384,13 +384,12 @@ De gebruiker wordt naast de groep voor licenties van Microsoft 365 ook nog toege
 
 Door gebruik te maken van groepsgebaseerde licentietoekenning blijft het beheer eenvoudiger, consistenter en schaalbaarder. Nieuwe gebruikers ontvangen automatisch de correcte cloudconfiguraties zonder dat manuele tussenkomst vereist is.
 
-Figuur \ref{fig:Do_until} toont de do until statement die in Power Automate gebruikt wordt.
-\clearpage
+Figuur ~\ref{fig:Do_until} toont de do until statement die in Power Automate gebruikt wordt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{Do_Until.png}
-    \caption[Controle cloudgebruiker en toevoeging groepen]{Deze afbeelding bevat de controle of de gebruiker aangemaakt is in Entra ID. Verder bevat deze ook de stappen om groepen toe te voegen.}
+    \caption[Controle cloudgebruiker en toevoeging groepen]{Controle of de gebruiker aangemaakt is in Entra ID met de stappen om groepen toe te voegen.}
     \label{fig:Do_until}
 \end{figure}
 
@@ -416,7 +415,7 @@ In deze flow, wordt er gebruik gemaakt van de stap ``Toepassing uitvoeren''. De 
 
 Het script ontvangt hierbij verschillende parameters vanuit Power Automate, waaronder de User Principal Name van de gebruiker, de geselecteerde gedeelde postvakken en de gekozen distributiegroepen.
 
-Onderstaand fragment toont de parameters die vanuit de desktopflow doorgestuurd worden naar het script.
+Codefragment ~\ref{lst:ExchangeParameters} toont de parameters die vanuit de desktopflow doorgestuurd worden naar het script.
 
 \begin{lstlisting}[language=PowerShell,
     caption={Parameters voor Exchange Online-configuratie},
@@ -429,7 +428,7 @@ Onderstaand fragment toont de parameters die vanuit de desktopflow doorgestuurd 
 \end{lstlisting}
 
 Voor de communicatie met Exchange Online wordt gebruikgemaakt van de module \texttt{ExchangeOnlineManagement}. Nadat verbinding gemaakt werd met Exchange Online, kan het script rechten en groepslidmaatschappen automatisch configureren.
-
+\clearpage
 \begin{lstlisting}[language=PowerShell,
     caption={Verbinding met Exchange Online},
     label={lst:ConnectExchange}]
@@ -522,7 +521,7 @@ Binnen de verschillende PowerShell-scripts wordt gebruikgemaakt van foutafhandel
 
 Wanneer een fout optreedt tijdens het uitvoeren van een opdracht, wordt een waarschuwing of foutmelding weggeschreven zodat deze later geraadpleegd kan worden binnen Power Automate of tijdens troubleshooting.
 
-Onderstaand fragment toont een voorbeeld van foutafhandeling tijdens het toevoegen van een gebruiker aan een gedeeld postvak.
+Codefragment ~\ref{lst:MailboxErrorHandling} toont een voorbeeld van foutafhandeling tijdens het toevoegen van een gebruiker aan een gedeeld postvak.
 
 \begin{lstlisting}[language=PowerShell,
     caption={Foutafhandeling bij mailboxrechten},
@@ -574,16 +573,16 @@ Deze aanpak verhoogt de betrouwbaarheid van het onboardingproces en vermindert d
 
 Na het succesvol uitvoeren van de onboardingflow wordt automatisch een e-mail verstuurd vanuit een gedeeld postvak van de ICT-dienst. Deze e-mail bevat bijkomende informatie en handleidingen voor de nieuwe medewerker.
 
-In deze handleidingen zijn stappenplannen te vinden met betrekking tot het gebruik van de VPN, mails vrijgeven die tegengehouden worden door de spamfilter en printen. In de mail zelf zijn ook een paar praktische afspraken in verband met het gebruik van wifi. Ook de uitleg over MFA is te vinden in deze mail. Ook is er in de mail een linkje naar de helpdesk waar ze al hun problemen moeten melden en uiteraard ook geholpen worden indien nodig. 
+In deze handleidingen zijn stappenplannen te vinden met betrekking tot het gebruik van de VPN, het vrijgeven van e-mails die tegengehouden worden door de spamfilter en printen. In de e-mail zelf zijn ook een paar praktische afspraken in verband met het gebruik van wifi. Ook de uitleg over MFA is te vinden in deze e-mail. Ook is er in de e-mail een link naar de helpdesk waar ze al hun problemen moeten melden en uiteraard ook geholpen worden indien nodig. 
 
-Binnen Power Automate moeten deze bijlagen eerst geladen worden. Dit gebeurd met de stap ``Get file content''. Voor de 4 bijlagen gebeurd dit dus op identieke, parallelle wijze. Eens deze opgeladen zijn in Power Automate, kunnen ze geselecteerd worden in de stap ``Send an email from a shared mailbox''. Hierin staat de mailadres dat de mail verstuurd, als ook de ontvanger. Dit is dan op dynamische wijze ook weer de UPN variabele die initieel via de desktopflow naar de cloud wordt gestuurd. Net zoals bij een normale mail hoort er ook een onderwerp en de gehele mail bij. 
+Binnen Power Automate moeten deze bijlagen eerst geladen worden. Dit gebeurd met de stap ``Get file content''. Voor de 4 bijlagen gebeurt dit dus op identieke, parallelle wijze. Eens deze opgeladen zijn in Power Automate, kunnen ze geselecteerd worden in de stap ``Send an email from a shared mailbox''. Hierin staat het e-mailadres dat de e-mail verstuurt, als ook de ontvanger. Dit is op dynamische wijze opnieuw de UPN variabele die initieel via de desktopflow naar de cloud wordt gestuurd. Net zoals bij een normale e-mail hoort er ook een onderwerp en de gehele e-mail bij. 
 
-Figuur \ref{fig:Mails} toont hoe de bijlagen worden aangemaakt en hoe de mail verstuurd wordt.
+Figuur ~\ref{fig:Mails} toont hoe de bijlagen worden aangemaakt en hoe de e-mail verstuurd wordt.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{Mails.png}
-    \caption[Stappen om een mail te versturen]{Deze afbeelding toont de stappen die nodig zijn in een flow om een automatische mail met bijlagen te versturen}
+    \caption[Stappen om een e-mail te versturen]{Stappen die nodig zijn in een flow om een automatische e-mail met bijlagen te versturen}
     \label{fig:Mails}
 \end{figure}
 
@@ -595,12 +594,12 @@ Binnen de cloudflow wordt hiervoor gebruikgemaakt van de actie ``Update a row''.
 
 Door gebruik te maken van deze logging kan de ICT-dienst eenvoudig controleren welke onboardings reeds uitgevoerd werden en kunnen eventuele problemen later sneller opgespoord worden. Ook voor de medewerkers van andere diensten is dit handig om te zien of alles van IT in orde is voor de nieuwe collega.
 
-Figuur \ref{fig:Voorbeeld_output_logging} toont het loggen wanneer de gebruiker aangemaakt is.
+Figuur ~\ref{fig:Voorbeeld_output_logging} toont het loggen wanneer de gebruiker aangemaakt is.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{VoorbeeldoutputLogging.png}
-    \caption[Voorbeeld output van logging]{Deze afbeelding toont de aangepaste rij nadat de gebruiker is aangemaakt. Kolom ``Processed'' is veranderd van ``No'' naar ``Yes''}
+    \caption[Voorbeeld output van logging]{Aangepaste rij nadat de gebruiker is aangemaakt. Kolom ``Processed'' is veranderd van ``No'' naar ``Yes''}
     \label{fig:Voorbeeld_output_logging}
 \end{figure}
 
@@ -634,7 +633,7 @@ Net zoals bij de onboarding wordt gebruikgemaakt van een hybride aanpak waarbij 
 
 Vanuit de cloudflow worden verschillende parameters doorgestuurd naar de desktopflow, waaronder de User Principal Name van de gebruiker, de reden van uitdiensttreding en de einddatum van het contract.
 
-Onderstaand fragment toont de parameters die gebruikt worden binnen het Exchange Online-script.
+Codefragment ~\ref{lst:OffboardingExchangeParameters} toont de parameters die gebruikt worden binnen het Exchange Online-script.
 
 \begin{lstlisting}[language=PowerShell,
     caption={Parameters voor Exchange Online-offboarding},
@@ -713,7 +712,7 @@ Naast de configuraties binnen Exchange Online worden tijdens de offboarding even
 
 Dit script ontvangt verschillende parameters vanuit de cloudflow, waaronder de User Principal Name van de gebruiker, de reden van uitdiensttreding en de einddatum van het contract.
 
-Onderstaand fragment toont de parameters die gebruikt worden binnen het Active Directory-script.
+Codefragment ~\ref{lst:ADOffboardingParameters} toont de parameters die gebruikt worden binnen het Active Directory-script.
 
 \begin{lstlisting}[language=PowerShell,
     caption={Parameters voor Active Directory-offboarding},
@@ -759,7 +758,7 @@ Daarnaast wordt het account verborgen uit de Global Address List van Exchange. H
     }
 \end{lstlisting}
 
-Naast het uitschakelen van het account wordt eveneens de beschrijving van de gebruiker aangepast. Hierbij wordt automatisch geregistreerd sinds wanneer de medewerker uit dienst is en wat de reden van uitdiensttreding was.
+Naast het uitschakelen van het account wordt eveneens de beschrijving van de gebruiker aangepast. Hierbij wordt automatisch geregistreerd vanaf wanneer de medewerker uit dienst is en wat de reden van uitdiensttreding was.
 
 \begin{lstlisting}[language=PowerShell,
     caption={Aanpassen van de beschrijving},
@@ -808,7 +807,7 @@ Figuur ~\ref{fig:DesktopOffboarding} toont de complete desktopflow voor het offb
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{DesktopOffboarding.png}
-    \caption[Desktopflow offboarding]{Deze afbeelding toont de desktopflow voor het offboardingsproces}
+    \caption[Desktopflow offboarding]{Desktopflow voor het offboardingsproces}
     \label{fig:DesktopOffboarding}
 \end{figure}
 
@@ -822,14 +821,14 @@ Het verwijderen van deze groepen gebeurt volledig binnen de cloudflow van Power 
 
 Voor het identificeren van de gebruiker wordt het e-mailadres gebruikt dat eerder via het formulier en de desktopflow verwerkt werd. Hierdoor kan de correcte gebruiker automatisch opgezocht en verwijderd worden uit de overeenkomstige groepen binnen Entra ID.
 
-Door gebruikers automatisch uit deze groepen te verwijderen, worden gekoppelde licenties en toegangsrechten eveneens automatisch ingetrokken. Dit vermindert het risico op ongewenste toegang na uitdiensttreding en zorgt ervoor dat ongebruikte licenties opnieuw beschikbaar worden binnen de organisatie. Dit is dus zowel positief voor veiligheid van gegevens, als ook voor het niet verspillen van licenties. 
+Door gebruikers automatisch uit deze groepen te verwijderen, worden gekoppelde licenties en toegangsrechten eveneens automatisch ingetrokken. Dit vermindert het risico op ongewenste toegang na uitdiensttreding en zorgt ervoor dat ongebruikte licenties opnieuw beschikbaar worden binnen de organisatie. Dit is dus zowel positief voor veiligheid van gegevens, als ook voor het niet verspillen van licenties. \newline
 
 Figuur ~\ref{fig:CloudOffboarding} toont de complete cloudflow voor het offboardingsproces.
 
 \begin{figure}[htbp]
     \centering
     \includegraphics[width=1\textwidth]{CloudOffboarding.png}
-    \caption[Cloudflow offboarding]{Deze afbeelding toont de cloudflow voor het offboardingsproces}
+    \caption[Cloudflow offboarding]{Cloudflow voor het offboardingsproces}
     \label{fig:CloudOffboarding}
 \end{figure}
 
