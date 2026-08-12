@@ -5,57 +5,80 @@
 \chapter{Analyse en ontwerp van de oplossing}
 \label{ch:analyseontwerp}
 
-\section{Doelstellingen van de oplossing}
-
 Op basis van de analyse van de huidige onboarding- en offboardingsprocedures werd vastgesteld dat verschillende stappen binnen de ICT-dienst repetitief en manueel uitgevoerd worden. Hierdoor neemt het verwerken van nieuwe medewerkers relatief veel tijd in beslag en ontstaat een verhoogde kans op menselijke fouten. Daarnaast zijn verschillende diensten afhankelijk van elkaar voor het uitvoeren van bepaalde configuraties, waardoor vertragingen kunnen ontstaan wanneer terugkoppelingen ontbreken.
 
 Het doel van dit onderzoek is daarom het ontwerpen van een oplossing die een deel van het onboarding- en van het offboardingsproces automatiseert binnen de bestaande ICT-omgeving van het gemeentebestuur van Berlare. De focus ligt hierbij voornamelijk op het automatisch verwerken van gebruikersgegevens en het automatisch aanmaken of uitschakelen van gebruikersaccounts binnen de Active Directory-omgeving.
 
 Daarnaast moet de oplossing zorgen voor een betere opvolging van uitgevoerde taken en een efficiëntere samenwerking tussen verschillende diensten binnen het onboarding- en offboardingsproces. Het uiteindelijke doel is om de administratieve belasting te verminderen, de foutenmarge te verkleinen en de doorlooptijd van beide processen te beperken.
-\clearpage
+
 \section{Requirements van de oplossing}
+
+Op basis van de literatuurstudie en de analyse van de huidige onboardingprocedure worden de requirements voor de oplossing bepaald. Hierbij wordt onderscheid gemaakt tussen functionele en niet-functionele requirements. De functionele requirements beschrijven welke functionaliteiten de oplossing moet of bij voorkeur moet aanbieden. De niet-functionele requirements beschrijven de voorwaarden waaraan de oplossing moet voldoen.
 
 \subsection{Functionele requirements}
 
+De functionele requirements worden ingedeeld volgens de MoSCoW-methode. Hierbij wordt onderscheid gemaakt tussen must-have, should-have, could-have en would-have requirements.
+
 \subsubsection{Must-have requirements}
 
-De belangrijkste doelstelling van deze bachelorproef is het ontwikkelen van een geautomatiseerd systeem waarbij gebruikersaccounts automatisch aangemaakt worden op basis van gegevens die aangeleverd worden door de personeelsdienst.
+De oplossing moet minimaal voldoen aan de volgende requirements:
 
-De focus ligt hierbij voornamelijk op het automatisch aanmaken van gebruikersaccounts binnen Active Directory, het instellen van relevante attributen binnen de lokale infrastructuur, het toekennen van Microsoft 365-licenties en het automatisch voorzien van basisrechten afhankelijk van de dienst van de medewerker.
-
-Daarnaast moet de oplossing voorzien in een vorm van terugkoppeling zodat de status van uitgevoerde onboardings beschikbaar is voor andere betrokken diensten binnen de organisatie.
+\begin{itemize}
+    \item De oplossing moet automatisch een gebruikersaccount kunnen aanmaken in Active Directory op basis van personeelsgegevens.
+    \item De oplossing moet de relevante gebruikersattributen binnen Active Directory automatisch kunnen instellen.
+    \item De oplossing moet Microsoft 365-licenties automatisch kunnen toekennen aan nieuwe gebruikers.
+    \item De oplossing moet op basis van de dienst van de medewerker de vereiste basisrechten automatisch kunnen toekennen.
+    \item De oplossing moet de status van een uitgevoerde onboarding beschikbaar kunnen maken voor andere betrokken diensten binnen de organisatie.
+\end{itemize}
 
 \subsubsection{Should-have requirements}
 
-Naast de basisfunctionaliteiten zijn er verschillende uitbreidingen die bij voorkeur aanwezig zijn binnen de oplossing. Hieronder vallen onder andere het automatisch toekennen van rechten op gedeelde postvakken en het automatisch toevoegen van gebruikers aan distributielijsten binnen Microsoft 365.
+De oplossing zou bij voorkeur ook de volgende functionaliteiten moeten ondersteunen:
 
-Deze functionaliteiten verhogen de gebruiksvriendelijkheid van het systeem en verminderen bijkomende manuele configuraties binnen de ICT-dienst.
+\begin{itemize}
+    \item De oplossing zou gebruikers automatisch rechten op gedeelde postvakken moeten kunnen toekennen.
+    \item De oplossing zou gebruikers automatisch aan relevante distributielijsten binnen Microsoft 365 moeten kunnen toevoegen.
+\end{itemize}
+
+Deze functionaliteiten verminderen bijkomende manuele configuraties binnen de ICT-dienst en verhogen de mate van automatisering van het onboardingproces.
 
 \subsubsection{Could-have requirements}
 
-Binnen deze categorie vallen functionaliteiten die een meerwaarde bieden, maar niet noodzakelijk zijn voor de basiswerking van de oplossing.
+De volgende functionaliteiten vormen een meerwaarde, maar zijn niet noodzakelijk voor de basiswerking van de oplossing:
 
-Een eerste uitbreiding is het automatisch versturen van een welkomstmail naar nieuwe medewerkers met praktische informatie en handleidingen. Daarnaast behoort ook het automatiseren van het offboardingproces tot deze categorie.
+\begin{itemize}
+    \item De oplossing zou automatisch een welkomstmail naar nieuwe medewerkers kunnen versturen met praktische informatie en relevante handleidingen.
+    \item De oplossing zou onderdelen van het offboardingproces kunnen automatiseren.
+\end{itemize}
 
-Hoewel offboarding een belangrijk onderdeel vormt van identiteits- en toegangsbeheer binnen organisaties, lag de primaire focus van deze bachelorproef op onboarding. Indien mogelijk wordt echter ook een (gedeeltelijke) automatisering van offboarding opgenomen binnen de oplossing.
+Hoewel offboarding een belangrijk onderdeel vormt van identiteits- en toegangsbeheer, ligt de primaire focus van deze bachelorproef op het onboardingproces. Daarom wordt offboarding als een optionele uitbreiding beschouwd.
 
 \subsubsection{Would-have requirements}
 
-De laatste categorie omvat uitbreidingen die wenselijk zijn, maar momenteel moeilijk realiseerbaar zijn binnen de bestaande infrastructuur.
+De volgende functionaliteit is wenselijk, maar kan binnen de huidige infrastructuur niet betrouwbaar worden gerealiseerd:
 
-Hieronder valt het volledig automatiseren van rechtenbeheer op de file server. Binnen de huidige omgeving bestaat een complexe rechtenstructuur waarbij bepaalde toegangen historisch rechtstreeks aan individuele gebruikers toegewezen werden in plaats van via veiligheidsgroepen.
+\begin{itemize}
+    \item De oplossing zou automatisch alle vereiste rechten op de file server moeten kunnen toekennen.
+\end{itemize}
 
-Door deze inconsistente structuur is het momenteel niet mogelijk om alle rechten volledig automatisch en betrouwbaar toe te wijzen. Een volledige herstructurering van de bestaande rechtenomgeving zou hiervoor noodzakelijk zijn.
+Binnen de huidige omgeving bestaat een complexe rechtenstructuur waarbij bepaalde toegangen historisch rechtstreeks aan individuele gebruikers werden toegewezen in plaats van via veiligheidsgroepen. Hierdoor kan deze functionaliteit momenteel niet op een betrouwbare manier worden geautomatiseerd. Een volledige herstructurering van de bestaande rechtenomgeving zou noodzakelijk zijn om deze requirement te realiseren.
 
 \subsection{Niet-functionele requirements}
 
-De oplossing moet compatibel zijn met de bestaande hybride infrastructuur van het gemeentebestuur van Berlare. Zowel lokale on-premisesystemen als cloudtoepassingen binnen Microsoft 365 moeten ondersteund worden.
+Naast de functionele requirements moet de oplossing voldoen aan verschillende niet-functionele requirements:
 
-Daarnaast moet de oplossing veilig functioneren binnen de bestaande infrastructuur. Enkel bevoegde medewerkers mogen toegang hebben tot de automatiseringsflows en gevoelige configuraties.
-
-Verder moet de oplossing voldoende flexibel en onderhoudbaar zijn zodat toekomstige uitbreidingen en aanpassingen mogelijk blijven.
+\begin{itemize}
+    \item De oplossing moet compatibel zijn met de bestaande hybride IT-infrastructuur van het gemeentebestuur van Berlare.
+    \item De oplossing moet zowel lokale on-premisesystemen als cloudtoepassingen binnen Microsoft 365 kunnen ondersteunen.
+    \item De oplossing moet veilig functioneren binnen de bestaande infrastructuur.
+    \item Alleen bevoegde medewerkers mogen toegang hebben tot de automatiseringsflows en gevoelige configuraties.
+    \item De oplossing moet voldoende flexibel zijn om toekomstige uitbreidingen en aanpassingen mogelijk te maken.
+    \item De oplossing moet onderhoudbaar zijn zodat wijzigingen in de bestaande infrastructuur of het onboardingproces kunnen worden verwerkt.
+\end{itemize}
 
 \section{Analyse van automatiseerbare processen}
+
+In de volgende sectie volgt de onderverdeling van de taken aan de hand van automatiseerbaarheid.
 
 \subsection{Automatiseerbare taken}
 
@@ -116,6 +139,9 @@ Op basis van deze vereisten werd gekozen om de verdere implementatie uit te werk
 Daarnaast moet de oplossing niet alleen nieuwe accounts kunnen aanmaken, maar ook bestaande gebruikersaccounts veilig kunnen aanpassen of deactiveren tijdens het offboardingproces. Voor zowel onboarding als ofboarding moet communicatie mogelijk zijn met Exchange Online voor het beheren van mailboxrechten, distributiegroepen en gedeelde postvakken.
 
 \section{Ontwerp van de oplossing}
+
+In de volgende sectie is het ontwerp van de oplossing. 
+
 \subsection{Algemene oplossing}
 
 De ontworpen oplossing bestaat uit verschillende componenten die samenwerken binnen zowel de cloudomgeving als de lokale infrastructuur van de gemeente.
@@ -135,7 +161,6 @@ Als laatste stap binnen het configuratieproces wordt automatisch een welkomstmai
 Na het voltooien van alle configuratiestappen wordt een terugkoppeling uitgevoerd binnen het opvolgsysteem. Omdat het algemene opvolgingssysteem van een parallel project momenteel nog in ontwikkeling is, werd tijdelijk gekozen voor een tussenoplossing op basis van Excel. Hierbij wordt de status van de verwerking automatisch aangepast binnen hetzelfde Excelbestand dat tijdens de testfase gebruikt werd. Op deze manier kan eenvoudig gecontroleerd worden of de volledige flow succesvol werd uitgevoerd en de gebruiker correct werd aangemaakt.\newline
 
 Figuur~\ref{fig:ArchitectuurOnboarding} toont een vereenvoudigd overzicht van de algemene architectuur van de oplossing voor onboarding. 
-\clearpage
 
 \begin{figure}[htbp]
     \centering
@@ -179,8 +204,6 @@ Zo bevat de site ``Gemeentehuis'' afzonderlijke OU's voor diensten zoals ``perso
 Door deze variatie binnen de directorystructuur moet de automatiseringsoplossing rekening houden met verschillende mappings tussen diensten en hun overeenkomstige OU-locaties.
 
 Figuur~\ref{fig:OrganizationalUnit} toont een vereenvoudigd overzicht van de gebruikte OU-structuur binnen Active Directory.
-
-\clearpage
 
 \begin{figure}[htbp]
     \centering

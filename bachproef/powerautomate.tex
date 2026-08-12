@@ -33,12 +33,12 @@ Codefragment ~\ref{lst:ComposeDepartement} vereenvoudigde expressie toont de geb
     caption={Samenstelling van de departementen},
     label={lst:ComposeDepartement}]
     if(site == "Gemeentehuis",
-    dienst_gemeentehuis,
-    if(site == "Onthaalpoort",
-    dienst_onthaalpoort,
-    if(site == "Cultuurhuis Stroming",
-    dienst_cultuurhuis,
-    andere_dienst)))
+        dienst_gemeentehuis,
+        if(site == "Onthaalpoort",
+            dienst_onthaalpoort,
+            if(site == "Cultuurhuis Stroming",
+                dienst_cultuurhuis,
+                andere_dienst)))
 \end{lstlisting}
 
 Door gebruik te maken van deze conditionele verwerking kan de flow steeds de correcte dienst ophalen, ongeacht welke site geselecteerd werd binnen het formulier. Deze waarden worden later gebruikt voor het bepalen van de correcte OU-structuur en groepsconfiguraties binnen Active Directory.
@@ -53,12 +53,12 @@ Codefragment ~\ref{lst:ComposeRole} vereenvoudigde expressie toont een voorbeeld
     caption={Samenstelling van de rollen},
     label={lst:ComposeRole}]
     if(departement == "Informatica",
-    "IT-user",
-    if(departement == "Personeelsdienst",
-    "HR-user",
-    if(departement == "Financien",
-    "FI-user",
-    "user")))
+        "IT-user",
+        if(departement == "Personeelsdienst",
+            "HR-user",
+            if(departement == "Financien",
+                "FI-user",
+                "user")))
 \end{lstlisting}
 
 Door gebruik te maken van gestandaardiseerde rolcodes kan de verdere verwerking binnen PowerShell en Active Directory eenvoudiger en consistenter verlopen. Daarnaast maakt deze aanpak het mogelijk om rechten en groepslidmaatschappen centraal te beheren op basis van functie of dienst.
@@ -75,8 +75,6 @@ Figuur ~\ref{fig:VoorbeeldOutput} toont voorbeeldoutput die gebruikt werd om te 
     \caption[Voorbeeld output Power Automate]{Voorbeeld van de tijdelijke output van de Power Automate flow}
     \label{fig:VoorbeeldOutput}
 \end{figure}
-
-\clearpage
 
 Figuur ~\ref{fig:Cloudflow_deel1} toont het eerste deel van de cloudflow binnen Microsoft Power Automate.
 
@@ -279,7 +277,7 @@ Deze terugkoppeling wordt later gebruikt binnen verdere automatiseringsstappen, 
 
 \subsubsection{Instellen van accountvervaldatums}
 
-Voor medewerkers met een tijdelijk contract moet het gebruikersaccount automatisch gedeactiveerd worden op het einde van de contractperiode. Om te vermijden dat deze vervaldatums manueel beheerd moeten worden, werd binnen de desktopflow een bijkomend PowerShell-script voorzien dat automatisch een accountvervaldatum instelt binnen Active Directory. Wanneer deze code binnen het algemene onboardingscript werd geplaatst, reageerde PowerShell hier niet op en stelde het de datum niet in. Wanneer deze code in een apart Power Automate blok werd gezet, werd de einddatum wel correct ingesteld. 
+Voor medewerkers met een tijdelijk contract moet het gebruikersaccount automatisch gedeactiveerd worden op het einde van de contractperiode. Om te vermijden dat deze vervaldatums manueel beheerd moeten worden, werd binnen de desktopflow een bijkomend PowerShell-script voorzien dat automatisch een accountvervaldatum instelt binnen Active Directory. Wanneer deze code binnen het algemene onboardingscript werd geplaatst, reageerde PowerShell hier niet op en stelde het de datum niet in. Een reden hiervoor werd niet gevonden. Wanneer deze code in een apart Power Automate blok werd gezet, werd de einddatum wel correct ingesteld. 
 
 De einddatum wordt vanuit het Microsoft Forms-formulier doorgestuurd naar de desktopflow als parameter. Indien een einddatum ingevuld werd, verwerkt het script deze datum en koppelt deze aan het Active Directory-account van de gebruiker.
 
@@ -352,6 +350,8 @@ Figuur ~\ref{fig:DesktopFlow_deel1} toont het eerste deel van de desktopflow bin
 
 \section{Cloudverwerking binnen Microsoft 365 en Entra ID}
 
+Deze sectie overloopt de uitwerking van de Entra ID en Microsoft 365 omgeving. 
+
 \subsection{Synchronisatie met Entra ID}
 
 Na het aanmaken van de gebruiker binnen de lokale Active Directory-omgeving moet het account eerst gesynchroniseerd worden naar Microsoft Entra ID voordat bijkomende cloudconfiguraties uitgevoerd kunnen worden. Binnen het gemeentebestuur wordt gebruikgemaakt van een hybride omgeving waarbij lokale Active Directory gekoppeld is aan Microsoft 365 via synchronisatieservices. Er wordt gebruik gemaakt van Entra ID Connect, vroeger ook wel bekend als Azure AD Connect. 
@@ -370,7 +370,7 @@ Daarna kan de controle starten. Bij het starten van deze controle wordt eerst ee
 
 Wanneer het gebruikersprofiel succesvol opgehaald kan worden, wordt de variabele aangepast naar \texttt{true}, waardoor de \texttt{Do Until}-lus beëindigd wordt en de volgende cloudconfiguraties uitgevoerd kunnen worden.
 
-Omdat de synchronisatie tussen Active Directory en Entra ID enige tijd kan duren, werd binnen de lus eveneens een \texttt{Delay}-stap toegevoegd. Hierdoor wordt vermeden dat continu aanvragen naar Entra ID gestuurd worden. Binnen de implementatie wordt telkens 30 seconden gewacht voordat een nieuwe controle uitgevoerd wordt.
+Omdat de synchronisatie tussen Active Directory en Entra ID slechts één keer per half uur wordt gestart, werd binnen de lus eveneens een \texttt{Delay}-stap toegevoegd. Hierdoor wordt vermeden dat continu aanvragen naar Entra ID gestuurd worden. Binnen de implementatie wordt telkens 30 seconden gewacht voordat een nieuwe controle uitgevoerd wordt.
 
 \subsection{Toekennen van Microsoft 365-groepen en licenties}
 
@@ -428,7 +428,7 @@ Codefragment ~\ref{lst:ExchangeParameters} toont de parameters die vanuit de des
 \end{lstlisting}
 
 Voor de communicatie met Exchange Online wordt gebruikgemaakt van de module \texttt{ExchangeOnlineManagement}. Nadat verbinding gemaakt werd met Exchange Online, kan het script rechten en groepslidmaatschappen automatisch configureren.
-\clearpage
+
 \begin{lstlisting}[language=PowerShell,
     caption={Verbinding met Exchange Online},
     label={lst:ConnectExchange}]
@@ -519,7 +519,7 @@ Door deze configuraties automatisch uit te voeren, wordt het manuele beheer van 
 
 Binnen de verschillende PowerShell-scripts wordt gebruikgemaakt van foutafhandeling om onverwachte problemen gecontroleerd op te vangen zonder dat het volledige onboardingproces abrupt stopt. Hiervoor worden voornamelijk \texttt{try-catch}-constructies gebruikt.
 
-Wanneer een fout optreedt tijdens het uitvoeren van een opdracht, wordt een waarschuwing of foutmelding weggeschreven zodat deze later geraadpleegd kan worden binnen Power Automate of tijdens troubleshooting.
+Wanneer een fout optreedt tijdens het uitvoeren van een opdracht, wordt een waarschuwing of foutmelding weggeschreven zodat deze later geraadpleegd kan worden binnen Power Automate of tijdens troubleshooting. Dit zorgt er echter niet voor dat de flow automatisch stopt.
 
 Codefragment ~\ref{lst:MailboxErrorHandling} toont een voorbeeld van foutafhandeling tijdens het toevoegen van een gebruiker aan een gedeeld postvak.
 
@@ -827,7 +827,7 @@ Figuur ~\ref{fig:CloudOffboarding} toont de complete cloudflow voor het offboard
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=1\textwidth]{CloudOffboarding.png}
+    \includegraphics[width=0.8\textwidth]{CloudOffboarding.png}
     \caption[Cloudflow offboarding]{Cloudflow voor het offboardingsproces}
     \label{fig:CloudOffboarding}
 \end{figure}

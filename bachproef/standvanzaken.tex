@@ -48,13 +48,15 @@
 %  \caption[Voorbeeld tabel]{\label{tab:example}Voorbeeld van een tabel.}
 %\end{table}
 
-
+Om inzicht te krijgen in de mogelijkheden en voorwaarden voor het automatiseren van het onboardingproces, wordt eerst relevante literatuur onderzocht. Deze literatuurstudie vormt de theoretische basis voor de verdere analyse van de huidige onboardingprocedure binnen gemeente Berlare en voor het bepalen van de vereisten waaraan een geautomatiseerde oplossing moet voldoen.
 
 \section{Digitale onboarding en gebruikersprovisioning}
 
+In eerste instantie wordt het begrip onboarding toegelicht en wordt het onderscheid tussen een manuele en een geautomatiseerde onboardingprocedure besproken.  
+
 \subsection{Onboarding binnen organisaties}
 
-Volgens de Cambridge Dictionary wordt onboarding omschreven als ``het proces waarin nieuwe medewerkers vertrouwd raken met hun functie en de organisatie, en met de manier waarop de organisatie functioneert'' (eigen vertaling) \autocite{Cambridge}. Onboarding omvat dus niet uitsluitend administratieve handelingen, maar ook het integreren van nieuwe medewerkers binnen de werking en cultuur van een organisatie.
+Volgens \textcite{Cambridge} wordt onboarding omschreven als ``het proces waarin nieuwe medewerkers vertrouwd raken met hun functie en de organisatie, en met de manier waarop de organisatie functioneert'' (eigen vertaling) . Onboarding omvat dus niet uitsluitend administratieve handelingen, maar ook het integreren van nieuwe medewerkers binnen de werking en cultuur van een organisatie.
 
 Volgens \textcite{Studytube2024} kan onboarding beschouwd worden als het proces waarbij nieuwe medewerkers hun functie, collega’s en organisatie leren kennen. Tijdens deze fase maken medewerkers kennis met de interne werking van de organisatie en bouwen zij hun eerste professionele contacten op.
 
@@ -66,7 +68,7 @@ Binnen moderne organisaties speelt digitale onboarding een steeds belangrijkere 
 
 Volgens \textcite{Personioa} verwijst digitale onboarding naar het proces waarbij nieuwe medewerkers ingewerkt worden met behulp van digitale tools en softwareplatformen. Naast technische configuraties omvat dit eveneens digitale communicatie, documentatie en ondersteuning tijdens de integratie van nieuwe medewerkers binnen de organisatie.
 
-Binnen grotere IT-omgevingen wordt digitale onboarding vaak gekoppeld aan identi\-teits- en toe\-gangs\-beheer\-systemen zodat toegangsbeheer centraal en gecontroleerd beheerd kan worden. Een efficiënte digitale onboarding is belangrijk omdat medewerkers hierdoor sneller operationeel inzetbaar worden. Wanneer noodzakelijke gebruikersaccounts of toegangsrechten niet tijdig beschikbaar zijn, kan dit leiden tot vertragingen, verminderde productiviteit en een minder positieve eerste ervaring binnen de organisatie.
+Binnen grotere IT-omgevingen wordt digitale onboarding vaak gekoppeld aan identi\-teits- en toe\-gangs\-beheer\-systemen zodat toegangsbeheer centraal en gecontroleerd beheerd kan worden. Een efficiënte digitale onboarding is belangrijk omdat medewerkers hierdoor sneller operationeel inzetbaar worden. Wanneer noodzakelijke gebruikersaccounts of toegangsrechten niet tijdig beschikbaar zijn, kan dit leiden tot vertragingen, verminderde productiviteit en een minder positieve eerste ervaring binnen de organisatie \autocite{Forp2026}.
 
 \subsection{Offboarding binnen organisaties}
 
@@ -92,7 +94,7 @@ Daarnaast bevestigt \textcite{Vitla2023} dat geautomatiseerde onboardingprocesse
 
 \subsection{Automatische gebruikersprovisioning}
 
-Automatische gebruikersprovisioning vormt vandaag een belangrijk onderdeel van moderne identity- en accessmanagementsystemen. Provisioning verwijst naar het proces waarbij gebruikersaccounts, rechten en toegangen automatisch worden aangemaakt, aangepast en beheerd.
+Automatische gebruikersprovisioning vormt vandaag een belangrijk onderdeel van moderne identity- en accessmanagementsystemen \autocite{openIAM}. Provisioning verwijst naar het proces waarbij gebruikersaccounts, rechten en toegangen automatisch worden aangemaakt, aangepast en beheerd.
 
 Binnen organisaties omvat provisioning onder andere het aanmaken van gebruikersaccounts, het toekennen van groepslidmaatschappen, het configureren van mailboxen en het voorzien van toegang tot applicaties, gedeelde bestanden en andere digitale middelen.
 
@@ -101,6 +103,8 @@ De nood aan geautomatiseerde provisioningprocessen is de afgelopen jaren sterk t
 Automatische provisioning wordt daarom beschouwd als een belangrijke stap richting veilig en efficiënt identiteitsbeheer. Geautomatiseerde workflows maken het mogelijk om consistente configuraties toe te passen op basis van vooraf gedefinieerde regels en sjablonen. Hierdoor verbeteren zowel de schaalbaarheid als de standaardisatie van het gebruikersbeheer binnen organisaties.
 
 \section{Identity and Access Management}
+
+Vervolgens is er onderzocht wat identiteits- en toegangsmanagement is. Verder wordt er ook beschreven waarom dit belangrijk is.
 
 \subsection{Identity and Access Management}
 
@@ -138,6 +142,8 @@ Er moet altijd gewerkt worden met het principe om zo minimaal mogelijke rechten 
 
 \section{Workflowautomatisering}
 
+Vervolgens is onderzocht welke onderdelen van een onboardingproces in aanmerking komen voor automatisering.
+
 \subsection{Automatisering van bedrijfsprocessen}
 
 Workflowautomatisering verwijst naar het automatiseren van repetitieve processen en taken binnen organisaties. Door workflows te automatiseren kunnen organisaties manuele handelingen beperken, foutenmarges verkleinen en processen efficiënter uitvoeren.
@@ -157,6 +163,8 @@ Voor eenvoudige projecten, is het gebruik van deze platformen zeker een optie di
 Volgens \textcite{Nwibe2026} behoren Activepieces, Zapier en Make tot de meest gebruikte alternatieven voor Microsoft Power Automate binnen workflowautomatisering. Elk platform beschikt over specifieke eigenschappen, integratiemogelijkheden en beperkingen.
 
 \section{Workflowautomatiseringstools}
+
+Vervolgens is er voor die onderdelen gekeken naar welke technologieën hiervoor kunnen worden ingezet.
 
 \subsection{Microsoft Power Automate}
 
@@ -234,9 +242,11 @@ Microsoft Power Automate onderscheidt zich voornamelijk door de nauwe integratie
 
 \section{Hybride omgevingen en GDPR}
 
+Vervolgens is er aandacht besteed aan relevante aspecten rond gegevensverwerking en privacy, aangezien tijdens het onboardingproces persoonsgegevens van medewerkers worden verwerkt. Ook wordt er gekeken naar de verschillende soorten systemen binnen bedrijven.
+
 \subsection{Cloud- en on-premisesomgevingen}
 
-Veel organisaties maken vandaag gebruik van hybride IT-omgevingen waarbij bepaalde systemen in de cloud draaien terwijl andere toepassingen lokaal on-premises blijven functioneren. Deze aanpak combineert de schaalbaarheid en flexibiliteit van cloudplatformen met de controle en gegevensbescherming van lokale infrastructuren.
+Veel organisaties maken vandaag gebruik van hybride IT-omgevingen waarbij bepaalde systemen in de cloud draaien terwijl andere toepassingen lokaal on-premises blijven functioneren \autocite{Wong2023}. Deze aanpak combineert de schaalbaarheid en flexibiliteit van cloudplatformen met de controle en gegevensbescherming van lokale infrastructuren.
 
 Een on-premises infrastructuur houdt in dat de IT-omgeving en bijbehorende gegevens lokaal worden beheerd op de fysieke servers van de organisatie zelf. Deze servers zitten dan op het eigen netwerk en er kan van buiten het eigen netwerk geen connectie gemaakt worden met de servers. Volgens \textcite{Cooper2025} is het opzetten van een on prem systeem een grote kost. Er moet apparatuur aangekocht worden en het moet daarna ook goed onderhouden worden. Hiervoor zijn experts nodig. Historisch gezien maakten organisaties uitsluitend gebruik van on-premises systemen. Door de continue evolutie van technologieën verschoof de focus echter gaandeweg naar migraties naar de cloud.
 
@@ -366,7 +376,11 @@ Automatisering kan hierbij bijdragen aan consistente toegangscontrole, logging e
 
 \section{PowerShell en Active Directory}
 
+Tot slot zijn de integrale systemen die zowel de aanpassingen zullen doen en waarop deze worden aangepast onderzocht. 
+
 \subsection{Active Directory}
+
+In de volgende sectie is onderzocht wat Active directory is en waarvoor het gebruikt wordt. 
 
 \subsubsection{Directory services}
 
@@ -428,13 +442,13 @@ Microsoft vermeldt eveneens dat de cmdlet gebruikt kan worden in combinatie met 
 
 \subsubsection{Disable-ADAccount}
 
-De PowerShell-cmdlet Disable-ADAccount wordt gebruikt om Active Directory-ac\-counts uit te schakelen binnen een domeinomgeving \autocite{Microsoft2025b}. De cmdlet maakt deel uit van de Active Directory-module voor PowerShell en ondersteunt het uitschakelen van gebruikersaccounts, computeraccounts en serviceaccounts.
+De PowerShell-cmdlet \texttt{Disable-ADAccount} wordt gebruikt om Active Directory-ac\-counts uit te schakelen binnen een domeinomgeving \autocite{Microsoft2025b}. De cmdlet maakt deel uit van de Active Directory-module voor PowerShell en ondersteunt het uitschakelen van gebruikersaccounts, computeraccounts en serviceaccounts.
 
 Volgens de Microsoft-documentatie kan een account geïdentificeerd worden via verschillende eigenschappen, waaronder de distinguished name, GUID, security identifier (SID) of SAM-accountnaam \autocite{Microsoft2025b}. Daarnaast ondersteunt de cmdlet ook pipelineverwerking, waardoor accountobjecten rechtstreeks vanuit andere cmdlets zoals Get-ADUser of Search-ADAccount verwerkt kunnen worden.
 
-Binnen identity- en accessmanagement speelt Disable-ADAccount een belangrijke rol tijdens offboardingprocessen. Wanneer een medewerker een organisatie verlaat, is het noodzakelijk om toegangsrechten zo snel mogelijk te beperken om ongeautoriseerde toegang tot systemen en gegevens te voorkomen. Door accounts automatisch uit te schakelen kunnen organisaties beveiligingsrisico’s verminderen en beter voldoen aan compliance- en beveiligingsrichtlijnen.
+Binnen identity- en accessmanagement speelt \texttt{Disable-ADAccount} een belangrijke rol tijdens offboardingprocessen. Wanneer een medewerker een organisatie verlaat, is het noodzakelijk om toegangsrechten zo snel mogelijk te beperken om ongeautoriseerde toegang tot systemen en gegevens te voorkomen. Door accounts automatisch uit te schakelen kunnen organisaties beveiligingsrisico’s verminderen en beter voldoen aan compliance- en beveiligingsrichtlijnen.
 
-Een belangrijk voordeel van Disable-ADAccount is dat het account niet onmiddellijk verwijderd wordt. Hierdoor blijven gebruikersgegevens, groepslidmaatschappen en mailboxkoppelingen behouden voor eventuele audits, tijdelijke blokkeringen of latere heractivering. Dit biedt organisaties meer controle over gebruikersbeheer en voorkomt dat belangrijke gegevens onmiddellijk verloren gaan.
+Een belangrijk voordeel van \texttt{Disable-ADAccount} is dat het account niet onmiddellijk verwijderd wordt. Hierdoor blijven gebruikersgegevens, groepslidmaatschappen en mailboxkoppelingen behouden voor eventuele audits, tijdelijke blokkeringen of latere heractivering. Dit biedt organisaties meer controle over gebruikersbeheer en voorkomt dat belangrijke gegevens onmiddellijk verloren gaan.
 
 Daarnaast ondersteunt de cmdlet het gelijktijdig uitschakelen van meerdere accounts via scripting en automatisering. Microsoft toont bijvoorbeeld aan dat volledige organisatorische eenheden automatisch verwerkt kunnen worden door Disable-ADAccount te combineren met Get-ADUser \autocite{Microsoft2025b}. Hierdoor kan de cmdlet efficiënt ingezet worden binnen geautomatiseerde offboardingprocessen en periodieke beveiligingscontroles.
 
