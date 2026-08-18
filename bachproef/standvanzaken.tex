@@ -168,11 +168,11 @@ Door zijn sterke focus op cloudintegraties en gebruiksgemak vormt Zapier een toe
 
 \subsection{Make}
 
-Make (voorheen Integromat) is een no-code automatiseringsplatform waarmee gebruikers complexe workflows kunnen ontwikkelen via een visuele interface \autocite{Digidop}. Het platform ondersteunt meer dan 2000 integraties en biedt mogelijkheden voor voorwaarden, filters, lussen, webhooks en het verwerken van gestructureerde gegevens zoals JSON-objecten en arrays \autocite{Nwibe2026}. Hierdoor kunnen workflows flexibel worden opgebouwd.
+Make (voorheen Integromat) is een no-code automatiseringsplatform waarmee gebruikers complexe workflows kunnen ontwikkelen via een visuele interface \footnote{\autocite{Digidop}}. Het platform ondersteunt meer dan 2000 integraties en biedt mogelijkheden voor voorwaarden, filters, lussen, webhooks en het verwerken van gestructureerde gegevens zoals JSON-objecten en arrays \autocite{Nwibe2026}. Hierdoor kunnen workflows flexibel worden opgebouwd.
 
 Net zoals Zapier beschikt Make niet over een ingebouwde PowerShell-module. Integratie met lokale Windows-omgevingen en systeembeheer via PowerShell vereist daarom bijkomende configuraties of externe tussenlagen.
 
-Door zijn visuele workflowopbouw en uitgebreide ondersteuning voor gegevensverwerking vormt Make een flexibel automatiseringsplatform voor organisaties die complexe cloudworkflows wensen te ontwikkelen. Voor hybride infrastructuren met uitgebreide lokale systeemintegraties blijven echter bijkomende configuraties noodzakelijk.
+Door zijn visuele workflowopbouw en uitgebreide ondersteuning voor gegevensverwerking vormt Make een flexibel automatiseringsplatform voor organisaties die complexe cloudworkflows wensen te ontwikkelen. Voor hybride infrastructuren met uitgebreide lokale systeemintegraties blijven echter bijkomende configuraties noodzakelijk. \footnote{\autocite{Make}}
 
 \subsection{Activepieces}
 
@@ -212,12 +212,10 @@ Veel organisaties maken gebruik van hybride IT-omgevingen waarbij bepaalde syste
 
 Binnen dit onderzoek is deze combinatie relevant omdat het gemeentebestuur van Berlare zowel lokale Active Directory-systemen als cloudgebaseerde Microsoft-diensten gebruikt. De automatisering moet daarom gegevens en acties tussen beide omgevingen kunnen uitwisselen.
 
-In tabel ~\ref{tab:cloud_onprem} wordt een vergelijking gemaakt tussen cloud- en on-premises oplossingen.
+In tabel~\ref{tab:cloud_onprem} wordt een vergelijking gemaakt tussen cloud- en on-premises oplossingen.
 
 \begin{table}[H]
     \centering
-    \caption{Vergelijking tussen cloud- en on-premisesoplossingen}
-    \label{tab:cloud_onprem}
     \begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
         \hline
         \textbf{Aspect} & \textbf{Cloud} & \textbf{On-premises} \\ \hline
@@ -263,6 +261,8 @@ In tabel ~\ref{tab:cloud_onprem} wordt een vergelijking gemaakt tussen cloud- en
         Complexere en tijdsintensievere installatie \\ \hline
         
     \end{tabular}
+    \caption{Vergelijking tussen cloud- en on-premisesoplossingen}
+    \label{tab:cloud_onprem}
 \end{table}
 
 Volgens \textcite{Ahuja2024} kiezen organisaties vaak voor hybride infrastructuren om privacygevoelige gegevens lokaal te bewaren terwijl andere diensten via cloudplatformen worden aangeboden.
@@ -272,7 +272,7 @@ Volgens \textcite{Ahuja2024} kiezen organisaties vaak voor hybride infrastructur
 In de volgende subsecties zijn de attributen van de ontwikkelde Microsoft cloudsystemen onderzocht. 
 
 \subsubsection{Microsoft 365}
-Microsoft 365 is een cloudgebaseerd productiviteitsplatform dat verschillende toepassingen en diensten combineert, waaronder Office-applicaties, e-mail, bestandsopslag, samenwerkingstools en identiteitsbeheer \autocite{Microsoftc}. Het platform ondersteunt organisaties bij veilige samenwerking en communicatie via desktop-, web- en mobiele apparaten. 
+Microsoft 365 is een cloudgebaseerd productiviteitsplatform dat verschillende toepassingen en diensten combineert, waaronder Office-applicaties, e-mail, bestandsopslag, samenwerkingstools en identiteitsbeheer \footnote{\autocite{Microsoftc}}. Het platform ondersteunt organisaties bij veilige samenwerking en communicatie via desktop-, web- en mobiele apparaten. 
 
 \subsubsection{Microsoft Entra ID en identity- en accessmanagement}
 
@@ -280,7 +280,7 @@ Identity- en accessmanagement (IAM) richt zich op het beheren van gebruikersiden
 
 Microsoft Entra ID is de cloudgebaseerde IAM-oplossing van Microsoft. Het platform ondersteunt onder andere het beheer van gebruikers, groepen en applicaties en biedt functionaliteiten zoals Single Sign-On (SSO), multifactor-authenticatie (MFA) en conditionele toegang \autocite{Microsoft2026a}. Binnen een onboardingproces kan Entra ID daardoor worden gebruikt voor het beheren van digitale identiteiten en toegangsrechten.
 
-Verder biedt Microsoft Graph uitgebreide mogelijkheden voor automatisering en integratie binnen het Microsoft-ecosysteem. Microsoft Graph functioneert als een centrale toegangspoort tot data en intelligentie binnen cloudservices zoals Microsoft Entra en Microsoft 365 \autocite{Microsoft2026b}. Via één centrale API-endpoint kunnen ontwikkelaars en beheerders gegevens en functionaliteiten benaderen van verschillende Microsoft-diensten, waaronder Outlook, Teams, SharePoint, OneDrive en Microsoft Entra ID.
+Verder biedt Microsoft Graph uitgebreide mogelijkheden voor automatisering en integratie binnen het Microsoft-ecosysteem. Microsoft Graph functioneert als een centrale toegangspoort tot data en intelligentie binnen cloudservices zoals Microsoft Entra en Microsoft 365 \footnote{\autocite{Microsoft2026b}}. Via één centrale API-endpoint kunnen ontwikkelaars en beheerders gegevens en functionaliteiten benaderen van verschillende Microsoft-diensten, waaronder Outlook, Teams, SharePoint, OneDrive en Microsoft Entra ID.
 
 Microsoft Graph maakt gebruik van REST API’s en software development kits (SDK’s) om applicaties en automatiseringsprocessen te ontwikkelen \autocite{Microsoft2026b}. Hierdoor kunnen administratieve taken programmatorisch uitgevoerd worden, zoals gebruikersbeheer, groepsbeheer, licentietoewijzing en toegangscontrole. Binnen onboardingprocessen kan Microsoft Graph bijvoorbeeld gebruikt worden om automatisch gebruikersaccounts aan te maken, medewerkers toe te voegen aan groepen en rechten toe te wijzen op basis van hun functie binnen de organisatie.
 
@@ -330,13 +330,13 @@ PowerShell is relevant voor dit onderzoek omdat het onder andere gebruikt kan wo
 
 \subsubsection{New-ADUser}
 
-De PowerShell-cmdlet \texttt{New-ADUser} maakt deel uit van de Active Directory-module en wordt gebruikt om nieuwe gebruikersobjecten aan te maken binnen een domeinomgeving \autocite{Microsoft2024a}. Deze cmdlet ondersteunt uitgebreide configuratiemogelijkheden, waaronder het instellen van gebruikersattributen zoals accountnamen, wachtwoorden, organisatorische eenheden en accountinstellingen. Hierdoor kunnen organisaties consistente gebruikersaccounts implementeren binnen een Active Directory-omgeving.
+De PowerShell-cmdlet \texttt{New-ADUser} maakt deel uit van de Active Directory-module en wordt gebruikt om nieuwe gebruikersobjecten aan te maken binnen een domeinomgeving \footnote{\autocite{Microsoft2024a}}. Deze cmdlet ondersteunt uitgebreide configuratiemogelijkheden, waaronder het instellen van gebruikersattributen zoals accountnamen, wachtwoorden, organisatorische eenheden en accountinstellingen. Hierdoor kunnen organisaties consistente gebruikersaccounts implementeren binnen een Active Directory-omgeving.
 
 Binnen geautomatiseerde onboarding kan \texttt{New-ADUser} worden gebruikt om gebruikersaccounts aan te maken op basis van gegevens uit een HR-systeem, formulier of workflowplatform. Hierdoor kunnen accounts consistent worden geconfigureerd zonder dat een beheerder deze handmatig moet aanmaken.
 
 \subsubsection{Add-ADGroupMember}
 
-De PowerShell-cmdlet \texttt{Add-ADGroupMember} wordt gebruikt om gebruikers, computers, groepen of serviceaccounts toe te voegen aan een Active Directory-groep \autocite{Microsoft2025a}. Hierdoor kunnen groepslidmaatschappen programmatorisch worden beheerd.
+De PowerShell-cmdlet \texttt{Add-ADGroupMember} wordt gebruikt om gebruikers, computers, groepen of serviceaccounts toe te voegen aan een Active Directory-groep \footnote{\autocite{Microsoft2025a}}. Hierdoor kunnen groepslidmaatschappen programmatorisch worden beheerd.
 
 Binnen onboardingprocessen speelt Add-ADGroupMember een belangrijke rol bij het automatisch toekennen van toegangsrechten. In veel organisaties worden rechten namelijk niet rechtstreeks aan individuele gebruikers toegekend, maar via beveiligingsgroepen beheerd. Door nieuwe medewerkers automatisch aan de correcte groepen toe te voegen, kunnen toegangen tot gedeelde mappen, applicaties en netwerkresources centraal en consistent beheerd worden.
 
@@ -344,7 +344,7 @@ Daarnaast ondersteunt de cmdlet het toevoegen van meerdere objecten tegelijk via
 
 \subsubsection{Disable-ADAccount}
 
-De PowerShell-cmdlet \texttt{Disable-ADAccount} wordt gebruikt om Active Directory-ac\-counts uit te schakelen binnen een domeinomgeving \autocite{Microsoft2025b}. De cmdlet kan onder andere gebruikers-, computer- en serviceaccounts uitschakelen.
+De PowerShell-cmdlet \texttt{Disable-ADAccount} wordt gebruikt om Active Directory-ac\-counts uit te schakelen binnen een domeinomgeving \footnote{\autocite{Microsoft2025b}}. De cmdlet kan onder andere gebruikers-, computer- en serviceaccounts uitschakelen.
 
 Binnen identity- en accessmanagement speelt \texttt{Disable-ADAccount} een belangrijke rol tijdens offboardingprocessen. Wanneer een medewerker een organisatie verlaat, is het noodzakelijk om toegangsrechten zo snel mogelijk te beperken om ongeautoriseerde toegang tot systemen en gegevens te voorkomen. Door accounts automatisch uit te schakelen kunnen organisaties beveiligingsrisico’s verminderen en beter voldoen aan compliance- en beveiligingsrichtlijnen.
 
@@ -352,7 +352,7 @@ Een belangrijk voordeel van \texttt{Disable-ADAccount} is dat het account niet o
 
 \subsection{Exchange Online PowerShell}
 
-Exchange Online PowerShell vormt een belangrijk onderdeel van het beheer van Microsoft Exchange Online en Microsoft 365-omgevingen. Via PowerShell kunnen beheerders mailboxen, distributiegroepen, gebruikersrechten en e-mailcon\-fi\-gu\-ra\-ties geautomatiseerd beheren \autocite{Microsoft2025c}. 
+Exchange Online PowerShell vormt een belangrijk onderdeel van het beheer van Microsoft Exchange Online en Microsoft 365-omgevingen. Via PowerShell kunnen beheerders mailboxen, distributiegroepen, gebruikersrechten en e-mailcon\-fi\-gu\-ra\-ties geautomatiseerd beheren \footnote{\autocite{Microsoft2025c}}. 
 
 Een belangrijk voordeel van Exchange Online PowerShell is de mogelijkheid om administratieve taken te automatiseren binnen hybride Microsoft 365-omgevingen. Cmdlets kunnen gebruikt worden voor het automatisch aanmaken van mailboxen, het toekennen van mailboxrechten, het beheren van distributiegroepen en het configureren van e-mailinstellingen. 
 
