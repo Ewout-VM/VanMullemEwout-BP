@@ -1,0 +1,14 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{\PYGZdl{}DefaultGroups} \PYG{p}{=} \PYG{p}{@(}
+    \PYG{l+s+s2}{\PYGZdq{}SEC\PYGZus{}DR\PYGZus{}Data2\PYGZdq{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}UNIFLOW\PYGZdq{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}SEC\PYGZus{}DR\PYGZus{}Fotoarchief\PYGZdq{}}
+\PYG{p}{)}
+
+\PYG{n+nv}{\PYGZdl{}AllGroups} \PYG{p}{=} \PYG{p}{@()}
+\PYG{n+nv}{\PYGZdl{}AllGroups} \PYG{p}{+=} \PYG{n+nv}{\PYGZdl{}DefaultGroups}
+
+\PYG{k}{foreach} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}Group} \PYG{k}{in} \PYG{n+nv}{\PYGZdl{}AllGroups}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n+nb}{Add\PYGZhy{}ADGroupMember} \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}Group} \PYG{n}{\PYGZhy{}Members} \PYG{n+nv}{\PYGZdl{}Sam}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

@@ -1,0 +1,8 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{Add\PYGZhy{}MailboxPermission} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}sharedMailbox} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}User} \PYG{n+nv}{\PYGZdl{}UPN} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}AccessRights} \PYG{n}{FullAccess} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}InheritanceType} \PYG{n}{All} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Confirm}\PYG{p}{:}\PYG{n+nv}{\PYGZdl{}false}
+\end{MintedVerbatim}

@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{Remove\PYGZhy{}DistributionGroupMember} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}\PYGZus{}}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Member} \PYG{n+nv}{\PYGZdl{}UPN} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Confirm}\PYG{p}{:}\PYG{n+nv}{\PYGZdl{}false}
+\end{MintedVerbatim}

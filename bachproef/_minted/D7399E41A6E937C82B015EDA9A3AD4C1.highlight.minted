@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{Set\PYGZhy{}Mailbox} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}Mailbox}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}GrantSendOnBehalfTo} \PYG{p}{@\PYGZob{}}
+        \PYG{n}{Remove} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}UserMailbox}\PYG{p}{.}\PYG{n}{DistinguishedName}
+    \PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

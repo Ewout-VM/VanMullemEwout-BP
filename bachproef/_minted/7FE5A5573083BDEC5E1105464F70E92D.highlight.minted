@@ -1,0 +1,8 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{\PYGZdl{}Sam} \PYG{p}{=} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}LastClean} \PYG{p}{+} \PYG{n+nv}{\PYGZdl{}FirstClean}\PYG{p}{.}\PYG{n}{Substring}\PYG{p}{(}\PYG{n}{0}\PYG{p}{,}\PYG{n}{1}\PYG{p}{)).}\PYG{n}{ToLower}\PYG{p}{()}
+\PYG{n+nv}{\PYGZdl{}Email} \PYG{p}{=} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}FirstClean} \PYG{p}{+} \PYG{l+s+s2}{\PYGZdq{}.\PYGZdq{}} \PYG{p}{+} \PYG{n+nv}{\PYGZdl{}LastClean} \PYG{p}{+} \PYG{l+s+s2}{\PYGZdq{}@berlare.be\PYGZdq{}}\PYG{p}{).}\PYG{n}{ToLower}\PYG{p}{()}
+
+\PYG{n+nv}{\PYGZdl{}DisplayName} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}First \PYGZdl{}Last\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}Description} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}Title}
+\PYG{n+nv}{\PYGZdl{}Company}     \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}Berlare\PYGZdq{}}
+\end{MintedVerbatim}

@@ -1,0 +1,26 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{Import\PYGZhy{}Module} \PYG{n}{ActiveDirectory}
+
+\PYG{n+nv}{\PYGZdl{}Sam} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}Username\PYGZpc{}\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}DateString} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZpc{}ExpirationDate\PYGZpc{}\PYGZdq{}}
+
+\PYG{k}{if} \PYG{p}{(!}\PYG{n+no}{[string]}\PYG{p}{::}\PYG{n}{IsNullOrWhiteSpace}\PYG{p}{(}\PYG{n+nv}{\PYGZdl{}DateString}\PYG{p}{))} \PYG{p}{\PYGZob{}}
+
+    \PYG{k}{try} \PYG{p}{\PYGZob{}}
+        \PYG{n+nv}{\PYGZdl{}DateObj} \PYG{p}{=} \PYG{n+no}{[datetime]}\PYG{p}{::}\PYG{n}{ParseExact}\PYG{p}{(}\PYG{n+nv}{\PYGZdl{}DateString}\PYG{p}{,} \PYG{l+s+s2}{\PYGZdq{}yyyy\PYGZhy{}MM\PYGZhy{}dd\PYGZdq{}}\PYG{p}{,} \PYG{n+nv}{\PYGZdl{}null}\PYG{p}{)}
+        \PYG{n+nv}{\PYGZdl{}DateObj} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}DateObj}\PYG{p}{.}\PYG{n}{AddDays}\PYG{p}{(}\PYG{n}{2}\PYG{p}{)}
+        \PYG{n+nv}{\PYGZdl{}DateObj} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}DateObj}\PYG{p}{.}\PYG{n}{Date}\PYG{p}{.}\PYG{n}{AddHours}\PYG{p}{(}\PYG{n}{23}\PYG{p}{).}\PYG{n}{AddMinutes}\PYG{p}{(}\PYG{n}{59}\PYG{p}{).}\PYG{n}{AddSeconds}\PYG{p}{(}\PYG{n}{59}\PYG{p}{)}
+
+        \PYG{n+nb}{Set\PYGZhy{}ADAccountExpiration} \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}Sam} \PYG{n}{\PYGZhy{}DateTime} \PYG{n+nv}{\PYGZdl{}DateObj}
+
+        \PYG{n+nb}{Write\PYGZhy{}Output} \PYG{l+s+s2}{\PYGZdq{}Expiration set to \PYGZdl{}DateObj\PYGZdq{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{catch} \PYG{p}{\PYGZob{}}
+        \PYG{n+nb}{Write\PYGZhy{}Output} \PYG{l+s+s2}{\PYGZdq{}ERROR:\PYGZdq{}}
+        \PYG{n+nb}{Write\PYGZhy{}Output} \PYG{n+nv}{\PYGZdl{}\PYGZus{}}
+    \PYG{p}{\PYGZcb{}}
+
+\PYG{p}{\PYGZcb{}} \PYG{k}{else} \PYG{p}{\PYGZob{}}
+    \PYG{n+nb}{Write\PYGZhy{}Output} \PYG{l+s+s2}{\PYGZdq{}No expiration date provided\PYGZdq{}}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

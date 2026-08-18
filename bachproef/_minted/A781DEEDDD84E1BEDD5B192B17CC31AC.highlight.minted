@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{Add\PYGZhy{}DistributionGroupMember} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}dl} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Member} \PYG{n+nv}{\PYGZdl{}UPN} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}BypassSecurityGroupManagerCheck}
+\end{MintedVerbatim}

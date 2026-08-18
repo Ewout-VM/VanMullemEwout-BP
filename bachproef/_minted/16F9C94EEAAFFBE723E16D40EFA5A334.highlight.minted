@@ -1,0 +1,15 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nb}{Add\PYGZhy{}MailboxPermission} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}sharedMailbox} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}User} \PYG{n+nv}{\PYGZdl{}UPN} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}AccessRights} \PYG{n}{FullAccess} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}ErrorAction} \PYG{n}{Stop}
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{catch} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}Failed FullAccess\PYGZdq{}}
+    \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{n+nv}{\PYGZdl{}\PYGZus{}}\PYG{p}{.}\PYG{n}{Exception}\PYG{p}{.}\PYG{n}{Message}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

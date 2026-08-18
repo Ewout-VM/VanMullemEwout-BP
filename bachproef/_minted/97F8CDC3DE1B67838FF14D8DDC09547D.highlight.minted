@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{\PYGZdl{}BaseOU} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}OU=Berlare Gemeente,DC=intranet,DC=berlare,DC=be\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}UsersOUName} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}OU=Users\PYGZdq{}}
+
+\PYG{n+nv}{\PYGZdl{}DeptOU} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}UsersOUName,OU=\PYGZdl{}Department,OU=Site \PYGZdl{}Site,\PYGZdl{}BaseOU\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}SiteOU} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}UsersOUName,OU=Site \PYGZdl{}Site,\PYGZdl{}BaseOU\PYGZdq{}}
+\end{MintedVerbatim}

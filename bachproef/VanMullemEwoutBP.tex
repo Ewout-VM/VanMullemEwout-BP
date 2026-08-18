@@ -18,10 +18,10 @@
 
 %% For source code highlighting, requires pygments to be installed
 %% Compile with the -shell-escape flag!
-%% \usepackage[chapter]{minted}
+\usepackage[chapter]{minted}
 %% If you compile with the make_thesis.{bat,sh} script, use the following
 %% import instead:
-\usepackage[chapter,outputdir=../output]{minted}
+%%\usepackage[chapter,outputdir=../output]{minted}
 \usemintedstyle{solarized-light}
 
 
@@ -170,57 +170,57 @@
 
 \section{Hoofdscript voor Active Directory-onboarding}
 
-\lstinputlisting[
-language=PowerShell,
-caption={Hoofdscript voor Active Directory-onboarding}
-]{../scripts/PowerAutomate.ps1}
+%\lstinputlisting[
+%language=PowerShell,
+%caption={Hoofdscript voor Active Directory-onboarding}
+%]{../scripts/PowerAutomate.ps1}
 
-%\inputminted{powershell}{PowerAutomate.ps1}
+\inputminted{powershell}{../scripts/PowerAutomate.ps1}
 
 \chapter{PowerShell-script voor instellen einddatum}
 
 \section{Script voor instellen einddatum}
 
 
-\lstinputlisting[
-language=PowerShell,
-caption={Script voor instellen van mogelijke einddatum}
-]{../scripts/Enddate.ps1}
+%\lstinputlisting[
+%language=PowerShell,
+%caption={Script voor instellen van mogelijke einddatum}
+%]{../scripts/Enddate.ps1}
 
-%\inputminted{powershell}{Enddate.ps1}
+\inputminted{powershell}{../scripts/Enddate.ps1}
 
 \chapter{PowerShell-script voor toegang mailboxen}
 
 \section{Script voor toegang mailboxen}
 
-\lstinputlisting[
-language=PowerShell,
-caption={Script voor toegang tot mailboxen}
-]{../scripts/DisableUser.ps1}
+%\lstinputlisting[
+%language=PowerShell,
+%caption={Script voor toegang tot mailboxen}
+%]{../scripts/DisableUser.ps1}
 
-%\inputminted{powershell}{DisableUser.ps1}
+\inputminted{powershell}{../scripts/DisableUser.ps1}
 
 \chapter{PowerShell-script voor offboarding Exchange Online}
 
 \section{Script voor offboarding Exchange Online}
 
-\lstinputlisting[
-language=PowerShell,
-caption={Script voor offboarding Exchange Online}
-]{../scripts/SharedMailbox.ps1}
+%\lstinputlisting[
+%language=PowerShell,
+%caption={Script voor offboarding Exchange Online}
+%]{../scripts/SharedMailbox.ps1}
 
-%\inputminted{powershell}{SharedMailbox.ps1}
+\inputminted{powershell}{../scripts/SharedMailbox.ps1}
 
 \chapter{PowerShell-script voor offboarding Active Directory}
 
 \section{Script voor offboarding Active Directory}
 
-\lstinputlisting[
-language=PowerShell,
-caption={Script voor offboarding Active Directory}
-]{../scripts/DisableUser.ps1}
+%\lstinputlisting[
+%language=PowerShell,
+%caption={Script voor offboarding Active Directory}
+%]{../scripts/DisableUser.ps1}
 
-%\inputminted{powershell}{DisableUser.ps1}
+\inputminted{powershell}{../scripts/DisableUser.ps1}
 
 \chapter{Onderzoeksvoorstel}
 

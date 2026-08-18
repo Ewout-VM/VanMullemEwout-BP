@@ -1,0 +1,18 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{try} \PYG{p}{\PYGZob{}}
+    \PYG{n+nb}{New\PYGZhy{}ADUser} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Name} \PYG{n+nv}{\PYGZdl{}DisplayName} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}GivenName} \PYG{n+nv}{\PYGZdl{}First} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Surname} \PYG{n+nv}{\PYGZdl{}Last} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}SamAccountName} \PYG{n+nv}{\PYGZdl{}Sam} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}UserPrincipalName} \PYG{n+nv}{\PYGZdl{}Email} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Department} \PYG{n+nv}{\PYGZdl{}Department} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Title} \PYG{n+nv}{\PYGZdl{}Title} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Enabled} \PYG{n+nv}{\PYGZdl{}true} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Path} \PYG{n+nv}{\PYGZdl{}TargetOU}
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{catch} \PYG{p}{\PYGZob{}}
+    \PYG{n+nb}{Write\PYGZhy{}Error} \PYG{l+s+s2}{\PYGZdq{}Failed to create user \PYGZdl{}Sam\PYGZdq{}}
+    \PYG{k}{return}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

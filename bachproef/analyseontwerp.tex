@@ -124,7 +124,7 @@ Daarnaast moet de oplossing voldoende veilig functioneren binnen de bestaande in
 
 \section{Keuze van technologieën}
 
-Binnen het onderzoek werden verschillende automatiseringsplatformen onderzocht die gebruikt kunnen worden voor workflowautomatisering en systeemintegratie.
+Binnen het onderzoek werden verschillende automatiseringsplatformen on\-der\-zocht die gebruikt kunnen worden voor workflowautomatisering en systeemintegratie.
 
 Platformen zoals Zapier, Make en Activepieces bieden mogelijkheden voor cloudgebaseerde automatisering en integratie tussen verschillende toepassingen. Deze platformen richten zich voornamelijk op algemene workflowautomatisering tussen cloudservices.
 
@@ -132,7 +132,7 @@ Binnen dit project vormde ondersteuning voor lokale PowerShell-uitvoering echter
 
 Daarnaast werd binnen de organisatie reeds gebruikgemaakt van infrastructuur gebaseerd op Microsoft en bestaande automatiseringsprojecten binnen Power Automate. Hierdoor bood Power Automate belangrijke voordelen op vlak van compatibiliteit en integratie met bestaande Microsoft-diensten.
 
-Verder ondersteunt Power Automate de combinatie van cloudflows en lokale desktopflows via Power Automate Desktop en Machine Runtime, waardoor communicatie met lokale systemen mogelijk wordt binnen een hybride omgeving.
+Verder ondersteunt Power Automate de combinatie van cloudflows en lokale desk\-top\-flows via Power Automate Desktop en Machine Runtime, waardoor communicatie met lokale systemen mogelijk wordt binnen een hybride omgeving.
 
 Op basis van deze vereisten werd gekozen om de verdere implementatie uit te werken met Microsoft Power Automate in combinatie met PowerShell-gebaseerde automatisering.
 
@@ -146,7 +146,7 @@ In de volgende sectie is het ontwerp van de oplossing.
 
 De ontworpen oplossing bestaat uit verschillende componenten die samenwerken binnen zowel de cloudomgeving als de lokale infrastructuur van de gemeente.
 
-De invoer van gebruikersgegevens gebeurt via Microsoft Forms. Wanneer een nieuwe aanvraag wordt verzonden, worden de gegevens verwerkt binnen een cloudflow in Power Automate. Deze flow verwerkt de ontvangen gegevens en bereidt deze voor op verdere verwerking binnen de lokale omgeving.
+De invoer van gebruikersgegevens gebeurt via Microsoft Forms. Wanneer een nieu\-we aanvraag wordt verzonden, worden de gegevens verwerkt binnen een cloudflow in Power Automate. Deze flow verwerkt de ontvangen gegevens en bereidt deze voor op verdere verwerking binnen de lokale omgeving.
 
 Omdat Active Directory lokaal beheerd wordt, moet de cloudomgeving kunnen communiceren met een on-premisesysteem. Hiervoor wordt gebruikgemaakt van Power Automate Desktop en Power Automate Machine Runtime. Deze componenten vormen de brug tussen de cloudflow en de lokale serveromgeving.
 
@@ -183,7 +183,7 @@ Daarnaast moet de oplossing rekening houden met verschillen tussen cloud- en on-
 
 Naast het automatiseren van onboarding werd eveneens een geautomatiseerde offboardingflow ontworpen. Deze flow heeft als doel om gebruikersaccounts en toegangsrechten automatisch af te bouwen wanneer een medewerker uit dienst gaat.
 
-De offboarding start vanuit een afzonderlijk Microsoft Forms-formulier waarin de personeelsdienst de gegevens van de medewerker invoert, waaronder het e-mailadres, de einddatum van het contract en de reden van uitdiensttreding.
+De offboarding start vanuit een afzonderlijk Microsoft Forms-formulier waarin de personeelsdienst de gegevens van de medewerker invoert, waaronder het e\-mail\-adres, de einddatum van het contract en de reden van uitdiensttreding.
 
 Omdat gebruikers pas gedeactiveerd mogen worden nadat de laatste werkdag verstreken is, werd een wachtmechanisme voorzien binnen de cloudflow van Power Automate. De flow blijft actief totdat de opgegeven einddatum bereikt wordt.
 

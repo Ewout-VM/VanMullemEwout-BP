@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{param}\PYG{p}{(}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}UPN}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}Mailboxes}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}DistributionLists}
+\PYG{p}{)}
+\end{MintedVerbatim}

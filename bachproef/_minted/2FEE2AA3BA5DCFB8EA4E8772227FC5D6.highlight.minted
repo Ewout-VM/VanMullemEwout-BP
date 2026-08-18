@@ -1,0 +1,8 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{\PYGZdl{}Existing} \PYG{p}{=} \PYG{n+nb}{Get\PYGZhy{}ADUser} \PYG{n}{\PYGZhy{}Filter} \PYG{l+s+s2}{\PYGZdq{}SamAccountName \PYGZhy{}eq \PYGZsq{}\PYGZdl{}Sam\PYGZsq{}\PYGZdq{}}
+
+\PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}Existing}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+    \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}User already exists\PYGZdq{}}
+    \PYG{k}{return}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

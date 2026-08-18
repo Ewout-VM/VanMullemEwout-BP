@@ -1,0 +1,131 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{param}\PYG{p}{(}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}UPN}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}Reason}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}EndDate}
+\PYG{p}{)}
+
+\PYG{n+nb}{Import\PYGZhy{}Module} \PYG{n}{ActiveDirectory}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} User ophalen via UPN}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{n+nv}{\PYGZdl{}User} \PYG{p}{=} \PYG{n+nb}{Get\PYGZhy{}ADUser} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Filter} \PYG{l+s+s2}{\PYGZdq{}UserPrincipalName \PYGZhy{}eq \PYGZsq{}\PYGZdl{}UPN\PYGZsq{}\PYGZdq{}} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Properties} \PYG{n}{MemberOf}\PYG{p}{,}\PYG{n}{Description}
+
+\PYG{k}{if} \PYG{p}{(}\PYG{o}{\PYGZhy{}not} \PYG{n+nv}{\PYGZdl{}User}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nb}{Write\PYGZhy{}Error} \PYG{l+s+s2}{\PYGZdq{}User not found: \PYGZdl{}UPN\PYGZdq{}}
+    \PYG{n+nb}{Read\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Druk op ENTER om af te sluiten\PYGZdq{}}
+    \PYG{n}{exit}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} Hide from GAL}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nb}{Set\PYGZhy{}ADUser} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}User} \PYG{p}{`}
+        \PYG{o}{\PYGZhy{}Replace} \PYG{p}{@\PYGZob{}}\PYG{n}{msExchHideFromAddressLists}\PYG{p}{=}\PYG{n+nv}{\PYGZdl{}true}\PYG{p}{\PYGZcb{}}
+
+    \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Hidden from GAL\PYGZdq{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{catch} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}Failed to hide from GAL\PYGZdq{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} Disable account}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nb}{Disable\PYGZhy{}ADAccount} \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}User}
+
+    \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Account disabled\PYGZdq{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{catch} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}Failed to disable account\PYGZdq{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} Description aanpassen}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+    \PYG{c}{\PYGZsh{} Oude description ophalen}
+    \PYG{n+nv}{\PYGZdl{}OldDescription} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}User}\PYG{p}{.}\PYG{n}{Description}
+
+    \PYG{c}{\PYGZsh{} Datum formatteren}
+    \PYG{n+nv}{\PYGZdl{}FormattedDate} \PYG{p}{=} \PYG{p}{(}\PYG{n+nb}{Get\PYGZhy{}Date} \PYG{n+nv}{\PYGZdl{}EndDate}\PYG{p}{).}\PYG{n}{ToString}\PYG{p}{(}\PYG{l+s+s2}{\PYGZdq{}dd/MM/yyyy\PYGZdq{}}\PYG{p}{)}
+
+    \PYG{c}{\PYGZsh{} Nieuwe description maken}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n+no}{[string]}\PYG{p}{::}\PYG{n}{IsNullOrWhiteSpace}\PYG{p}{(}\PYG{n+nv}{\PYGZdl{}OldDescription}\PYG{p}{))} \PYG{p}{\PYGZob{}}
+
+        \PYG{n+nv}{\PYGZdl{}NewDescription} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}Uit dienst sinds \PYGZdl{}FormattedDate \PYGZhy{} \PYGZdl{}Reason\PYGZdq{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{else} \PYG{p}{\PYGZob{}}
+
+        \PYG{n+nv}{\PYGZdl{}NewDescription} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}OldDescription | Uit dienst sinds \PYGZdl{}FormattedDate \PYGZhy{} \PYGZdl{}Reason\PYGZdq{}}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{c}{\PYGZsh{} Description zetten}
+    \PYG{n+nb}{Set\PYGZhy{}ADUser} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}User} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}Description} \PYG{n+nv}{\PYGZdl{}NewDescription}
+
+    \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Description updated\PYGZdq{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{catch} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}Failed to update description\PYGZdq{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} Groups behouden}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{n+nv}{\PYGZdl{}GroupsToKeep} \PYG{p}{=} \PYG{p}{@(}
+    \PYG{l+s+s2}{\PYGZdq{}Domain Users\PYGZdq{}}
+\PYG{p}{)}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} Groups verwijderen}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{n+nb}{Get\PYGZhy{}ADPrincipalGroupMembership} \PYG{n+nv}{\PYGZdl{}User} \PYG{p}{|} \PYG{k}{ForEach}\PYG{n}{\PYGZhy{}Object} \PYG{p}{\PYGZob{}}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}GroupsToKeep} \PYG{o}{\PYGZhy{}notcontains} \PYG{n+nv}{\PYGZdl{}\PYGZus{}}\PYG{p}{.}\PYG{n}{Name}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+
+        \PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+            \PYG{n+nb}{Remove\PYGZhy{}ADGroupMember} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}\PYGZus{}} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}Members} \PYG{n+nv}{\PYGZdl{}User} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}Confirm}\PYG{p}{:}\PYG{n+nv}{\PYGZdl{}false} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}ErrorAction} \PYG{n}{Stop}
+
+            \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Removed from }\PYG{p}{\PYGZdl{}(}\PYG{n+nv}{\PYGZdl{}\PYGZus{}}\PYG{p}{.}\PYG{n}{Name}\PYG{p}{)}\PYG{l+s+s2}{\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{catch} \PYG{p}{\PYGZob{}}
+
+            \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}Failed to remove from }\PYG{p}{\PYGZdl{}(}\PYG{n+nv}{\PYGZdl{}\PYGZus{}}\PYG{p}{.}\PYG{n}{Name}\PYG{p}{)}\PYG{l+s+s2}{\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} Klaar}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Offboarding completed for \PYGZdl{}UPN\PYGZdq{}}
+
+\PYG{n+nb}{Read\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Druk op ENTER om af te sluiten\PYGZdq{}}
+\end{MintedVerbatim}

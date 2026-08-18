@@ -1,0 +1,5 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{Import\PYGZhy{}Module} \PYG{n}{ExchangeOnlineManagement}
+
+\PYG{n+nb}{Connect\PYGZhy{}ExchangeOnline} \PYG{n}{\PYGZhy{}ShowBanner}\PYG{p}{:}\PYG{n+nv}{\PYGZdl{}false}
+\end{MintedVerbatim}

@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{\PYGZdl{}Result} \PYG{p}{=} \PYG{n+no}{[PSCustomObject]}\PYG{p}{@\PYGZob{}}
+    \PYG{n}{UPN} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}Email}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{n+nv}{\PYGZdl{}Result} \PYG{p}{|} \PYG{n+nb}{ConvertTo\PYGZhy{}Json} \PYG{n}{\PYGZhy{}Compress}
+\end{MintedVerbatim}

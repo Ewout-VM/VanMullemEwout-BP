@@ -1,0 +1,19 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{while} \PYG{p}{(}\PYG{o}{\PYGZhy{}not} \PYG{n+nv}{\PYGZdl{}Success} \PYG{o}{\PYGZhy{}and} \PYG{n+nv}{\PYGZdl{}Attempt} \PYG{o}{\PYGZhy{}lt} \PYG{n+nv}{\PYGZdl{}MaxAttempts}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+
+    \PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+        \PYG{n+nb}{Set\PYGZhy{}Mailbox} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}sharedMailbox} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}GrantSendOnBehalfTo} \PYG{p}{@\PYGZob{}}\PYG{n}{Add}\PYG{p}{=}\PYG{n+nv}{\PYGZdl{}UPN}\PYG{p}{\PYGZcb{}}
+
+        \PYG{n+nv}{\PYGZdl{}Success} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}true}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{catch} \PYG{p}{\PYGZob{}}
+
+        \PYG{n+nv}{\PYGZdl{}Attempt}\PYG{p}{++}
+
+        \PYG{n+nb}{Start\PYGZhy{}Sleep} \PYG{n}{\PYGZhy{}Seconds} \PYG{n}{60}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

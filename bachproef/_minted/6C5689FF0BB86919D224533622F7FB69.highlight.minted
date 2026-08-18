@@ -1,0 +1,8 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{\PYGZdl{}NewDescription} \PYG{p}{=}
+    \PYG{l+s+s2}{\PYGZdq{}Uit dienst sinds \PYGZdl{}FormattedDate \PYGZhy{} \PYGZdl{}Reason\PYGZdq{}}
+
+\PYG{n+nb}{Set\PYGZhy{}ADUser} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}User} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Description} \PYG{n+nv}{\PYGZdl{}NewDescription}
+\end{MintedVerbatim}

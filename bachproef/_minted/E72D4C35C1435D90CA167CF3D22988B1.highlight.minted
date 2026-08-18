@@ -1,0 +1,199 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{param}\PYG{p}{(}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}FirstName}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}LastName}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}Department}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}Site}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}Role}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}Telephone}\PYG{p}{,}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}Title}
+\PYG{p}{)}
+
+\PYG{c}{\PYGZsh{} ===== STREAM CONTROL VOOR POWER AUTOMATE =====}
+\PYG{n+nv}{\PYGZdl{}WarningPreference}     \PYG{p}{=} \PYG{l+s+s1}{\PYGZsq{}SilentlyContinue\PYGZsq{}}
+\PYG{n+nv}{\PYGZdl{}InformationPreference} \PYG{p}{=} \PYG{l+s+s1}{\PYGZsq{}SilentlyContinue\PYGZsq{}}
+\PYG{n+nv}{\PYGZdl{}VerbosePreference}     \PYG{p}{=} \PYG{l+s+s1}{\PYGZsq{}SilentlyContinue\PYGZsq{}}
+\PYG{n+nv}{\PYGZdl{}DebugPreference}       \PYG{p}{=} \PYG{l+s+s1}{\PYGZsq{}SilentlyContinue\PYGZsq{}}
+\PYG{n+nv}{\PYGZdl{}ProgressPreference}    \PYG{p}{=} \PYG{l+s+s1}{\PYGZsq{}SilentlyContinue\PYGZsq{}}
+
+\PYG{n+nb}{Import\PYGZhy{}Module} \PYG{n}{ActiveDirectory}
+
+\PYG{c}{\PYGZsh{} ===== CONFIG =====}
+\PYG{n+nv}{\PYGZdl{}UPNSuffix} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}intranet.berlare.be\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}LogFile}   \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}C:\PYGZbs{}Automation\PYGZbs{}Provisioning.log\PYGZdq{}}
+
+\PYG{c}{\PYGZsh{} Root OU}
+\PYG{n+nv}{\PYGZdl{}BaseOU} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}OU=Berlare Gemeente,DC=intranet,DC=berlare,DC=be\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}UsersOUName} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}OU=Users\PYGZdq{}}
+
+\PYG{c}{\PYGZsh{} Role \PYGZhy{}\PYGZgt{} AD Group mapping}
+\PYG{n+nv}{\PYGZdl{}RoleGroups} \PYG{p}{=} \PYG{p}{@\PYGZob{}}
+    \PYG{l+s+s2}{\PYGZdq{}IT\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}Informatica\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}HR\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}Per\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}OP\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}MEDEWERKERS\PYGZus{}R\PYGZam{}O\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}CU\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}CUL\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}FI\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}FINANCIEN\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}BZ\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}BEV\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}BS\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}BS\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}BIB\PYGZhy{}USER\PYGZdq{}} \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}BIB\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}IBO\PYGZhy{}USER\PYGZdq{}} \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}IBO\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}OW\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}OW\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}IZ\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}SEC\PYGZdq{}}\PYG{p}{)}
+    \PYG{l+s+s2}{\PYGZdq{}VE\PYGZhy{}USER\PYGZdq{}}  \PYG{p}{=} \PYG{p}{@(}\PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}VERGUNNINGEN\PYGZdq{}}\PYG{p}{)}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c}{\PYGZsh{} Start\PYGZhy{}Transcript \PYGZhy{}Path \PYGZdl{}LogFile \PYGZhy{}Append}
+
+\PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+    \PYG{c}{\PYGZsh{} ===== Clean input =====}
+    \PYG{n+nv}{\PYGZdl{}First} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}FirstName}\PYG{p}{.}\PYG{n}{Trim}\PYG{p}{()}
+    \PYG{n+nv}{\PYGZdl{}Last}  \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}LastName}\PYG{p}{.}\PYG{n}{Trim}\PYG{p}{()}
+
+    \PYG{n+nv}{\PYGZdl{}Site}       \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}Site}\PYG{p}{.}\PYG{n}{Trim}\PYG{p}{()}
+    \PYG{n+nv}{\PYGZdl{}Department} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}Department}\PYG{p}{.}\PYG{n}{Trim}\PYG{p}{()}
+    \PYG{n+nv}{\PYGZdl{}Role}       \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}Role}\PYG{p}{.}\PYG{n}{Trim}\PYG{p}{().}\PYG{n}{ToUpper}\PYG{p}{()}
+
+    \PYG{c}{\PYGZsh{} ===== Speciale tekens verwijderen (é, ë, …) =====}
+    \PYG{n+nv}{\PYGZdl{}FirstClean} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}First}\PYG{p}{.}\PYG{n}{Normalize}\PYG{p}{(}\PYG{n+no}{[Text.NormalizationForm]}\PYG{p}{::}\PYG{n}{FormD}\PYG{p}{)} \PYG{o}{\PYGZhy{}replace} \PYG{l+s+s1}{\PYGZsq{}\PYGZbs{}p\PYGZob{}Mn\PYGZcb{}\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
+    \PYG{n+nv}{\PYGZdl{}LastClean}  \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}Last}\PYG{p}{.}\PYG{n}{Normalize}\PYG{p}{(}\PYG{n+no}{[Text.NormalizationForm]}\PYG{p}{::}\PYG{n}{FormD}\PYG{p}{)} \PYG{o}{\PYGZhy{}replace} \PYG{l+s+s1}{\PYGZsq{}\PYGZbs{}p\PYGZob{}Mn\PYGZcb{}\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
+
+    \PYG{c}{\PYGZsh{} ===== Niet\PYGZhy{}letters verwijderen =====}
+    \PYG{n+nv}{\PYGZdl{}FirstClean} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}FirstClean} \PYG{o}{\PYGZhy{}replace} \PYG{l+s+s1}{\PYGZsq{}[\PYGZca{}a\PYGZhy{}zA\PYGZhy{}Z]\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
+    \PYG{n+nv}{\PYGZdl{}LastClean}  \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}LastClean} \PYG{o}{\PYGZhy{}replace} \PYG{l+s+s1}{\PYGZsq{}[\PYGZca{}a\PYGZhy{}zA\PYGZhy{}Z]\PYGZsq{}}\PYG{p}{,} \PYG{l+s+s1}{\PYGZsq{}\PYGZsq{}}
+
+    \PYG{c}{\PYGZsh{} ===== Velden opbouwen =====}
+    \PYG{n+nv}{\PYGZdl{}Sam} \PYG{p}{=} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}LastClean} \PYG{p}{+} \PYG{n+nv}{\PYGZdl{}FirstClean}\PYG{p}{.}\PYG{n}{Substring}\PYG{p}{(}\PYG{n}{0}\PYG{p}{,}\PYG{n}{1}\PYG{p}{)).}\PYG{n}{ToLower}\PYG{p}{()}
+    \PYG{n+nv}{\PYGZdl{}Email} \PYG{p}{=} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}FirstClean} \PYG{p}{+} \PYG{l+s+s2}{\PYGZdq{}.\PYGZdq{}} \PYG{p}{+} \PYG{n+nv}{\PYGZdl{}LastClean} \PYG{p}{+} \PYG{l+s+s2}{\PYGZdq{}@berlare.be\PYGZdq{}}\PYG{p}{).}\PYG{n}{ToLower}\PYG{p}{()}
+
+    \PYG{n+nv}{\PYGZdl{}DisplayName} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}First \PYGZdl{}Last\PYGZdq{}}
+    \PYG{n+nv}{\PYGZdl{}Description} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}Title}
+    \PYG{n+nv}{\PYGZdl{}Company}     \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}Berlare\PYGZdq{}}
+
+    \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Processing \PYGZdl{}DisplayName\PYGZdq{}} \PYG{n}{\PYGZhy{}ForegroundColor} \PYG{n}{Cyan}
+    \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}SAM: \PYGZdl{}Sam\PYGZdq{}} \PYG{n}{\PYGZhy{}ForegroundColor} \PYG{n}{DarkGray}
+    \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}UPN: \PYGZdl{}Email\PYGZdq{}} \PYG{n}{\PYGZhy{}ForegroundColor} \PYG{n}{DarkGray}
+    \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Site=\PYGZsq{}\PYGZdl{}Site\PYGZsq{} Department=\PYGZsq{}\PYGZdl{}Department\PYGZsq{}\PYGZdq{}} \PYG{n}{\PYGZhy{}ForegroundColor} \PYG{n}{DarkGray}
+
+    \PYG{c}{\PYGZsh{} ===== Duplicate check =====}
+    \PYG{n+nv}{\PYGZdl{}Existing} \PYG{p}{=} \PYG{n+nb}{Get\PYGZhy{}ADUser} \PYG{n}{\PYGZhy{}Filter} \PYG{l+s+s2}{\PYGZdq{}SamAccountName \PYGZhy{}eq \PYGZsq{}\PYGZdl{}Sam\PYGZsq{}\PYGZdq{}} \PYG{n}{\PYGZhy{}ErrorAction} \PYG{n}{SilentlyContinue}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}Existing}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}User \PYGZdl{}Sam already exists \PYGZhy{} stopping script\PYGZdq{}}
+        \PYG{k}{return}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{c}{\PYGZsh{} ===== Build OU paths =====}
+    \PYG{n+nv}{\PYGZdl{}DeptOU} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}UsersOUName,OU=\PYGZdl{}Department,OU=Site \PYGZdl{}Site,\PYGZdl{}BaseOU\PYGZdq{}}
+    \PYG{n+nv}{\PYGZdl{}SiteOU} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}\PYGZdl{}UsersOUName,OU=Site \PYGZdl{}Site,\PYGZdl{}BaseOU\PYGZdq{}}
+
+    \PYG{n+nv}{\PYGZdl{}TargetOU} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}null}
+
+    \PYG{c}{\PYGZsh{} ===== Smart OU detection =====}
+    \PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}Department} \PYG{o}{\PYGZhy{}eq} \PYG{n+nv}{\PYGZdl{}Site}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+
+        \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Department equals site \PYGZhy{} using site OU directly\PYGZdq{}} \PYG{n}{\PYGZhy{}ForegroundColor} \PYG{n}{Yellow}
+
+        \PYG{n+nv}{\PYGZdl{}SiteCheck} \PYG{p}{=} \PYG{n+nb}{Get\PYGZhy{}ADOrganizationalUnit} \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}SiteOU} \PYG{n}{\PYGZhy{}ErrorAction} \PYG{n}{SilentlyContinue}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}SiteCheck}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nv}{\PYGZdl{}TargetOU} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}SiteOU}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n+nb}{Write\PYGZhy{}Error} \PYG{l+s+s2}{\PYGZdq{}Site OU not found for Site=\PYGZsq{}\PYGZdl{}Site\PYGZsq{}\PYGZdq{}}
+            \PYG{k}{return}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{else} \PYG{p}{\PYGZob{}}
+
+        \PYG{n+nv}{\PYGZdl{}DeptCheck} \PYG{p}{=} \PYG{n+nb}{Get\PYGZhy{}ADOrganizationalUnit} \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}DeptOU} \PYG{n}{\PYGZhy{}ErrorAction} \PYG{n}{SilentlyContinue}
+        \PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}DeptCheck}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+            \PYG{n+nv}{\PYGZdl{}TargetOU} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}DeptOU}
+            \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Using department OU\PYGZdq{}} \PYG{n}{\PYGZhy{}ForegroundColor} \PYG{n}{Green}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{else} \PYG{p}{\PYGZob{}}
+            \PYG{n+nv}{\PYGZdl{}SiteCheck} \PYG{p}{=} \PYG{n+nb}{Get\PYGZhy{}ADOrganizationalUnit} \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}SiteOU} \PYG{n}{\PYGZhy{}ErrorAction} \PYG{n}{SilentlyContinue}
+            \PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}SiteCheck}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+                \PYG{n+nv}{\PYGZdl{}TargetOU} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}SiteOU}
+                \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Department OU not found, using site OU\PYGZdq{}} \PYG{n}{\PYGZhy{}ForegroundColor} \PYG{n}{Yellow}
+            \PYG{p}{\PYGZcb{}}
+            \PYG{k}{else} \PYG{p}{\PYGZob{}}
+                \PYG{n+nb}{Write\PYGZhy{}Error} \PYG{l+s+s2}{\PYGZdq{}OU not found for Site=\PYGZsq{}\PYGZdl{}Site\PYGZsq{} Department=\PYGZsq{}\PYGZdl{}Department\PYGZsq{}\PYGZdq{}}
+                \PYG{k}{return}
+            \PYG{p}{\PYGZcb{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{c}{\PYGZsh{} ===== Password =====}
+    \PYG{n+nv}{\PYGZdl{}Password} \PYG{p}{=} \PYG{n+nb}{ConvertTo\PYGZhy{}SecureString} \PYG{l+s+s2}{\PYGZdq{}Welkominberlare9290+\PYGZdq{}} \PYG{n}{\PYGZhy{}AsPlainText} \PYG{n}{\PYGZhy{}Force}
+
+    \PYG{c}{\PYGZsh{} ===== Create user =====}
+    \PYG{k}{try} \PYG{p}{\PYGZob{}}
+        \PYG{n+nb}{New\PYGZhy{}ADUser} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Name} \PYG{n+nv}{\PYGZdl{}DisplayName} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}GivenName} \PYG{n+nv}{\PYGZdl{}First} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Surname} \PYG{n+nv}{\PYGZdl{}Last} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}DisplayName} \PYG{n+nv}{\PYGZdl{}DisplayName} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}SamAccountName} \PYG{n+nv}{\PYGZdl{}Sam} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}UserPrincipalName} \PYG{n+nv}{\PYGZdl{}Email} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}EmailAddress} \PYG{n+nv}{\PYGZdl{}Email} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}OfficePhone} \PYG{n+nv}{\PYGZdl{}Telephone} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Department} \PYG{n+nv}{\PYGZdl{}Department} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Title} \PYG{n+nv}{\PYGZdl{}Title} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Description} \PYG{n+nv}{\PYGZdl{}Description} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Company} \PYG{n+nv}{\PYGZdl{}Company} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}AccountPassword} \PYG{n+nv}{\PYGZdl{}Password} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Enabled} \PYG{n+nv}{\PYGZdl{}true} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Path} \PYG{n+nv}{\PYGZdl{}TargetOU} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}ChangePasswordAtLogon} \PYG{n+nv}{\PYGZdl{}true}
+
+        \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}User created in \PYGZdl{}TargetOU\PYGZdq{}} \PYG{n}{\PYGZhy{}ForegroundColor} \PYG{n}{Green}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{catch} \PYG{p}{\PYGZob{}}
+        \PYG{n+nb}{Write\PYGZhy{}Error} \PYG{l+s+s2}{\PYGZdq{}Failed to create user \PYGZdl{}Sam : \PYGZdl{}\PYGZus{}\PYGZdq{}}
+        \PYG{k}{return}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{c}{\PYGZsh{} ===== Group assignment =====}
+
+    \PYG{n+nv}{\PYGZdl{}DefaultGroups} \PYG{p}{=} \PYG{p}{@(}
+        \PYG{l+s+s2}{\PYGZdq{}SEC\PYGZus{}DR\PYGZus{}Data2\PYGZdq{}}\PYG{p}{,}
+        \PYG{l+s+s2}{\PYGZdq{}GG\PYGZus{}GE\PYGZus{}UNIFLOW\PYGZdq{}}\PYG{p}{,}
+        \PYG{l+s+s2}{\PYGZdq{}SEC\PYGZus{}DR\PYGZus{}Fotoarchief\PYGZdq{}}
+    \PYG{p}{)}
+
+    \PYG{n+nv}{\PYGZdl{}AllGroups} \PYG{p}{=} \PYG{p}{@()}
+    \PYG{n+nv}{\PYGZdl{}AllGroups} \PYG{p}{+=} \PYG{n+nv}{\PYGZdl{}DefaultGroups}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}RoleGroups}\PYG{p}{.}\PYG{n}{ContainsKey}\PYG{p}{(}\PYG{n+nv}{\PYGZdl{}Role}\PYG{p}{))} \PYG{p}{\PYGZob{}}
+        \PYG{n+nv}{\PYGZdl{}AllGroups} \PYG{p}{+=} \PYG{n+nv}{\PYGZdl{}RoleGroups}\PYG{p}{[}\PYG{n+nv}{\PYGZdl{}Role}\PYG{p}{]}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{else} \PYG{p}{\PYGZob{}}
+        \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}Unknown role: \PYGZdl{}Role\PYGZdq{}}
+    \PYG{p}{\PYGZcb{}}
+
+    \PYG{k}{foreach} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}Group} \PYG{k}{in} \PYG{n+nv}{\PYGZdl{}AllGroups}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+        \PYG{k}{try} \PYG{p}{\PYGZob{}}
+            \PYG{n+nb}{Add\PYGZhy{}ADGroupMember} \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}Group} \PYG{n}{\PYGZhy{}Members} \PYG{n+nv}{\PYGZdl{}Sam}
+            \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{} \PYGZhy{}\PYGZgt{} Added to group \PYGZdl{}Group\PYGZdq{}} \PYG{n}{\PYGZhy{}ForegroundColor} \PYG{n}{DarkCyan}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{catch} \PYG{p}{\PYGZob{}}
+            \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}Failed to add \PYGZdl{}Sam to \PYGZdl{}Group\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{catch} \PYG{p}{\PYGZob{}}
+    \PYG{n+nb}{Write\PYGZhy{}Error} \PYG{n+nv}{\PYGZdl{}\PYGZus{}}
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{finally} \PYG{p}{\PYGZob{}}
+    \PYG{c}{\PYGZsh{} Stop\PYGZhy{}Transcript}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c}{\PYGZsh{} ===== OUTPUT VOOR POWER AUTOMATE =====}
+
+\PYG{n+nv}{\PYGZdl{}Result} \PYG{p}{=} \PYG{n+no}{[PSCustomObject]}\PYG{p}{@\PYGZob{}}
+    \PYG{n}{UPN} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}Email}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{n+nv}{\PYGZdl{}JsonPath} \PYG{p}{=} \PYG{l+s+s2}{\PYGZdq{}C:\PYGZbs{}Automation\PYGZbs{}PA\PYGZus{}Output.json\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}Result} \PYG{p}{|} \PYG{n+nb}{ConvertTo\PYGZhy{}Json} \PYG{n}{\PYGZhy{}Compress} \PYG{p}{|} \PYG{n+nb}{Set\PYGZhy{}Content} \PYG{n}{\PYGZhy{}Path} \PYG{n+nv}{\PYGZdl{}JsonPath} \PYG{n}{\PYGZhy{}Encoding} \PYG{n}{UTF8}
+\end{MintedVerbatim}

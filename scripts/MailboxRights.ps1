@@ -3,7 +3,6 @@ param(
     [string]$Mailboxes,
     [string]$DistributionLists
 )
-
 Import-Module ExchangeOnlineManagement
 
 $ProgressPreference = 'SilentlyContinue'
@@ -25,7 +24,6 @@ if (![string]::IsNullOrWhiteSpace($Mailboxes)) {
         if ($sharedMailbox -ne "") {
 
             Write-Host "Mailbox permissions for $sharedMailbox"
-
             try {
 
                 Add-MailboxPermission `
@@ -55,7 +53,6 @@ if (![string]::IsNullOrWhiteSpace($Mailboxes)) {
             while (-not $Success -and $Attempt -lt $MaxAttempts) {
 
                 try {
-
                     Write-Host "Trying SendOnBehalf for $sharedMailbox"
 
                     Set-Mailbox `
@@ -69,7 +66,6 @@ if (![string]::IsNullOrWhiteSpace($Mailboxes)) {
                     $Success = $true
                 }
                 catch {
-
                     $Attempt++
 
                     Write-Warning "Mailbox not ready yet. Attempt $Attempt/$MaxAttempts"
@@ -78,12 +74,10 @@ if (![string]::IsNullOrWhiteSpace($Mailboxes)) {
                     Start-Sleep -Seconds 60
                 }
             }
-
             if (-not $Success) {
 
                 Write-Warning "Failed SendOnBehalf after multiple attempts for $sharedMailbox"
             }
-
             Write-Host "Mailbox done"
         }
     }
@@ -118,7 +112,6 @@ foreach ($dl in $AllDLs) {
         Write-Host "Adding $UPN to distribution group $dl"
 
         try {
-
             Add-DistributionGroupMember `
                 -Identity $dl `
                 -Member $UPN `

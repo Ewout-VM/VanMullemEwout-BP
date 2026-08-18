@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{\PYGZdl{}DateObj} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}DateObj}\PYG{p}{.}\PYG{n}{AddDays}\PYG{p}{(}\PYG{n}{2}\PYG{p}{)}
+\PYG{n+nv}{\PYGZdl{}DateObj} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}DateObj}\PYG{p}{.}\PYG{n}{Date}
+    \PYG{p}{.}\PYG{n}{AddHours}\PYG{p}{(}\PYG{n}{23}\PYG{p}{)}
+    \PYG{p}{.}\PYG{n}{AddMinutes}\PYG{p}{(}\PYG{n}{59}\PYG{p}{)}
+    \PYG{p}{.}\PYG{n}{AddSeconds}\PYG{p}{(}\PYG{n}{59}\PYG{p}{)}
+\end{MintedVerbatim}

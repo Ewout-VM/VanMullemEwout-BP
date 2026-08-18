@@ -1,0 +1,9 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+if(site == \PYGZdq{}Gemeentehuis\PYGZdq{},
+    dienst\PYGZus{}gemeentehuis,
+    if(site == \PYGZdq{}Onthaalpoort\PYGZdq{},
+        dienst\PYGZus{}onthaalpoort,
+        if(site == \PYGZdq{}Cultuurhuis Stroming\PYGZdq{},
+            dienst\PYGZus{}cultuurhuis,
+            andere\PYGZus{}dienst)))
+\end{MintedVerbatim}

@@ -1,0 +1,11 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{try} \PYG{p}{\PYGZob{}}
+    \PYG{n+nb}{Set\PYGZhy{}ADAccountExpiration} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}Sam} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}DateTime} \PYG{n+nv}{\PYGZdl{}DateObj}
+\PYG{p}{\PYGZcb{}}
+\PYG{k}{catch} \PYG{p}{\PYGZob{}}
+    \PYG{n+nb}{Write\PYGZhy{}Output} \PYG{l+s+s2}{\PYGZdq{}ERROR:\PYGZdq{}}
+    \PYG{n+nb}{Write\PYGZhy{}Output} \PYG{n+nv}{\PYGZdl{}\PYGZus{}}
+\PYG{p}{\PYGZcb{}}
+\end{MintedVerbatim}

@@ -1,0 +1,5 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{\PYGZdl{}User} \PYG{p}{=} \PYG{n+nb}{Get\PYGZhy{}ADUser} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Filter} \PYG{l+s+s2}{\PYGZdq{}UserPrincipalName \PYGZhy{}eq \PYGZsq{}\PYGZdl{}UPN\PYGZsq{}\PYGZdq{}} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Properties} \PYG{n}{MemberOf}\PYG{p}{,}\PYG{n}{Description}
+\end{MintedVerbatim}

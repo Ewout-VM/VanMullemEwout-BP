@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nv}{\PYGZdl{}DefaultDLs} \PYG{p}{=} \PYG{p}{@(}
+    \PYG{l+s+s2}{\PYGZdq{}iedereen@berlare.be\PYGZdq{}}\PYG{p}{,}
+    \PYG{l+s+s2}{\PYGZdq{}viruswaarschuwing@berlare.be\PYGZdq{}}
+\PYG{p}{)}
+\end{MintedVerbatim}

@@ -29,17 +29,19 @@ Om deze gegevens uniform te kunnen verwerken binnen de verdere automatisering, w
 
 Codefragment ~\ref{lst:ComposeDepartement} vereenvoudigde expressie toont de gebruikte logica.
 
-\begin{lstlisting}[
-    caption={Samenstelling van de departementen},
-    label={lst:ComposeDepartement}]
-    if(site == "Gemeentehuis",
-        dienst_gemeentehuis,
-        if(site == "Onthaalpoort",
-            dienst_onthaalpoort,
-            if(site == "Cultuurhuis Stroming",
-                dienst_cultuurhuis,
-                andere_dienst)))
-\end{lstlisting}
+\begin{listing}[ht]
+\caption{Samenstelling van de departementen}
+\label{lst:ComposeDepartement}
+\begin{minted}{text}
+if(site == "Gemeentehuis",
+    dienst_gemeentehuis,
+    if(site == "Onthaalpoort",
+        dienst_onthaalpoort,
+        if(site == "Cultuurhuis Stroming",
+            dienst_cultuurhuis,
+            andere_dienst)))
+\end{minted}
+\end{listing}
 
 Door gebruik te maken van deze conditionele verwerking kan de flow steeds de correcte dienst ophalen, ongeacht welke site geselecteerd werd binnen het formulier. Deze waarden worden later gebruikt voor het bepalen van de correcte OU-structuur en groepsconfiguraties binnen Active Directory.
 
@@ -49,17 +51,19 @@ Hiervoor wordt opnieuw gebruikgemaakt van een ``Compose''-stap waarin conditione
 
 Codefragment ~\ref{lst:ComposeRole} vereenvoudigde expressie toont een voorbeeld van deze verwerking.
 
-\begin{lstlisting}[
-    caption={Samenstelling van de rollen},
-    label={lst:ComposeRole}]
-    if(departement == "Informatica",
-        "IT-user",
-        if(departement == "Personeelsdienst",
-            "HR-user",
-            if(departement == "Financien",
-                "FI-user",
-                "user")))
-\end{lstlisting}
+\begin{listing}[ht]
+\begin{minted}{text}
+if(departement == "Informatica",
+    "IT-user",
+    if(departement == "Personeelsdienst",
+        "HR-user",
+        if(departement == "Financien",
+            "FI-user",
+            "user")))
+\end{minted}
+\caption{Samenstelling van de rollen}
+\label{lst:ComposeRole}
+\end{listing}
 
 %\inputminted{powershell}{PowerAutomate.ps1}
 
@@ -93,7 +97,7 @@ Omdat Active Directory lokaal beheerd wordt binnen de infrastructuur van het gem
 
 Om deze communicatie mogelijk te maken, wordt gebruikgemaakt van Power Automate Desktop in combinatie met Power Automate Machine Runtime. Deze componenten vormen de verbinding tussen de cloudomgeving van Microsoft Power Automate en de lokale infrastructuur van de gemeente. Power Automate Desktop zal de scripts uitvoeren in een lokale flow en Power Automate Runtime zorgt voor de connectie tussen Power Automate Cloud en Power Automate Desktop. 
 
-Wanneer de cloudflow alle gegevens verwerkt heeft, wordt automatisch een desktopflow gestart op de lokale server. Hierbij worden verschillende parameters doorgestuurd, waaronder de naam van de gebruiker, de dienst, de gekozen site, de rolcode en eventuele bijkomende configuraties zoals distributielijsten of gedeelde postvakken.
+Wanneer de cloudflow alle gegevens verwerkt heeft, wordt automatisch een desk\-top\-flow gestart op de lokale server. Hierbij worden verschillende parameters doorgestuurd, waaronder de naam van de gebruiker, de dienst, de gekozen site, de rolcode en eventuele bijkomende configuraties zoals distributielijsten of gedeelde postvakken.
 
 \subsection{Automatisch aanmaken en instellen van Active Directory-ge\-brui\-kers}
 
@@ -103,10 +107,9 @@ Op basis van deze gegevens worden automatisch de correcte accountgegevens sameng
 
 Codefragment ~\ref{lst:Parameters} toont de parameters die vanuit de desktopflow doorgestuurd worden naar het PowerShell-script.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Parameters},
-    label={lst:Parameters}]
-    param(
+\begin{listing}[ht]
+\begin{minted}{powershell}
+param(
     [string]$FirstName,
     [string]$LastName,
     [string]$Department,
@@ -114,8 +117,11 @@ Codefragment ~\ref{lst:Parameters} toont de parameters die vanuit de desktopflow
     [string]$Role,
     [string]$Telephone,
     [string]$Title
-    )
-\end{lstlisting}
+)
+\end{minted}
+\caption{Parameters}
+\label{lst:Parameters}
+\end{listing}
 
 Door gebruik te maken van parameters kan hetzelfde script hergebruikt worden voor verschillende gebruikers en diensten zonder manuele aanpassingen aan de code.
 
@@ -123,104 +129,115 @@ Door gebruik te maken van parameters kan hetzelfde script hergebruikt worden voo
 
 Voor het aanmaken van een account worden de ontvangen gegevens eerst gevalideerd en genormaliseerd. Speciale tekens en niet-alfabetische karakters worden verwijderd om problemen met accountnamen en e-mailadressen te vermijden. Door de tekst eerst te normaliseren, worden speciale tekens opgesplitst zodat deze eenvoudiger verwijderd kunnen worden.
 
-Dezelfde verwerking wordt toegepast op zowel de voornaam als de achternaam van de gebruiker.
+Dezelfde verwerking wordt toegepast op zowel de voornaam als de achternaam van de gebruiker. Zie codefragment ~\ref{lst:AanpassenNaam}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Aanpassen naam},
-    label={lst:AanpassenNaam}]
-    $FirstClean = $First.Normalize(
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$FirstClean = $First.Normalize(
     [Text.NormalizationForm]::FormD
-    ) -replace '\p{Mn}', ''
-    
-    $FirstClean = $FirstClean -replace '[^a-zA-Z]', ''
-\end{lstlisting}
+) -replace '\p{Mn}', ''
+
+$FirstClean = $FirstClean -replace '[^a-zA-Z]', ''
+\end{minted}
+\caption{Aanpassen naam}
+\label{lst:AanpassenNaam}
+\end{listing}
 
 Deze verwerking zorgt ervoor dat gebruikersnamen consistent opgebouwd worden en compatibel blijven met de naamgevingsconventies binnen Active Directory.
 
-Na het opschonen van de invoergegevens worden automatisch verschillende accountgegevens samengesteld. Hierbij gaat het onder andere om de \textit{SamAccountName}, het e-mailadres, de weergavenaam en bijkomende beschrijvende attributen.
+Na het opschonen van de invoergegevens worden automatisch verschillende accountgegevens samengesteld. Hierbij gaat het onder andere om de \textit{SamAccountName}, het e-mailadres, de weergavenaam en bijkomende beschrijvende attributen. Zie codefragment ~\ref{lst:VariabelenToekennen}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Variabelen toekennen},
-    label={lst:VariabelenToekennen}]
-    $Sam = ($LastClean + $FirstClean.Substring(0,1)).ToLower()
-    $Email = ($FirstClean + "." + $LastClean + "@berlare.be").ToLower()
-    
-    $DisplayName = "$First $Last"
-    $Description = $Title
-    $Company     = "Berlare"
-\end{lstlisting}
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$Sam = ($LastClean + $FirstClean.Substring(0,1)).ToLower()
+$Email = ($FirstClean + "." + $LastClean + "@berlare.be").ToLower()
+
+$DisplayName = "$First $Last"
+$Description = $Title
+$Company     = "Berlare"
+\end{minted}
+\caption{Variabelen toekennen}
+\label{lst:VariabelenToekennen}
+\end{listing}
 
 Door deze waarden automatisch op te bouwen, wordt een uniforme naamgeving binnen de Active Directory-omgeving gegarandeerd.
 
-Voordat een nieuwe gebruiker wordt aangemaakt, controleert het script eerst of reeds een account bestaat met dezelfde gebruikersnaam.
+Voordat een nieuwe gebruiker wordt aangemaakt, controleert het script eerst of reeds een account bestaat met dezelfde gebruikersnaam. Zie codefragment ~\ref{lst:DuplicateCheck}.
 
-\begin{lstlisting}[
-    caption={Dubbele controle},
-    label={lst:DuplicateCheck}]{powershell}
-    $Existing = Get-ADUser -Filter "SamAccountName -eq '$Sam'"
-    
-    if ($Existing) {
-        Write-Warning "User already exists"
-        return
-    }
-\end{lstlisting}
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$Existing = Get-ADUser -Filter "SamAccountName -eq '$Sam'"
+
+if ($Existing) {
+    Write-Warning "User already exists"
+    return
+}
+\end{minted}
+\caption{Dubbele controle}
+\label{lst:DuplicateCheck}
+\end{listing}
 
 Hierdoor wordt vermeden dat dubbele accounts aangemaakt worden binnen Active Directory.
 
 \subsubsection{Bepalen van de Organizational Unit}
 
-Om gebruikers automatisch op de correcte locatie binnen Active Directory te plaatsen, worden eerst mogelijke OU-paden opgebouwd op basis van de gekozen site en dienst.
+Om gebruikers automatisch op de correcte locatie binnen Active Directory te plaatsen, worden eerst mogelijke OU-paden opgebouwd op basis van de gekozen site en dienst. Zie codefragment ~\ref{lst:SamenstellingOU}.
 
-\begin{lstlisting}[
-    language=PowerShell,
-    caption={Samenstelling van de OU},
-    label={lst:SamenstellingOU}]
-    $BaseOU = "OU=Berlare Gemeente,DC=intranet,DC=berlare,DC=be"
-    $UsersOUName = "OU=Users"
-    
-    $DeptOU = "$UsersOUName,OU=$Department,OU=Site $Site,$BaseOU"
-    $SiteOU = "$UsersOUName,OU=Site $Site,$BaseOU"
-\end{lstlisting}
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$BaseOU = "OU=Berlare Gemeente,DC=intranet,DC=berlare,DC=be"
+$UsersOUName = "OU=Users"
 
-Vervolgens controleert het script automatisch of een specifieke dienst-OU beschikbaar is. Indien deze niet gevonden wordt, valt het script terug op de algemene site-OU.
+$DeptOU = "$UsersOUName,OU=$Department,OU=Site $Site,$BaseOU"
+$SiteOU = "$UsersOUName,OU=Site $Site,$BaseOU"
+\end{minted}
+\caption{Samenstelling van de OU}
+\label{lst:SamenstellingOU}
+\end{listing}
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Controle van de OU},
-    label={lst:ControleOU}]
-    if ($DeptCheck) {
-        $TargetOU = $DeptOU
-    }
-    else {
-        $TargetOU = $SiteOU
-    }
-\end{lstlisting}
+Vervolgens controleert het script automatisch of een specifieke dienst-OU beschikbaar is. Indien deze niet gevonden wordt, valt het script terug op de algemene site-OU. Zie codefragment ~\ref{lst:ControleOU}.
+
+\begin{listing}[ht]
+\begin{minted}{powershell}
+if ($DeptCheck) {
+    $TargetOU = $DeptOU
+}
+else {
+    $TargetOU = $SiteOU
+}
+\end{minted}
+\caption{Controle van de OU}
+\label{lst:ControleOU}
+\end{listing}
 
 Deze aanpak zorgt ervoor dat het script flexibel kan omgaan met verschillen binnen de directorystructuur van de gemeente.
 
 \subsubsection{Aanmaken van het gebruikersaccount}
 
-Na het bepalen van de correcte OU wordt het gebruikersaccount effectief aangemaakt via het cmdlet \texttt{New-ADUser}. Hierbij worden verschillende attributen automatisch ingevuld, waaronder de naam, gebruikersnaam, functietitel, afdeling en het e-mailadres.
+Na het bepalen van de correcte OU wordt het gebruikersaccount effectief aangemaakt via het cmdlet \texttt{New-ADUser}. Hierbij worden verschillende attributen automatisch ingevuld, waaronder de naam, gebruikersnaam, functietitel, afdeling en het e-mailadres. Zie codefragment ~\ref{lst:UserCreation}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Creatie van de gebruiker},
-    label={lst:UserCreation}]
-    try {
-        New-ADUser `
-        -Name $DisplayName `
-        -GivenName $First `
-        -Surname $Last `
-        -SamAccountName $Sam `
-        -UserPrincipalName $Email `
-        -Department $Department `
-        -Title $Title `
-        -Enabled $true `
-        -Path $TargetOU
-    }
-    catch {
-        Write-Error "Failed to create user $Sam"
-        return
-    }
-\end{lstlisting}
+\begin{listing}[ht]
+\begin{minted}{powershell}
+try {
+    New-ADUser `
+    -Name $DisplayName `
+    -GivenName $First `
+    -Surname $Last `
+    -SamAccountName $Sam `
+    -UserPrincipalName $Email `
+    -Department $Department `
+    -Title $Title `
+    -Enabled $true `
+    -Path $TargetOU
+}
+catch {
+    Write-Error "Failed to create user $Sam"
+    return
+}
+\end{minted}
+\caption{Creatie van de gebruiker}
+\label{lst:UserCreation}
+\end{listing}
 
 Tijdens het aanmaken van de gebruiker wordt eveneens een tijdelijk wachtwoord ingesteld en wordt afgedwongen dat de gebruiker dit wachtwoord moet wijzigen bij de eerste aanmelding.
 
@@ -228,52 +245,58 @@ Door gebruik te maken van \texttt{try-catch}-constructies kunnen fouten gecontro
 
 \subsubsection{Toekennen van groepslidmaatschappen}
 
-Naast het aanmaken van het account worden automatisch verschillende groepslidmaatschappen toegekend. Hiervoor wordt gebruikgemaakt van vooraf gedefinieerde mappings tussen rolcodes en Active Directory-groepen.
+Naast het aanmaken van het account worden automatisch verschillende groepslidmaatschappen toegekend. Hiervoor wordt gebruikgemaakt van vooraf gedefinieerde mappings tussen rolcodes en Active Directory-groepen. Zie codefragment ~\ref{lst:Rolemappings}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Samenstelling rollen},
-    label={lst:Rolemappings}]
-    $RoleGroups = @{
-        "IT-USER" = @("GG_GE_Informatica")
-        "HR-USER" = @("GG_GE_Per")
-        "FI-USER" = @("GG_GE_FINANCIEN")
-    }
-\end{lstlisting}
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$RoleGroups = @{
+    "IT-USER" = @("GG_GE_Informatica")
+    "HR-USER" = @("GG_GE_Per")
+    "FI-USER" = @("GG_GE_FINANCIEN")
+}
+\end{minted}
+\caption{Samenstelling rollen}
+\label{lst:Rolemappings}
+\end{listing}
 
-Daarnaast worden ook standaardgroepen toegevoegd die iedere gebruiker binnen de organisatie moet ontvangen.
+Daarnaast worden ook standaardgroepen toegevoegd die iedere gebruiker binnen de organisatie moet ontvangen. Zie codefragment ~\ref{lst:SamenstellingGroepen}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Samenstelling groepen},
-    label={lst:SamenstellingGroepen}]
-    $DefaultGroups = @(
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$DefaultGroups = @(
     "SEC_DR_Data2",
     "GG_GE_UNIFLOW",
     "SEC_DR_Fotoarchief"
-    )
-    
-    $AllGroups = @()
-    $AllGroups += $DefaultGroups
-    
-    foreach ($Group in $AllGroups) {
-        Add-ADGroupMember -Identity $Group -Members $Sam
-    }
-\end{lstlisting}
+)
+
+$AllGroups = @()
+$AllGroups += $DefaultGroups
+
+foreach ($Group in $AllGroups) {
+    Add-ADGroupMember -Identity $Group -Members $Sam
+}
+\end{minted}
+\caption{Samenstelling groepen}
+\label{lst:SamenstellingGroepen}
+\end{listing}
 
 Door groepslidmaatschappen automatisch toe te kennen, kunnen rechten en configuraties centraal beheerd worden via Active Directory-groepen.
 
 \subsubsection{Terugkoppeling naar Power Automate}
 
-Tot slot schrijft het script een beperkte uitvoer weg die opnieuw opgehaald kan worden binnen Power Automate. Hierbij wordt onder andere de User Principal Name teruggekoppeld naar de cloudflow.
+Tot slot schrijft het script een beperkte uitvoer weg die opnieuw opgehaald kan worden binnen Power Automate. Hierbij wordt onder andere de User Principal Name teruggekoppeld naar de cloudflow. Zie codefragment ~\ref{lst:TerugkoppelingUPN}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Terugkoppeling UPN},
-    label={lst:TerugkoppelingUPN}]
-    $Result = [PSCustomObject]@{
-        UPN = $Email
-    }
-    
-    $Result | ConvertTo-Json -Compress
-\end{lstlisting}
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$Result = [PSCustomObject]@{
+    UPN = $Email
+}
+
+$Result | ConvertTo-Json -Compress
+\end{minted}
+\caption{Terugkoppeling UPN}
+\label{lst:TerugkoppelingUPN}
+\end{listing}
 
 Deze terugkoppeling wordt later gebruikt binnen verdere automatiseringsstappen, zoals de synchronisatiecontrole met Entra ID en het toekennen van cloudlicenties.
 
@@ -285,59 +308,65 @@ De einddatum wordt vanuit het Microsoft Forms-formulier doorgestuurd naar de des
 
 Codefragment ~\ref{lst:Einddatum} toont de verwerking van de meegegeven einddatum.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Verwerking van de mogelijke einddatum},
-    label={lst:Einddatum}]
-    $Sam = "%Username%"
-    $DateString = "%ExpirationDate%"
-    
-    if (![string]::IsNullOrWhiteSpace($DateString)) {
-        
-        $DateObj = [datetime]::ParseExact(
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$Sam = "%Username%"
+$DateString = "%ExpirationDate%"
+
+if (![string]::IsNullOrWhiteSpace($DateString)) {
+
+    $DateObj = [datetime]::ParseExact(
         $DateString,
         "yyyy-MM-dd",
         $null
-        )
-        
-        Set-ADAccountExpiration `
+    )
+
+    Set-ADAccountExpiration `
         -Identity $Sam `
         -DateTime $DateObj
-    }
-\end{lstlisting}
+}
+\end{minted}
+\caption{Verwerking van de mogelijke einddatum}
+\label{lst:Einddatum}
+\end{listing}
 
 Het script controleert eerst of effectief een einddatum werd meegegeven. Indien dit niet het geval is, wordt geen vervaldatum ingesteld en blijft het account actief.\newline
 
 Wanneer wel een einddatum aanwezig is, wordt deze geconverteerd naar een geldig \texttt{DateTime}-object zodat Active Directory deze correct kan verwerken. Vervolgens wordt via het cmdlet \texttt{Set-ADAccountExpiration} automatisch een accountvervaldatum ingesteld voor de gebruiker.
 
-Binnen het uiteindelijke script werd bijkomende logica toegevoegd waarbij twee extra dagen toegevoegd worden aan de opgegeven einddatum. Daarnaast wordt het tijdstip ingesteld op 23:59:59 zodat het account actief blijft gedurende de volledige laatste werkdag van de medewerker.
+Binnen het uiteindelijke script werd bijkomende logica toegevoegd waarbij twee extra dagen toegevoegd worden aan de opgegeven einddatum. Daarnaast wordt het tijdstip ingesteld op 23:59:59 zodat het account actief blijft gedurende de volledige laatste werkdag van de medewerker. Zie codefragment ~\ref{lst:Extra dagen}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Extra toevoegen 2 dagen bij einddatum},
-    label={lst:Extra dagen}]
-    $DateObj = $DateObj.AddDays(2)
-    $DateObj = $DateObj.Date
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$DateObj = $DateObj.AddDays(2)
+$DateObj = $DateObj.Date
     .AddHours(23)
     .AddMinutes(59)
     .AddSeconds(59)
-\end{lstlisting}
+\end{minted}
+\caption{Extra toevoegen 2 dagen bij einddatum}
+\label{lst:Extra dagen}
+\end{listing}
 
 Deze aanpak voorkomt dat accounts te vroeg gedeactiveerd worden door verschillen in synchronisatietijdstippen of tijdsinstellingen tussen systemen.
 
-Ook binnen dit script wordt gebruikgemaakt van \texttt{try-catch}-constructies zodat fouten tijdens het instellen van de vervaldatum gecontroleerd opgevangen kunnen worden.
+Ook binnen dit script wordt gebruikgemaakt van \texttt{try-catch}-constructies zodat fouten tijdens het instellen van de vervaldatum gecontroleerd opgevangen kunnen worden. Zie codefragment ~\ref{lst:TryCatchEinddatum}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Try catch bij de einddatum},
-    label={lst:TryCatchEinddatum}]
-    try {
-        Set-ADAccountExpiration `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+try {
+    Set-ADAccountExpiration `
         -Identity $Sam `
         -DateTime $DateObj
-    }
-    catch {
-        Write-Output "ERROR:"
-        Write-Output $_
-    }
-\end{lstlisting}
+}
+catch {
+    Write-Output "ERROR:"
+    Write-Output $_
+}
+\end{minted}
+\caption{Try catch bij de einddatum}
+\label{lst:TryCatchEinddatum}
+\end{listing}
 
 Door de vervaldatum automatisch te configureren, wordt de nood aan manuele opvolging verminderd en blijft het gebruikersbeheer consistenter en veiliger verlopen.
 
@@ -399,7 +428,7 @@ Figuur ~\ref{fig:Do_until} toont de do until statement die in Power Automate geb
 
 Na het aanmaken van de gebruiker, de synchronisatie met Entra ID en het toekennen van licenties, worden bijkomende e-mailconfiguraties uitgevoerd. Hierbij gaat het voornamelijk om het toekennen van toegang tot gedeelde postvakken en het toevoegen van gebruikers aan distributiegroepen binnen Microsoft Exchange Online.
 
-De benodigde configuraties worden geselecteerd binnen het Microsoft Forms-formulier tijdens de onboardingaanvraag. Deze gegevens worden vervolgens verwerkt binnen de cloudflow van Power Automate en doorgestuurd naar een bijkomende desktopflow waarin een PowerShell-script uitgevoerd wordt.
+De benodigde configuraties worden geselecteerd binnen het Microsoft Forms\-for\-mu\-lier tijdens de onboardingaanvraag. Deze gegevens worden vervolgens verwerkt binnen de cloudflow van Power Automate en doorgestuurd naar een bijkomende desk\-top\-flow waarin een PowerShell-script uitgevoerd wordt.
 
 Binnen deze automatiseringsstap wordt gebruikgemaakt van de Exchange Online PowerShell-module om rechten toe te kennen op gedeelde postvakken en gebruikers automatisch toe te voegen aan de correcte distributiegroepen.
 
@@ -419,101 +448,100 @@ Het script ontvangt hierbij verschillende parameters vanuit Power Automate, waar
 
 Codefragment ~\ref{lst:ExchangeParameters} toont de parameters die vanuit de desktopflow doorgestuurd worden naar het script.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Parameters voor Exchange Online-configuratie},
-    label={lst:ExchangeParameters}]
-    param(
+\begin{listing}[ht]
+\begin{minted}{powershell}
+param(
     [string]$UPN,
     [string]$Mailboxes,
     [string]$DistributionLists
-    )
-\end{lstlisting}
+)
+\end{minted}
+\caption{Parameters voor Exchange Online-configuratie}
+\label{lst:ExchangeParameters}
+\end{listing}
 
 Voor de communicatie met Exchange Online wordt gebruikgemaakt van de module \texttt{ExchangeOnlineManagement}. Nadat verbinding gemaakt werd met Exchange Online, kan het script rechten en groepslidmaatschappen automatisch configureren.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Verbinding met Exchange Online},
-    label={lst:ConnectExchange}]
-    Import-Module ExchangeOnlineManagement
-    
-    Connect-ExchangeOnline -ShowBanner:$false
-\end{lstlisting}
+Codefragment~\ref{lst:ConnectExchange} toont hoe de verbinding met Exchange online tot stand komt. 
 
-De geselecteerde gedeelde postvakken worden eerst verwerkt tot een lijst zodat meerdere mailboxen automatisch verwerkt kunnen worden binnen een lus.
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Import-Module ExchangeOnlineManagement
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Verwerking van mailboxlijsten},
-    label={lst:MailboxList}]
-    $MailboxList = $Mailboxes.Trim("[]") -split ","
-    
-    foreach ($sharedMailbox in $MailboxList) {
-        
-        $sharedMailbox = $sharedMailbox.Trim(
-        " ","'","[","]"
-        )
-    }
-\end{lstlisting}
+Connect-ExchangeOnline -ShowBanner:$false
+\end{minted}
+\caption{Verbinding met Exchange Online}
+\label{lst:ConnectExchange}
+\end{listing}
 
-Voor ieder gedeeld postvak wordt vervolgens automatisch \textit{Full Access}-toegang toegekend aan de gebruiker via het cmdlet \texttt{Add-MailboxPermission}.
+Voor ieder gedeeld postvak wordt vervolgens automatisch \textit{Full Access}-toegang toegekend aan de gebruiker via het cmdlet \texttt{Add-MailboxPermission}. Zie codefragment ~\ref{lst:MailboxPermissions}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Toekennen van mailboxrechten},
-    label={lst:MailboxPermissions}]
-    Add-MailboxPermission `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Add-MailboxPermission `
     -Identity $sharedMailbox `
     -User $UPN `
     -AccessRights FullAccess `
     -InheritanceType All `
     -Confirm:$false
-\end{lstlisting}
+\end{minted}
+\caption{Toekennen van mailboxrechten}
+\label{lst:MailboxPermissions}
+\end{listing}
 
-Naast volledige toegang wordt eveneens automatisch \textit{Send on Behalf}-toegang ingesteld. Omdat een mailbox hiervoor verplicht is, moet de configuratie van de E3 licentie afgerond zijn. Als deze afgerond is, kunnen de correcte rechten toegewezen worden. Er wordt hierbij gebruikgemaakt van een retry-mechanisme waarbij meerdere pogingen uitgevoerd worden met een tussentijdse wachttijd. Hierdoor worden, op het moment dat de mailbox aangemaakt is, de correcte mailboxen toegewezen aan de gebruiker.
+Naast volledige toegang wordt eveneens automatisch \textit{Send on Behalf}-toegang ingesteld. Omdat een mailbox hiervoor verplicht is, moet de configuratie van de E3 licentie afgerond zijn. Als deze afgerond is, kunnen de correcte rechten toegewezen worden. Er wordt hierbij gebruikgemaakt van een retry-mechanisme waarbij meerdere pogingen uitgevoerd worden met een tussentijdse wachttijd. Hierdoor worden, op het moment dat de mailbox aangemaakt is, de correcte mailboxen toegewezen aan de gebruiker. Zie codefragment ~\ref{lst:RetrySendOnBehalf}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Retry-mechanisme voor Send on Behalf},
-    label={lst:RetrySendOnBehalf}]
-    while (-not $Success -and $Attempt -lt $MaxAttempts) {
-        
-        try {
-            
-            Set-Mailbox `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+while (-not $Success -and $Attempt -lt $MaxAttempts) {
+
+    try {
+
+        Set-Mailbox `
             -Identity $sharedMailbox `
             -GrantSendOnBehalfTo @{Add=$UPN}
-            
-            $Success = $true
-        }
-        catch {
-            
-            $Attempt++
-            
-            Start-Sleep -Seconds 60
-        }
+
+        $Success = $true
     }
-\end{lstlisting}
+    catch {
+
+        $Attempt++
+
+        Start-Sleep -Seconds 60
+    }
+}
+\end{minted}
+\caption{Retry-mechanisme voor Send on Behalf}
+\label{lst:RetrySendOnBehalf}
+\end{listing}
 
 \subsection{Toevoegen aan distributiegroepen}
 
-Naast gedeelde postvakken worden gebruikers eveneens automatisch toegevoegd aan distributiegroepen binnen Exchange Online. Hierbij worden zowel standaard distributiegroepen als bijkomende groepen uit het formulier verwerkt.
+Naast gedeelde postvakken worden gebruikers eveneens automatisch toegevoegd aan distributiegroepen binnen Exchange Online. Hierbij worden zowel standaard distributiegroepen als bijkomende groepen uit het formulier verwerkt. Zie codefragment ~\ref{lst:DefaultDLs}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Standaard distributiegroepen},
-    label={lst:DefaultDLs}]
-    $DefaultDLs = @(
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$DefaultDLs = @(
     "iedereen@berlare.be",
     "viruswaarschuwing@berlare.be"
-    )
-\end{lstlisting}
+)
+\end{minted}
+\caption{Standaard distributiegroepen}
+\label{lst:DefaultDLs}
+\end{listing}
 
-Tot slot worden alle distributiegroepen doorlopen en wordt de gebruiker automatisch toegevoegd via het cmdlet \texttt{Add-DistributionGroupMember}.
+Tot slot worden alle distributiegroepen doorlopen en wordt de gebruiker automatisch toegevoegd via het cmdlet \texttt{Add-DistributionGroupMember}. Zie codefragment ~\ref{lst:AddDistributionGroup}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Toevoegen aan distributiegroepen},
-    label={lst:AddDistributionGroup}]
-    Add-DistributionGroupMember `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Add-DistributionGroupMember `
     -Identity $dl `
     -Member $UPN `
     -BypassSecurityGroupManagerCheck
-\end{lstlisting}
+\end{minted}
+\caption{Toevoegen aan distributiegroepen}
+\label{lst:AddDistributionGroup}
+\end{listing}
 
 Door deze configuraties automatisch uit te voeren, wordt het manuele beheer van mailboxrechten en distributiegroepen sterk verminderd en verloopt de onboarding consistenter en efficiënter.
 
@@ -525,49 +553,53 @@ Wanneer een fout optreedt tijdens het uitvoeren van een opdracht, wordt een waar
 
 Codefragment ~\ref{lst:MailboxErrorHandling} toont een voorbeeld van foutafhandeling tijdens het toevoegen van een gebruiker aan een gedeeld postvak.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Foutafhandeling bij mailboxrechten},
-    label={lst:MailboxErrorHandling}]
-    try {
-        
-        Add-MailboxPermission `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+try {
+
+    Add-MailboxPermission `
         -Identity $sharedMailbox `
         -User $UPN `
         -AccessRights FullAccess `
         -ErrorAction Stop
-    }
-    catch {
-        
-        Write-Warning "Failed FullAccess"
-        Write-Warning $_.Exception.Message
-    }
-\end{lstlisting}
+}
+catch {
 
-Daarnaast wordt binnen bepaalde onderdelen gebruikgemaakt van retry-mechanismen. Dit is voornamelijk noodzakelijk bij synchronisatieprocessen binnen Exchange Online en Entra ID, waarbij objecten niet altijd onmiddellijk beschikbaar zijn na het aanmaken van een gebruiker.
+    Write-Warning "Failed FullAccess"
+    Write-Warning $_.Exception.Message
+}
+\end{minted}
+\caption{Foutafhandeling bij mailboxrechten}
+\label{lst:MailboxErrorHandling}
+\end{listing}
 
-Door meerdere pogingen uit te voeren met een tussentijdse wachttijd, kan het script tijdelijke synchronisatieproblemen automatisch opvangen zonder manuele tussenkomst.
+Daarnaast wordt binnen bepaalde onderdelen gebruikgemaakt van re\-try-me\-cha\-nis\-men. Dit is voornamelijk noodzakelijk bij synchronisatieprocessen binnen Exchange Online en Entra ID, waarbij objecten niet altijd onmiddellijk beschikbaar zijn na het aanmaken van een gebruiker.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Retry-mechanisme},
-    label={lst:RetryMechanism}]
-    while (-not $Success -and $Attempt -lt $MaxAttempts) {
-        
-        try {
-            
-            Set-Mailbox `
+Door meerdere pogingen uit te voeren met een tussentijdse wachttijd, kan het script tijdelijke synchronisatieproblemen automatisch opvangen zonder manuele tussenkomst. Zie codefragment ~\ref{lst:RetryMechanism}.
+
+\begin{listing}[ht]
+\begin{minted}{powershell}
+while (-not $Success -and $Attempt -lt $MaxAttempts) {
+
+    try {
+
+        Set-Mailbox `
             -Identity $sharedMailbox `
             -GrantSendOnBehalfTo @{Add=$UPN}
-            
-            $Success = $true
-        }
-        catch {
-            
-            $Attempt++
-            
-            Start-Sleep -Seconds 60
-        }
+
+        $Success = $true
     }
-\end{lstlisting}
+    catch {
+
+        $Attempt++
+
+        Start-Sleep -Seconds 60
+    }
+}
+\end{minted}
+\caption{Retry-mechanisme}
+\label{lst:RetryMechanism}
+\end{listing}
 
 Deze aanpak verhoogt de betrouwbaarheid van het onboardingproces en vermindert de nood aan manuele correcties wanneer tijdelijke fouten of synchronisatievertragingen optreden.
 
@@ -633,78 +665,66 @@ Wanneer de opgegeven einddatum bereikt werd, start de cloudflow automatisch een 
 
 Net zoals bij de onboarding wordt gebruikgemaakt van een hybride aanpak waarbij Power Automate Cloud communiceert met de lokale infrastructuur via Power Automate Desktop en Power Automate Machine Runtime. Hierdoor kunnen lokale Active Directory-configuraties gecombineerd worden met cloudconfiguraties binnen Microsoft 365.
 
-Vanuit de cloudflow worden verschillende parameters doorgestuurd naar de desktopflow, waaronder de User Principal Name van de gebruiker, de reden van uitdiensttreding en de einddatum van het contract.
-
-Codefragment ~\ref{lst:OffboardingExchangeParameters} toont de parameters die gebruikt worden binnen het Exchange Online-script.
-
-\begin{lstlisting}[language=PowerShell,
-    caption={Parameters voor Exchange Online-offboarding},
-    label={lst:OffboardingExchangeParameters}]
-    param(
-    [string]$UPN
-    )
-\end{lstlisting}
-
-Binnen het script wordt eerst verbinding gemaakt met Exchange Online via de module \texttt{ExchangeOnlineManagement}. Hierdoor kunnen mailboxen, rechten en distributiegroepen automatisch aangepast worden tijdens de offboarding.
-
-\begin{lstlisting}[language=PowerShell,
-    caption={Verbinding met Exchange Online},
-    label={lst:ConnectExchangeOffboarding}]
-    Import-Module ExchangeOnlineManagement
-    
-    Connect-ExchangeOnline
-\end{lstlisting}
+Vanuit de cloudflow worden verschillende parameters doorgestuurd naar de desk\-top\-flow, waaronder de User Principal Name van de gebruiker, de reden van uitdiensttreding en de einddatum van het contract.
 
 \subsubsection{Omzetten naar gedeeld postvak}
 
-De mailbox van de gebruiker wordt eerst automatisch omgezet naar een gedeeld postvak. Hierdoor blijven bestaande e-mails en agenda-items behouden nadat de gebruiker uit dienst gegaan is.
+De mailbox van de gebruiker wordt eerst automatisch omgezet naar een gedeeld postvak. Hierdoor blijven bestaande e-mails en agenda-items behouden nadat de gebruiker uit dienst gegaan is. Zie codefragment ~\ref{lst:ConvertSharedMailbox}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Omzetten naar gedeeld postvak},
-    label={lst:ConvertSharedMailbox}]
-    Set-Mailbox `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Set-Mailbox `
     -Identity $UserMailbox.PrimarySmtpAddress `
     -Type Shared
-\end{lstlisting}
+\end{minted}
+\caption{Omzetten naar gedeeld postvak}
+\label{lst:ConvertSharedMailbox}
+\end{listing}
 
 Door de mailbox om te zetten naar een gedeeld postvak kan de Microsoft 365-licentie later verwijderd worden zonder dat historische communicatie verloren gaat. Dit maakt het mogelijk om oude e-mails nog tijdelijk te raadplegen indien nodig.
 
 \subsubsection{Verwijderen van mailboxrechten en distributiegroepen}
 
-Na het omzetten van de mailbox worden bestaande rechten en groepslidmaatschappen verwijderd. Hierbij wordt eerst gecontroleerd op mailboxen waarvoor de gebruiker \textit{Full Access}-rechten bezit.
+Na het omzetten van de mailbox worden bestaande rechten en groepslidmaatschappen verwijderd. Hierbij wordt eerst gecontroleerd op mailboxen waarvoor de gebruiker \textit{Full Access}-rechten bezit. Zie codefragment ~\ref{lst:RemoveFullAccess}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Verwijderen van Full Access-rechten},
-    label={lst:RemoveFullAccess}]
-    Remove-MailboxPermission `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Remove-MailboxPermission `
     -Identity $Mailbox.PrimarySmtpAddress `
     -User $UPN `
     -AccessRights FullAccess `
     -Confirm:$false
-\end{lstlisting}
+\end{minted}
+\caption{Verwijderen van Full Access-rechten}
+\label{lst:RemoveFullAccess}
+\end{listing}
 
-Daarnaast wordt eveneens gecontroleerd of de gebruiker \textit{Send on Behalf}-rechten bezit op andere mailboxen. Indien deze rechten aanwezig zijn, worden ze automatisch verwijderd.
+Daarnaast wordt eveneens gecontroleerd of de gebruiker \textit{Send on Behalf}-rechten bezit op andere mailboxen. Indien deze rechten aanwezig zijn, worden ze automatisch verwijderd. Zie codefragment ~\ref{lst:RemoveSendOnBehalf}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Verwijderen van Send on Behalf},
-    label={lst:RemoveSendOnBehalf}]
-    Set-Mailbox `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Set-Mailbox `
     -Identity $Mailbox.PrimarySmtpAddress `
     -GrantSendOnBehalfTo @{
         Remove = $UserMailbox.DistinguishedName
     }
-\end{lstlisting}
+\end{minted}
+\caption{Verwijderen van Send on Behalf}
+\label{lst:RemoveSendOnBehalf}
+\end{listing}
 
-Tot slot wordt de gebruiker automatisch verwijderd uit distributiegroepen binnen Exchange Online.
+Tot slot wordt de gebruiker automatisch verwijderd uit distributiegroepen binnen Exchange Online. Zie codefragment ~\ref{lst:RemoveDistributionGroups}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Verwijderen uit distributiegroepen},
-    label={lst:RemoveDistributionGroups}]
-    Remove-DistributionGroupMember `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Remove-DistributionGroupMember `
     -Identity $_.PrimarySmtpAddress `
     -Member $UPN `
     -Confirm:$false
-\end{lstlisting}
+\end{minted}
+\caption{Verwijderen uit distributiegroepen}
+\label{lst:RemoveDistributionGroups}
+\end{listing}
 
 Door deze rechten en groepslidmaatschappen automatisch te verwijderen, wordt vermeden dat voormalige medewerkers nog toegang behouden tot gedeelde mailboxen of interne communicatiestromen.
 
@@ -714,64 +734,60 @@ Naast de configuraties binnen Exchange Online worden tijdens de offboarding even
 
 Dit script ontvangt verschillende parameters vanuit de cloudflow, waaronder de User Principal Name van de gebruiker, de reden van uitdiensttreding en de einddatum van het contract.
 
-Codefragment ~\ref{lst:ADOffboardingParameters} toont de parameters die gebruikt worden binnen het Active Directory-script.
+Binnen het script wordt eerst gecontroleerd of het gebruikersaccount effectief bestaat binnen Active Directory. Hiervoor wordt de gebruiker opgezocht aan de hand van de User Principal Name. Zie codefragment ~\ref{lst:GetADUserOffboarding}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Parameters voor Active Directory-offboarding},
-    label={lst:ADOffboardingParameters}]
-    param(
-    [string]$UPN,
-    [string]$Reason,
-    [string]$EndDate
-    )
-\end{lstlisting}
-
-Binnen het script wordt eerst gecontroleerd of het gebruikersaccount effectief bestaat binnen Active Directory. Hiervoor wordt de gebruiker opgezocht aan de hand van de User Principal Name.
-
-\begin{lstlisting}[language=PowerShell,
-    caption={Opzoeken van de gebruiker},
-    label={lst:GetADUserOffboarding}]
-    $User = Get-ADUser `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$User = Get-ADUser `
     -Filter "UserPrincipalName -eq '$UPN'" `
     -Properties MemberOf,Description
-\end{lstlisting}
+\end{minted}
+\caption{Opzoeken van de gebruiker}
+\label{lst:GetADUserOffboarding}
+\end{listing}
 
 Na het ophalen van het account kunnen de verdere offboardingstappen automatisch uitgevoerd worden.
 
 \subsubsection{Deactiveren van gebruikersaccounts}
 
-Tijdens de offboarding wordt het gebruikersaccount automatisch gedeactiveerd binnen Active Directory. Hierdoor kan de voormalige medewerker niet langer aanmelden binnen de omgeving van de organisatie.
+Tijdens de offboarding wordt het gebruikersaccount automatisch gedeactiveerd binnen Active Directory. Hierdoor kan de voormalige medewerker niet langer aanmelden binnen de omgeving van de organisatie. Zie codefragment ~\ref{lst:DisableADAccount}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Deactiveren van gebruikersaccounts},
-    label={lst:DisableADAccount}]
-    Disable-ADAccount -Identity $User
-\end{lstlisting}
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Disable-ADAccount -Identity $User
+\end{minted}
+\caption{Deactiveren van gebruikersaccounts}
+\label{lst:DisableADAccount}
+\end{listing}
 
-Daarnaast wordt het account verborgen uit de Global Address List van Exchange. Hierdoor verschijnt de gebruiker niet langer binnen adreslijsten van Microsoft Outlook of andere Microsoft 365-toepassingen.
+Daarnaast wordt het account verborgen uit de Global Address List van Exchange. Hierdoor verschijnt de gebruiker niet langer binnen adreslijsten van Microsoft Outlook of andere Microsoft 365-toepassingen. Zie codefragment ~\ref{lst:HideFromGAL}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Verbergen uit de Global Address List},
-    label={lst:HideFromGAL}]
-    Set-ADUser `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Set-ADUser `
     -Identity $User `
     -Replace @{
         msExchHideFromAddressLists=$true
     }
-\end{lstlisting}
+\end{minted}
+\caption{Verbergen uit de Global Address List}
+\label{lst:HideFromGAL}
+\end{listing}
 
-Naast het uitschakelen van het account wordt eveneens de beschrijving van de gebruiker aangepast. Hierbij wordt automatisch geregistreerd vanaf wanneer de medewerker uit dienst is en wat de reden van uitdiensttreding was.
+Naast het uitschakelen van het account wordt eveneens de beschrijving van de gebruiker aangepast. Hierbij wordt automatisch geregistreerd vanaf wanneer de medewerker uit dienst is en wat de reden van uitdiensttreding was. Zie codefragment ~\ref{lst:DescriptionOffboarding}.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Aanpassen van de beschrijving},
-    label={lst:DescriptionOffboarding}]
-    $NewDescription = 
+\begin{listing}[ht]
+\begin{minted}{powershell}
+$NewDescription =
     "Uit dienst sinds $FormattedDate - $Reason"
-    
-    Set-ADUser `
+
+Set-ADUser `
     -Identity $User `
     -Description $NewDescription
-\end{lstlisting}
+\end{minted}
+\caption{Aanpassen van de beschrijving}
+\label{lst:DescriptionOffboarding}
+\end{listing}
 
 Door deze informatie rechtstreeks binnen Active Directory op te slaan, blijft bijkomende administratieve informatie beschikbaar voor de ICT-dienst en systeembeheerders.
 
@@ -781,26 +797,20 @@ Na het deactiveren van het account worden bestaande groepslidmaatschappen automa
 
 Binnen het script wordt eerst een beperkte lijst samengesteld van groepen die behouden moeten blijven. In de huidige implementatie blijft enkel de standaardgroep \texttt{Domain Users} behouden.
 
-\begin{lstlisting}[language=PowerShell,
-    caption={Groepen die behouden blijven},
-    label={lst:GroupsToKeep}]
-    $GroupsToKeep = @(
-    "Domain Users"
-    )
-\end{lstlisting}
+Vervolgens worden alle groepslidmaatschappen van de gebruiker opgehaald en gecontroleerd. Indien een groep niet voorkomt binnen de uitzonderingslijst, wordt de gebruiker automatisch uit deze groep verwijderd. Zie codefragment ~\ref{lst:RemoveADGroups}.
 
-Vervolgens worden alle groepslidmaatschappen van de gebruiker opgehaald en gecontroleerd. Indien een groep niet voorkomt binnen de uitzonderingslijst, wordt de gebruiker automatisch uit deze groep verwijderd.
-
-\begin{lstlisting}[language=PowerShell,
-    caption={Verwijderen van groepslidmaatschappen},
-    label={lst:RemoveADGroups}]
-    Remove-ADGroupMember `
+\begin{listing}[ht]
+\begin{minted}{powershell}
+Remove-ADGroupMember `
     -Identity $_ `
     -Members $User `
     -Confirm:$false
-\end{lstlisting}
+\end{minted}
+\caption{Verwijderen van groepslidmaatschappen}
+\label{lst:RemoveADGroups}
+\end{listing}
 
-Door groepslidmaatschappen automatisch te verwijderen, wordt vermeden dat voormalige medewerkers nog toegang behouden tot netwerkshares, beveiligingsgroepen of andere interne systemen die gekoppeld zijn aan Active Directory-groepen.
+Door groepslidmaatschappen automatisch te verwijderen, wordt vermeden dat voormalige medewerkers nog toegang behouden tot netwerkshares, beveiligingsgroepen of andere interne systemen die gekoppeld zijn aan Active Di\-rec\-to\-ry-groe\-pen.
 
 Net zoals bij de onboarding wordt ook binnen deze scripts gebruikgemaakt van \texttt{try-catch}-constructies zodat fouten gecontroleerd opgevangen kunnen worden zonder dat het volledige proces abrupt stopt.
 
@@ -817,7 +827,7 @@ Figuur ~\ref{fig:DesktopOffboarding} toont de complete desktopflow voor het offb
 
 Naast de lokale Active Directory-groepen moeten tijdens de offboarding eveneens verschillende cloudgroepen binnen Microsoft 365 verwijderd worden. Deze groepen werden tijdens de onboarding automatisch toegekend via Power Automate en zijn verantwoordelijk voor het toewijzen van licenties en bijkomende toegangsrechten.
 
-Binnen de implementatie gaat het onder andere om de Microsoft 365 E3-licentie, een Power Automate-licentie en een groep die toegang verleent tot de VPN-omgeving van de organisatie.
+Binnen de implementatie gaat het onder andere om de Microsoft 365 E3-licentie, een Power Automate-licentie en een groep die toegang verleent tot de VPN-om\-ge\-ving van de organisatie.
 
 Het verwijderen van deze groepen gebeurt volledig binnen de cloudflow van Power Automate. Hiervoor wordt gebruikgemaakt van de actie ``Lid uit groep verwijderen''. Via deze stap wordt de gebruiker automatisch verwijderd uit de vooraf gedefinieerde Microsoft 365-groepen.
 

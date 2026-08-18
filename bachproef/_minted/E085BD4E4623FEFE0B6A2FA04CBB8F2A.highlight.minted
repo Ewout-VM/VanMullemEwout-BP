@@ -1,0 +1,9 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+if(departement == \PYGZdq{}Informatica\PYGZdq{},
+    \PYGZdq{}IT\PYGZhy{}user\PYGZdq{},
+    if(departement == \PYGZdq{}Personeelsdienst\PYGZdq{},
+        \PYGZdq{}HR\PYGZhy{}user\PYGZdq{},
+        if(departement == \PYGZdq{}Financien\PYGZdq{},
+            \PYGZdq{}FI\PYGZhy{}user\PYGZdq{},
+            \PYGZdq{}user\PYGZdq{})))
+\end{MintedVerbatim}

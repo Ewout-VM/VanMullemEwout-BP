@@ -1,0 +1,103 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{k}{param}\PYG{p}{(}
+    \PYG{n+no}{[string]}\PYG{n+nv}{\PYGZdl{}UPN}
+\PYG{p}{)}
+
+\PYG{n+nb}{Import\PYGZhy{}Module} \PYG{n}{ExchangeOnlineManagement}
+
+\PYG{n+nb}{Connect\PYGZhy{}ExchangeOnline}
+
+\PYG{c}{\PYGZsh{} Mailbox ophalen}
+\PYG{n+nv}{\PYGZdl{}UserMailbox} \PYG{p}{=} \PYG{n+nb}{Get\PYGZhy{}Mailbox} \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}UPN}
+
+\PYG{c}{\PYGZsh{} Convert naar shared mailbox}
+\PYG{n+nb}{Set\PYGZhy{}Mailbox} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}UserMailbox}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Type} \PYG{n}{Shared}
+
+\PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Mailbox converted to shared\PYGZdq{}}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} FULL ACCESS verwijderen}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{n+nb}{Get\PYGZhy{}Mailbox} \PYG{n}{\PYGZhy{}ResultSize} \PYG{n}{Unlimited} \PYG{p}{|} \PYG{k}{ForEach}\PYG{n}{\PYGZhy{}Object} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nv}{\PYGZdl{}Mailbox} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}\PYGZus{}}
+
+    \PYG{n+nv}{\PYGZdl{}Permissions} \PYG{p}{=} \PYG{n+nb}{Get\PYGZhy{}MailboxPermission} \PYG{p}{`}
+        \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}Mailbox}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress} \PYG{p}{|}
+        \PYG{n+nb}{Where\PYGZhy{}Object} \PYG{p}{\PYGZob{}}
+            \PYG{n+nv}{\PYGZdl{}\PYGZus{}}\PYG{p}{.}\PYG{n}{User} \PYG{o}{\PYGZhy{}like} \PYG{n+nv}{\PYGZdl{}UPN} \PYG{o}{\PYGZhy{}and}
+            \PYG{n+nv}{\PYGZdl{}\PYGZus{}}\PYG{p}{.}\PYG{n}{AccessRights} \PYG{o}{\PYGZhy{}contains} \PYG{l+s+s2}{\PYGZdq{}FullAccess\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}Permissions}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+
+        \PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+            \PYG{n+nb}{Remove\PYGZhy{}MailboxPermission} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}Mailbox}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}User} \PYG{n+nv}{\PYGZdl{}UPN} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}AccessRights} \PYG{n}{FullAccess} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}InheritanceType} \PYG{n}{All} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}Confirm}\PYG{p}{:}\PYG{n+nv}{\PYGZdl{}false}
+
+            \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Removed FullAccess from }\PYG{p}{\PYGZdl{}(}\PYG{n+nv}{\PYGZdl{}Mailbox}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress}\PYG{p}{)}\PYG{l+s+s2}{\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{catch} \PYG{p}{\PYGZob{}}
+
+            \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}Failed FullAccess removal on }\PYG{p}{\PYGZdl{}(}\PYG{n+nv}{\PYGZdl{}Mailbox}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress}\PYG{p}{)}\PYG{l+s+s2}{\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} SEND ON BEHALF verwijderen}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{n+nb}{Get\PYGZhy{}Mailbox} \PYG{n}{\PYGZhy{}ResultSize} \PYG{n}{Unlimited} \PYG{p}{|} \PYG{k}{ForEach}\PYG{n}{\PYGZhy{}Object} \PYG{p}{\PYGZob{}}
+
+    \PYG{n+nv}{\PYGZdl{}Mailbox} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}\PYGZus{}}
+
+    \PYG{k}{if} \PYG{p}{(}\PYG{n+nv}{\PYGZdl{}Mailbox}\PYG{p}{.}\PYG{n}{GrantSendOnBehalfTo} \PYG{o}{\PYGZhy{}contains} \PYG{n+nv}{\PYGZdl{}UserMailbox}\PYG{p}{.}\PYG{n}{DistinguishedName}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+
+        \PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+            \PYG{n+nb}{Set\PYGZhy{}Mailbox} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}Mailbox}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress} \PYG{p}{`}
+                \PYG{n}{\PYGZhy{}GrantSendOnBehalfTo} \PYG{p}{@\PYGZob{}}
+                    \PYG{n}{Remove} \PYG{p}{=} \PYG{n+nv}{\PYGZdl{}UserMailbox}\PYG{p}{.}\PYG{n}{DistinguishedName}
+                \PYG{p}{\PYGZcb{}}
+
+            \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Removed SendOnBehalf from }\PYG{p}{\PYGZdl{}(}\PYG{n+nv}{\PYGZdl{}Mailbox}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress}\PYG{p}{)}\PYG{l+s+s2}{\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+        \PYG{k}{catch} \PYG{p}{\PYGZob{}}
+
+            \PYG{n+nb}{Write\PYGZhy{}Warning} \PYG{l+s+s2}{\PYGZdq{}Failed SendOnBehalf removal on }\PYG{p}{\PYGZdl{}(}\PYG{n+nv}{\PYGZdl{}Mailbox}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress}\PYG{p}{)}\PYG{l+s+s2}{\PYGZdq{}}
+        \PYG{p}{\PYGZcb{}}
+    \PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{c}{\PYGZsh{} ============================================}
+\PYG{c}{\PYGZsh{} DISTRIBUTIEGROEPEN verwijderen}
+\PYG{c}{\PYGZsh{} ============================================}
+
+\PYG{n+nb}{Get\PYGZhy{}DistributionGroup} \PYG{n}{\PYGZhy{}ResultSize} \PYG{n}{Unlimited} \PYG{p}{|} \PYG{k}{ForEach}\PYG{n}{\PYGZhy{}Object} \PYG{p}{\PYGZob{}}
+
+    \PYG{k}{try} \PYG{p}{\PYGZob{}}
+
+        \PYG{n+nb}{Remove\PYGZhy{}DistributionGroupMember} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}\PYGZus{}}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Member} \PYG{n+nv}{\PYGZdl{}UPN} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}Confirm}\PYG{p}{:}\PYG{n+nv}{\PYGZdl{}false} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}BypassSecurityGroupManagerCheck} \PYG{p}{`}
+            \PYG{n}{\PYGZhy{}ErrorAction} \PYG{n}{Stop}
+
+        \PYG{n+nb}{Write\PYGZhy{}Host} \PYG{l+s+s2}{\PYGZdq{}Removed from distribution group }\PYG{p}{\PYGZdl{}(}\PYG{n+nv}{\PYGZdl{}\PYGZus{}}\PYG{p}{.}\PYG{n}{PrimarySmtpAddress}\PYG{p}{)}\PYG{l+s+s2}{\PYGZdq{}}
+    \PYG{p}{\PYGZcb{}}
+    \PYG{k}{catch} \PYG{p}{\PYGZob{}\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{n+nb}{Disconnect\PYGZhy{}ExchangeOnline} \PYG{n}{\PYGZhy{}Confirm}\PYG{p}{:}\PYG{n+nv}{\PYGZdl{}false}
+\end{MintedVerbatim}

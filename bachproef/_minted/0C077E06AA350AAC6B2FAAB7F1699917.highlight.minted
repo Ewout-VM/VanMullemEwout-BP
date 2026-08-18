@@ -1,0 +1,6 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{n+nb}{Remove\PYGZhy{}ADGroupMember} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Identity} \PYG{n+nv}{\PYGZdl{}\PYGZus{}} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Members} \PYG{n+nv}{\PYGZdl{}User} \PYG{p}{`}
+    \PYG{n}{\PYGZhy{}Confirm}\PYG{p}{:}\PYG{n+nv}{\PYGZdl{}false}
+\end{MintedVerbatim}
